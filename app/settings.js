@@ -1,5 +1,5 @@
 export const settings = {
-    globalURL: 'http://localhost:3000/',
+    globalURL: 'https://pizza-delivery-next-fqeh0a5sg-ilya-olkhovskys-projects.vercel.app/',
     idForProduct: 'id', //этот айди пропускается в отправке на сервер
     getURLPizza() {
         return this.globalURL + 'productLists/піца';
