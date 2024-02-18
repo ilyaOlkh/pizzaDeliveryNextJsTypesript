@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.sass";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import './js/app.js'
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
                 <div className="wrapper">
                     {children}
                 </div>
+                <SpeedInsights />
             </body>
         </html>
     );
