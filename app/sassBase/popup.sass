@@ -1,0 +1,193 @@
+body::after
+    content: ""
+    background: rgba(25, 25, 25, 0.40)
+    backdrop-filter: blur(16px)
+    position: fixed
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    opacity: 0
+    transition: opacity 0.4s ease 0s
+    pointer-events: none
+    z-index: 149
+
+.popup-show body::after
+    opacity: 1
+
+.lock
+    .popup:not(.popup_show)
+        .popup__content
+            animation-fill-mode: forwards
+            animation-name: visAnimaton
+            animation-delay: 0.3s
+            animation-duration: 0s
+
+.popup
+    position: fixed
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    padding: 30px 10px
+    transition: visibility 0.4s ease 0s
+    visibility: hidden
+    pointer-events: none
+    .lock &
+        z-index: 150
+    &_show
+        z-index: 150
+        visibility: visible
+        // overflow: auto
+        pointer-events: auto
+
+    &__header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: toRem(32) toRem(20) toRem(20) toRem(20)
+        border-bottom: 1px solid #F0F0F0
+
+    &__title
+        color: #191919
+        font-size: toRem(32)
+        font-weight: 600
+    &_show &__content
+        transform: scale(1) translate(0,0)
+
+    .filters.popup_show &__content
+        transform: translate(0,0)
+
+    &__wrapper
+        display: flex
+        flex-direction: column
+        align-items: center
+        min-height: 100%
+        flex: 1 1 auto
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        overflow: hidden
+        visibility: hidden
+    &__content
+        transition: transform 0.3s ease 0s
+        background-color: #fff
+        border-radius: 20px
+        transform: scale(0)
+        .filters &
+            transform: translate(0,100%)
+            @media (min-width: $mobile)
+                transform: translate(100%,0)
+        .lock &
+            visibility: visible
+
+@keyframes visAnimaton
+    100%
+        visibility: hidden
+    0%
+        visibility: hidden
+
+.filters
+    .popup
+        &__content
+            width: 100%
+            position: absolute
+            right: 0
+            background: #fff
+            top: toRem(60)
+            bottom: 0
+            border-radius: toRem(16) toRem(16) 0 0
+            @media (min-width: $mobile)
+                width: toRem(520)
+                border-radius: toRem(0)
+                top: toRem(0)
+
+    &__body
+        display: flex
+        flex-direction: column
+    &__header
+        // display: flex
+        // justify-content: space-between
+        // align-items: center
+        // padding: toRem(32) toRem(20) toRem(20) toRem(20)
+        // border-bottom: 1px solid #F0F0F0
+
+    &__title
+        // color: #191919
+        // font-size: toRem(32)
+        // font-weight: 600
+    &__checks
+        display: flex
+        flex-direction: column
+        gap: toRem(24)
+        flex: 1 1 100%
+        overflow: auto
+        padding: toRem(20) toRem(20)
+
+    &__block
+        display: flex
+        flex-direction: column
+        gap: toRem(12)
+    &__block-title
+        color: #A5A5A5
+    &__options
+        display: flex
+        flex-wrap: wrap
+        gap: toRem(8)
+    &__option
+        display: inline-block
+        cursor: pointer
+        #word_opts
+            display: inline-block
+            padding: toRem(11) toRem(20)
+            border-radius: 6px
+            border: 1px solid #F0F0F0
+            box-sizing: content-box
+            transition: background, color 0.3s
+    &__option input[type="checkbox"]:checked + #word_opts
+        color: #fff
+        background: #FF7010
+        border: none
+        padding: toRem(12) toRem(21)
+
+    &__buttons
+        flex: 0 0 auto
+        display: flex
+        gap: toRem(20)
+        padding: toRem(12) toRem(20)
+        border-top: 1px solid #F0F0F0
+
+        input
+            border-radius: 6px
+            border: 1px solid #FF7010
+            background: #fff0
+            color: #FF7010
+            flex: 1 1 50%
+            padding: toRem(13)
+            cursor: pointer
+            transition: background,color 0.3s
+            &:hover
+                background: #FF7010
+                color: #fff
+
+.card
+
+    &__wrapper
+
+    &__content
+        width: 100%
+        max-width: toRem(1070)
+    &__header
+
+    &__title
+
+    &__body
+        display: flex
+        gap: toRem(16)
+    &__img
+        flex: 0 0 50%
+    &__info
+        flex: 0 0 50%
+
+    &__title-product

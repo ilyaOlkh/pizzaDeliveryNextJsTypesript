@@ -1,0 +1,94 @@
+// Базові стилі спойлерів
+// Сніппет (HTML): spoller
+
+// Блок зі спойлерами
+.spollers
+    display: grid
+    gap: 15px
+    &__item
+    &__title
+        padding-right: 24px
+        img
+            transition: 0.5s
+
+        &::marker
+
+        ._spoller-init &
+            cursor: pointer
+            &::before,
+            &::after
+                content: ""
+                position: absolute
+                right: 0
+                top: 50%
+                background-color: #000
+                height: 1px
+                width: 10px
+                transition: transform 0.5s ease 0s
+                transform: translate(-75%, -50%) rotate(45deg)
+
+            &::after
+                transform: translate(0, -50%) rotate(-45deg)
+
+            &._spoller-active
+
+                &::before
+                    transform: translateX(-75%) rotate(-45deg)
+
+                &::after
+                    transform: rotate(45deg)
+
+            // &
+            //     position: relative
+            //     width: 100%
+            //     text-align: left
+            //     &::before,
+            //     &::after
+            //         content: ""
+            //         position: absolute
+            //         right: 0
+            //         top: toRem(12)
+            //         height: toRem(1)
+            //         transition: all 0.3s ease 0s
+            //         width: toRem(10)
+            //         background-color: #000
+
+            //     &::before
+            //         transform: rotate(40deg)
+            //         right: toRem(7)
+
+            //     &::after
+            //         transform: rotate(-40deg)
+
+            // &._spoller-active
+            //     &::before
+            //         transform: rotate(-40deg)
+
+            //     &::after
+            //         transform: rotate(40deg)
+
+// Контент спойлера
+.spollers__body
+    padding: toRem(20)
+    border-radius: toRem(12)
+    border: 1px solid #F0F0F0
+    box-shadow: 0px 2px 8px 0px rgba(25, 25, 25, 0.10)
+    overflow: visible !important
+    position: relative
+    background: #fff
+
+    &::after
+        content: ''
+        background: #fff
+        border: 1px solid #F0F0F0
+        border-right: 0
+        border-bottom: 0
+        width: toRem(10)
+        height: toRem(10)
+        position: absolute
+        top: 0px
+        transform: translate(-50%,-50%) rotate(45deg)
+        left: 50%
+.spollers__body-inner
+    overflow: hidden
+    height: 100%

@@ -1,0 +1,285 @@
+//====================================================================================================
+.header
+    position: fixed
+    z-index: 1
+    width: 100%
+    top: 0
+    left: 0
+    background: #fff
+
+    &::before
+        content: ''
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: #fff
+        z-index: 6
+        display: none
+        border-bottom: toRem(1) solid #F0F0F0
+
+        // @media (max-width: em(767))
+        //     border-bottom: toRem(1) solid #F0F0F0
+
+        @media (max-width: em(767))
+            display: block
+
+    &__container
+
+    &__row
+        display: flex
+        align-items: center
+        padding-bottom: toRem(12)
+        padding-top: toRem(12)
+        gap: toRem(64)
+        width: 100%
+
+        &:first-child
+            font-size: toRem(14)
+            gap: toRem(15)
+            position: relative
+            z-index: 9
+        &:nth-child(1n+2)
+            justify-content: space-between
+            @media (max-width: em(767))
+                gap: toRem(16)
+        @media (max-width: em(767))
+            border-bottom: toRem(1) solid #F0F0F0
+    &__column
+        display: flex
+        // gap: toRem(40)
+        @include adaptiveValue("gap",40,15,0,1320, 767)
+        align-items: center
+        height: 100%
+        line-height: 100%
+        &:last-child
+            text-align: right
+            margin-left: auto
+            .header__link
+                @media (max-width: $tablet)
+                    // width: min-content
+                    &#account
+                        width: toRem(90)
+                        flex-shrink: 0
+                        flex-grow: 0
+        @media (max-width: $mobile)
+            &:first-child
+                justify-content: space-between
+                flex: 0 0 100%
+                text-align: right
+            &:last-child
+                display: none
+
+    &__select
+        display: flex
+        align-items: center
+        width: 130px
+        .select
+            width: 100%
+            &__content
+                flex: 0 1 auto
+    &__link
+        display: flex
+        align-items: center
+        gap: toRem(5)
+    &__text
+    &__average-time
+        font-weight: 600
+    &__menu
+
+.menu
+    display: flex
+    align-items: center
+    gap: toRem(64)
+    &__body-wrapper
+        display: contents
+    &__logo
+        @media (max-width: em(767))
+            position: relative
+            z-index: 8
+            order: 1
+        @media (max-width: em(400))
+            width: toRem(35)
+            overflow: hidden
+    &__icon
+
+    &__body
+        .header__link#account
+            height: max-content
+            width: 100%
+            padding: 20px
+            border-bottom: toRem(1) solid #F0F0F0
+            font-size: toRem(20)
+            font-style: normal
+            font-weight: 400
+
+    &__list
+        display: flex
+        gap: toRem(32)
+    &__item
+        &_mobile
+            display: none
+    &__link
+    &__contact
+        display: none
+        padding: toRem(20)
+        border-top: toRem(1) solid #F0F0F0
+        @media (max-width: em(767))
+            display: flex
+
+    .spollers
+        position: relative
+        &__title
+            align-items: center
+            font-size: inherit
+        &__body
+            position: absolute
+            top: 150%
+            left: -75%
+        @media (max-width: em(767))
+            font-size: inherit
+
+            &__body
+                position: static
+                box-shadow: none
+                border: none
+                padding-bottom: 0
+                &::after
+                    display: none
+            &__body-inner
+                height: calc( 100% - 20px )
+            &__title
+                position: relative
+    &__more
+        display: flex
+        flex-direction: column
+        gap: toRem(10)
+
+.menu-open
+    @media (max-width: em(767))
+        .menu
+            &__body-wrapper
+                transform: translate(0,0)
+
+            &__item
+                &_mobile
+                    display: inline-block
+
+@media (max-width: em(767))
+    .lock:not(.popup-show)
+        .menu
+            &__body-wrapper
+                transition: transform 0.4s ease // время анимации
+                .header__text#time
+                    padding: toRem(16) 0
+                    display: flex
+                    justify-content: center
+                    font-size: toRem(16)
+                    border-top: toRem(1) solid #F0F0F0
+                    color: #A5A5A5
+                    background-color: #fff
+
+    .menu
+        display: contents
+        &__body-wrapper
+            display: flex
+            flex-direction: column
+            transform: translate(0,-100%)
+            top: 0
+            position: fixed
+            left: 0
+            width: 100%
+            height: 100%
+            padding-top: toRem(116)
+            .header__text
+        &__body
+            z-index: 3
+            width: 100%
+            height: 100%
+            overflow: auto
+            background-color: #fff
+        &__body-scroll
+            height: max-content
+
+        &__content
+            height: 100%
+            // overflow: auto
+            margin-top: $containerPadding + px
+        &__list
+            flex-direction: column
+            gap: toRem(20)
+            padding: toRem(20)
+            // overflow: auto
+
+        &__item
+            font-size: toRem(20)
+.basket
+    background: #FF7010
+    color: #fff
+    display: flex
+    align-items: center
+    padding: toRem(8) toRem(16)
+    border-radius: toRem(4)
+    margin-left: auto
+    position: relative
+    &__img
+        margin-right: toRem(8)
+    &__num
+
+    &__Curr
+    @media (max-width: em(767))
+        position: relative
+        z-index: 8
+        order: 2
+
+//====================================================================================================
+
+//Burger
+
+.icon-menu
+    display: none
+    @media (max-width: $mobile)
+        order: 3
+        display: block
+        position: relative
+        z-index: 10
+        width: toRem(30)
+        height: toRem(18)
+        @media (any-hover: none)
+            cursor: default
+
+        span,
+        &::before,
+        &::after
+            content: ""
+            transition: all 0.3s ease 0s
+            right: 0
+            position: absolute
+            width: 100%
+            height: toRem(2)
+            background-color: #000
+
+        &::before
+            top: 0
+
+        &::after
+            bottom: 0
+
+        span
+            top: calc(50% - toRem(1))
+
+        .menu-open &
+            span
+                width: 0
+
+            &::before,
+            &::after
+
+            &::before
+                top: calc(50% - toRem(1))
+                transform: rotate(-45deg)
+
+            &::after
+                bottom: calc(50% - toRem(1))
+                transform: rotate(45deg)
