@@ -6,7 +6,6 @@ export default function ProductCard({ productData }) {
     function click() {
         let filters = window.location.search
         const params = new URLSearchParams(filters)
-        console.log(params)
         params.get(settings.idForProduct)
         if (params.get(settings.idForProduct) != productData.product_id) {
             params.delete(settings.idForProduct)

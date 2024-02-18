@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { settings } from '../settings'
 import ClientSideComponent from '../ui/clientRender.js';
-import Link from "next/link";
 export default function Header() {
     return (
         <>
@@ -40,7 +39,7 @@ export default function Header() {
                             <nav className="menu__body">
                                 <div className="menu__body-scroll">
                                     <ul className="menu__list">
-                                        <li className="menu__item"><a href="#filters" data-goto-top="10" data-goto-header="data-goto-header" className="menu__link">Акції</a></li>
+                                        <li className="menu__item"><a href="" data-goto-top="10" data-goto-header="data-goto-header" className="menu__link">Акції</a></li>
                                         <li className="menu__item"><a href={settings.getURLPizza()} className="menu__link">Піца</a></li>
                                         <li className="menu__item"><a href={settings.getURLSushi()} className="menu__link">Суші</a></li>
                                         <li className="menu__item"><a href="" className="menu__link">Напої</a></li>

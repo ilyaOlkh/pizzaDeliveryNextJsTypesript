@@ -241,12 +241,14 @@ $containerPaddingPX: $containerPadding + px
         overflow: hidden
         white-space: nowrap
         text-overflow: ellipsis
+        text-align: left
         @media (min-width: 600px)
             margin-bottom: toRem(12)
         span
             width: 100%
 
     &__composition
+        text-align: left
         margin-bottom: toRem(10)
         font-size: toRem(16)
         display: -webkit-box
@@ -258,6 +260,7 @@ $containerPaddingPX: $containerPadding + px
     &__row
         display: flex
         justify-content: space-between
+        align-items: center
     &__select
         display: none
 

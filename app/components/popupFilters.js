@@ -9,7 +9,7 @@ import { updateFilters } from '../service/updateFilters'
 
 const popupFilters = dynamic(() => {
     return new Promise((resolve) => {
-        resolve(({ type, filters1 }) => {
+        resolve(({ type }) => {
             const [filters, setFilters] = useState([]);
             useEffect(() => {
                 flsModules.popup = new Popup({});
@@ -17,7 +17,8 @@ const popupFilters = dynamic(() => {
             }, []);
             useEffect(() => {
                 const fetchFilters = async () => {
-                    const filters = await getFilters(type, filters1);
+                    const filters = await getFilters(type);
+                    console.log(filters)
                     setFilters(filters);
                 };
                 fetchFilters();
@@ -38,7 +39,7 @@ const popupFilters = dynamic(() => {
                                             <div class="filters__block-title">{block.i_type}</div>
                                             <div class="filters__options">
                                                 {
-                                                    block['group_concat(DISTINCT i_name)'].split(',').map((elem) => {
+                                                    block.i_name.split(',').map((elem) => {
                                                         return (
 
                                                             <label class="filters__option">

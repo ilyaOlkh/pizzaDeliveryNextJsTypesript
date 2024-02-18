@@ -104,7 +104,6 @@ export default class Popup {
     initPopups() {
         this.popupLogging(`Прокинувся`);
         this.eventsPopup();
-        console.log(history)
     }
     eventsPopup() {
         // Клік по всьому документі

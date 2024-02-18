@@ -5,15 +5,14 @@ import Image from "next/image";
 import ProductCard from '../../ui/productCard'
 import Header from "../../header/page.js"
 import Filters from '../../components/popupFilters'
-import dynamic from 'next/dynamic';
 import PopupProduct from '../../components/popupProduct'
 import '../../js/app.js'
+import getProducts from '../../service/getProducts.js'
 
 
 const urlPizza = 'getPizza.php'
 
 export default async function productList(params) {
-
     let decodedContent = {};
     console.log(params.searchParams)
     for (let key in params.searchParams) {
@@ -32,9 +31,9 @@ export default async function productList(params) {
     let typeUpper = type.charAt(0).toUpperCase() + type.slice(1);
     let products
     if (Object.keys(filters).length !== 0) {
-        products = await prompt(urlPizza, { type: type, filters: filters })
+        products = await getProducts({ type: type, filters: filters })
     } else {
-        products = await prompt(urlPizza, { type: type })
+        products = await getProducts({ type: type })
 
     }
     let ProductTypes = await getProductTypes()
