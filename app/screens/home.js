@@ -3,9 +3,11 @@ import Image from "next/image";
 import { settings } from '../settings'
 import '../js/app.js'
 import Header from "../header/page.js"
+import PopupProduct from '../components/popupProduct'
 export default function Home(pizzas, shushi) {
     return (
         <>
+            <PopupProduct />
             <Header />
             <main className="page">
                 <section className="categories">

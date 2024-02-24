@@ -2,6 +2,8 @@
 import { settings } from '@/app/settings';
 import React, { useEffect, useState } from 'react';
 import getProduct from '../service/getProduct.js';
+import { flsModules } from "../js/files/modules.js";
+import Popup from "../js/libs/popup"
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -31,6 +33,10 @@ export default function popupProduct() {
         }
     }
     useEffect(() => {
+        flsModules.popup = new Popup({});
+        flsModules.popup._openToHash()
+    }, []);
+    useEffect(() => {
         document.addEventListener('beforePopupOpen', click);
 
         return () => {
@@ -55,6 +61,7 @@ export default function popupProduct() {
                                 <h2 class="card__title-product">
                                     {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
                                     <span>{product.p_name}</span>
+
                                 </h2>
                                 <div class="card__ingridients">
                                     {product.composition.split(', ').map((elem) => {
