@@ -14,7 +14,6 @@ const urlPizza = 'getPizza.php'
 
 export default async function productList(params) {
     let decodedContent = {};
-    console.log(params.searchParams)
     for (let key in params.searchParams) {
         if (key == settings.idForProduct) {
             continue
@@ -60,15 +59,15 @@ export default async function productList(params) {
             }
         } else {
             body = (
-                <div class="error error_product">
-                    <span class="error__code">таких продуктов нет</span>
+                <div className="error error_product">
+                    <span className="error__code">таких продуктов нет</span>
                 </div>)
         }
 
     } else {
         body = (
-            <div class="error error_product">
-                <span class="error__code">таких типов продуктов нет</span>
+            <div className="error error_product">
+                <span className="error__code">таких типов продуктов нет</span>
             </div>)
     }
     return (

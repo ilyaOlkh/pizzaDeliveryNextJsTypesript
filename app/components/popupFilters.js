@@ -23,26 +23,26 @@ const popupFilters = dynamic(() => {
                 };
                 fetchFilters();
             }, []);
-            return (<div id="filters" aria-hidden="true" class="popup filters">
-                <div class="popup__wrapper">
-                    <form accept-charset="ISO-8859-1" action={updateFilters} method="get" class="popup__content filters__body">
-                        <div class="filters__header popup__header"><span class="filters__title popup__title">Фильтры</span>
-                            <button data-close="data-close" type="button" class="popup__close">
+            return (<div id="filters" aria-hidden="true" className="popup filters">
+                <div className="popup__wrapper">
+                    <form acceptCharset="ISO-8859-1" action={updateFilters} method="get" className="popup__content filters__body">
+                        <div className="filters__header popup__header"><span className="filters__title popup__title">Фильтры</span>
+                            <button data-close="data-close" type="button" className="popup__close">
                                 <img src="/Common/Cross.svg" alt="Cross" />
                             </button>
                         </div>
-                        <div class="filters__checks">
+                        <div className="filters__checks">
                             {
                                 filters.map((block) => {
                                     return (
-                                        <div class="filters__block">
-                                            <div class="filters__block-title">{block.i_type}</div>
-                                            <div class="filters__options">
+                                        <div className="filters__block">
+                                            <div className="filters__block-title">{block.i_type}</div>
+                                            <div className="filters__options">
                                                 {
                                                     block.i_name.split(',').map((elem) => {
                                                         return (
 
-                                                            <label class="filters__option">
+                                                            <label className="filters__option">
                                                                 <input id={elem} type="checkbox" name={encodeURIComponent(block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
                                                             </label>
                                                         )
@@ -54,7 +54,7 @@ const popupFilters = dynamic(() => {
                                 })
                             }
                         </div>
-                        <div class="filters__buttons">
+                        <div className="filters__buttons">
                             <input type="reset" value="Сбросить" />
                             <input type="submit" value="Применить" />
                         </div>

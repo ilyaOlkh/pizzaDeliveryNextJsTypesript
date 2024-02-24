@@ -18,6 +18,7 @@ body::after
 .lock
     .popup:not(.popup_show)
         .popup__content
+            // visibility: hidden
             animation-fill-mode: forwards
             animation-name: visAnimaton
             animation-delay: 0.3s
@@ -33,6 +34,8 @@ body::after
     transition: visibility 0.4s ease 0s
     visibility: hidden
     pointer-events: none
+    @media (max-width: $mobile)
+        padding: 0
     .lock &
         z-index: 150
     &_show
@@ -54,6 +57,7 @@ body::after
         font-weight: 600
     &_show &__content
         transform: scale(1) translate(0,0)
+        transition: transform 0.3s ease 0s
 
     .filters.popup_show &__content
         transform: translate(0,0)
@@ -70,17 +74,29 @@ body::after
         align-items: center
         overflow: hidden
         visibility: hidden
+        @media (max-width: $mobile)
+            position: absolute
+            top: 60px
+            bottom: 0
+            left: 0
+            right: 0
     &__content
-        transition: transform 0.3s ease 0s
         background-color: #fff
         border-radius: 20px
-        transform: scale(0)
+        transform: translate(0,100%)
+        @media (max-width: $mobile)
+            border-radius: 20px 20px 0 0
+            height: 100%
+        @media (min-width: $mobile)
+            transform: scale(0)
+
         .filters &
             transform: translate(0,100%)
             @media (min-width: $mobile)
                 transform: translate(100%,0)
         .lock &
             visibility: visible
+            transition: transform 0.3s ease 0s
 
 @keyframes visAnimaton
     100%
@@ -170,24 +186,272 @@ body::after
             &:hover
                 background: #FF7010
                 color: #fff
+.popup-show
+    .card
+        &__option
+            #word_opts
+                transition: 0.3s
+            .ingridient
+                &__img-inner
+                    transition: 0.3s
 
 .card
-
+    height: 100vh
     &__wrapper
+        max-height: 100%
+        height: 100%
 
+        overflow: visible
+        @media (max-width: $mobile)
+            min-height: auto
+            height: auto
+    &__close
+        position: absolute
+        top: 0
+        right: toRem(-30)
+        transform: translate(100%)
+        visibility: visible
+
+        img
     &__content
         width: 100%
         max-width: toRem(1070)
+        max-height: 100%
+        // height: 100%
+        &:has(.card__loading)
+            height: 100%
+
     &__header
 
     &__title
 
+    &__title-second
+        font-weight: 600
+        font-size: toRem(16)
+        line-height: 125%
     &__body
+        border-radius: toRem(20)
+        overflow: hidden
         display: flex
-        gap: toRem(16)
+        max-height: 100%
+        height: 100%
+        position: relative
+        &:has(.card__loading)
+            display: flex
+            height: 100%
+            padding: toRem(20)
+            align-items: center
+            justify-content: center
+            width: 100%
+            @media (max-width: $mobile)
+                max-height: inherit
+                border-radius: toRem(20) toRem(20) 0 0
+            .card__loading
+                max-height: toRem(50)
+                height: 100%
+
+        @media (max-width: $mobile)
+            display: block
+
     &__img
         flex: 0 0 50%
+        padding: toRem(22)
+        padding-right: 0
+        display: flex
+        align-items: center
+        @media (max-width: $mobile)
+            position: fixed
+            width: 100%
+            padding-right: toRem(22)
+            padding-bottom: toRem(0)
+            display: flex
+            justify-content: center
+    &__img-inner
+        @media (max-width: $mobile)
+            max-width: toRem(500)
+        img
+            width: 100%
+            border-radius: toRem(24)
     &__info
         flex: 0 0 50%
+        max-height: 100%
+        display: flex
+        flex-direction: column
+        padding-top: toRem(32)
+        height: 100%
+        @media (max-width: $mobile)
+            padding-top: 0
+            overflow: hidden
+    &__phantom-img
+        display: none
+        max-width: 544px
+        padding: toRem(22)
+        padding-bottom: toRem(0)
+        position: relative
+        z-index: 1
+        div
+            padding-top: 100%
+        @media (max-width: $mobile)
+            display: block
+
+    &__info-wrapper
+        overflow: auto
+        flex: 1 1 auto
+        padding-bottom: toRem(12)
+    &__info-blur
+        padding: toRem(32) toRem(20) toRem(20) toRem(20)
+        padding-top: toRem(10)
+        display: flex
+        flex-direction: column
+        gap: toRem(24)
+        position: relative
+        @media (max-width: $mobile)
+        &::before
+            content: ''
+            background: #ffffffd6
+            width: 100%
+            left: 0
+            top: 0
+            height: 100%
+            position: absolute
+            backdrop-filter: blur(20px)
+    &__info-send
+        flex: 0 0 toRem(50)
+        padding: 0 toRem(20) toRem(20) toRem(20)
+    &__info-block
+        display: flex
+        flex-direction: column
+        gap: toRem(16)
 
     &__title-product
+        font-weight: 600
+        font-size: toRem(20)
+        display: flex
+        align-items: center
+        gap: toRem(8)
+        z-index: 1
+    &__ingridients
+        width: 100%
+        display: grid
+        gap: toRem(20)
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr))
+    &__ingridient
+
+    &__block-buttons
+        position: relative
+        width: 100%
+        display: flex
+
+        &::after
+            background: #fff
+            content: ''
+            position: absolute
+            bottom: 0
+            top: 0
+            left: 0
+            right: 0
+            border: 1px solid #f0f0f0
+            border-radius: toRem(6)
+    &__option
+        width: 100%
+        z-index: 1
+        cursor: pointer
+
+        #word_opts
+            width: 100%
+            height: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: toRem(13) toRem(20)
+    &__option input[type="radio"]:checked + #word_opts
+        color: #fff
+        background: #FF7010
+        border: none
+        padding: toRem(13) toRem(20)
+        border-radius: toRem(6)
+    &__option input[type="checkbox"]:checked + .ingridient__img .ingridient__img-inner
+        border-color: #FF7010
+.ingridient
+    display: flex
+    flex-direction: column
+    gap: toRem(4)
+    position: relative
+    z-index: 1
+    &_not-worked
+        position: relative
+    &_not-worked &__img-inner img
+        filter: grayscale(1) brightness(1.2)
+    &_not-worked &__text
+        color: #a5a5a5
+    &_not-worked &__price
+        color: #a5a5a5
+    &_not-worked::before
+        content: ''
+        background-image: url('/Common/notWorked.svg')
+        width: toRem(16)
+        height: toRem(16)
+        position: absolute
+        right: toRem(8)
+        top: toRem(8)
+    &__img
+
+        position: relative
+        padding-top: 100%
+        margin-bottom: toRem(4)
+
+    &__img-inner
+        // transition: 0.3s
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        display: flex
+        align-items: center
+        justify-content: center
+        border: 1px solid #f0f0f0
+        border-radius: toRem(12)
+        background: #fff
+        img
+
+    &__text
+        display: flex
+        justify-content: center
+        font-size: toRem(14)
+    &__price
+        font-weight: 600
+        font-size: toRem(14)
+        line-height: 129%
+        text-align: center
+        color: #ff7010
+
+.send
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding-top: toRem(12)
+    @media (max-width: 425px)
+        flex-direction: column
+        gap: toRem(10)
+    &__info
+        display: flex
+        align-items: flex-end
+        gap: toRem(12)
+    &__price
+        font-weight: 600
+        font-size: toRem(20)
+        // line-height: 140%
+        color: #ff7010
+    &__weight
+        font-size: toRem(14)
+        // line-height: 129%
+        color: #a5a5a5
+    &__submit
+        border-radius: 6px
+        padding: 13px 40px
+        text-align: center
+        color: #fff
+        background: #ff7010
+        @media (max-width: 425px)
+            width: 100%
