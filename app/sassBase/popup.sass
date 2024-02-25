@@ -75,8 +75,10 @@ body::after
         overflow: hidden
         visibility: hidden
         @media (max-width: $mobile)
+            min-height: auto
+            height: auto
             position: absolute
-            top: 60px
+            top: toRem(60)
             bottom: 0
             left: 0
             right: 0
@@ -111,14 +113,19 @@ body::after
             position: absolute
             right: 0
             background: #fff
-            top: toRem(60)
             bottom: 0
             border-radius: toRem(16) toRem(16) 0 0
             @media (min-width: $mobile)
                 width: toRem(520)
                 border-radius: toRem(0)
                 top: toRem(0)
-
+    &__loading
+        flex: 1 1 100%
+        display: flex
+        align-items: center
+        justify-content: center
+        img
+            max-width: toRem(50)
     &__body
         display: flex
         flex-direction: column
@@ -196,7 +203,7 @@ body::after
                     transition: 0.3s
 
 .card
-    height: 100vh
+    height: 100dvh
     &__wrapper
         max-height: 100%
         height: 100%

@@ -319,6 +319,7 @@ export default class Popup {
             let classInHash = document.querySelector(`.${window.location.hash.replace('#', '')}`) ? `.${window.location.hash.replace('#', '')}` :
                 document.querySelector(`${window.location.hash}`) ? `${window.location.hash}` :
                     null;
+            console.log(classInHash)
 
             const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace('.', "#")}"]`);
 

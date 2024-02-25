@@ -8,6 +8,7 @@ import Filters from '../../components/popupFilters'
 import PopupProduct from '../../components/popupProduct'
 import '../../js/app.js'
 import getProducts from '../../service/getProducts.js'
+import StartPopups from '../../components/startPopups'
 
 
 const urlPizza = 'getPizza.php'
@@ -72,6 +73,7 @@ export default async function productList(params) {
     }
     return (
         <>
+
             {ProductTypes.includes(type) ? <Filters type={type} /> : <></>}
             <PopupProduct />
             <Header />
@@ -92,6 +94,8 @@ export default async function productList(params) {
                     </div>
                 </section>
             </main >
+            <StartPopups />
+
         </>
     )
 }

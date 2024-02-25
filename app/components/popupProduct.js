@@ -2,45 +2,44 @@
 import { settings } from '@/app/settings';
 import React, { useEffect, useState } from 'react';
 import getProduct from '../service/getProduct.js';
-import { flsModules } from "../js/files/modules.js";
-import Popup from "../js/libs/popup"
+
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
 )
 
+const popupProductHash = '#card'
+
 export default function popupProduct() {
     const [isLoading, setLoading] = useState(true)
     const [product, setProduct] = useState(undefined)
     let content;
-    async function click() {
+    async function click1(e) {
+        console.log(e)
+        if (e.detail.popup.hash == popupProductHash) {
 
-        let filters = window.location.search
-        const params = new URLSearchParams(filters)
-        console.log(product, params.get(settings.idForProduct))
-
-        if (document.querySelector('#card').dataset.productId != params.get(settings.idForProduct)) {
-            setLoading(true)
-            const id = params.get(settings.idForProduct)
-
-            let productRespons = await getProduct(id)
-            console.log(productRespons)
-            setProduct(productRespons[0])
-            if (productRespons.length > 1) {
-                alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ДАННЫХ О ПРОДУКТЕ!')
+            let filters = window.location.search
+            const params = new URLSearchParams(filters)
+            console.log(product, params.get(settings.idForProduct))
+            if (document.querySelector('#card').dataset.productId != params.get(settings.idForProduct)) {
+                setLoading(true)
+                const id = params.get(settings.idForProduct)
+                let productRespons = await getProduct(id)
+                console.log(productRespons)
+                setProduct(productRespons[0])
+                if (productRespons.length > 1) {
+                    alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ДАННЫХ О ПРОДУКТЕ!')
+                }
+                setLoading(false)
             }
-            setLoading(false)
         }
     }
     useEffect(() => {
-        flsModules.popup = new Popup({});
-        flsModules.popup._openToHash()
-    }, []);
-    useEffect(() => {
-        document.addEventListener('beforePopupOpen', click);
+        console.log('продукты отрендерены')
+        document.addEventListener('beforePopupOpen', click1);
 
         return () => {
-            document.removeEventListener('beforePopupOpen', click);
+            document.removeEventListener('beforePopupOpen', click1);
         };
     }, []);
     if (isLoading) {
