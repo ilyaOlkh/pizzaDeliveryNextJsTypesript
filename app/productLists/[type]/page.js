@@ -76,6 +76,7 @@ export default async function productList(params) {
 
             {ProductTypes.includes(type) ? <Filters type={type} /> : <></>}
             <PopupProduct />
+            <StartPopups />
             <Header />
             <main className="page">
                 <section className="priceList">
@@ -86,16 +87,12 @@ export default async function productList(params) {
                                 <button type="button" data-popup="#filters" className="priceList__filter button"><Image src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фильтры</span></button>
                             }
                         </div>
-
                         <div className="priceList__grid">
                             {body}
-
                         </div>
                     </div>
                 </section>
             </main >
-            <StartPopups />
-
         </>
     )
 }
