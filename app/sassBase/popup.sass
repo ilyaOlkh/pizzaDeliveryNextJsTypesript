@@ -296,6 +296,7 @@ body::after
         padding-bottom: toRem(0)
         position: relative
         z-index: 1
+        max-height: calc(100dvh - 60px - 75px - 40px)
         div
             padding-top: 100%
         @media (max-width: $mobile)
@@ -304,7 +305,6 @@ body::after
     &__info-wrapper
         overflow: auto
         flex: 1 1 auto
-        padding-bottom: toRem(12)
     &__info-blur
         padding: toRem(32) toRem(20) toRem(20) toRem(20)
         padding-top: toRem(10)
@@ -435,7 +435,11 @@ body::after
         color: #ff7010
 
 .send
+    position: relative
+    z-index: 1
+    background-color: #fff
     display: flex
+    border-top: 1px solid #F0F0F0
     justify-content: space-between
     align-items: center
     padding-top: toRem(12)
