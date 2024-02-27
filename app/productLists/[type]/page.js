@@ -1,5 +1,6 @@
 import prompt from '../../service/prompt'
 import getProductTypes from '../../service/getProductTypes'
+import getIngredientsTypes from '../../service/getIngredientsTypes'
 import { settings } from '@/app/settings';
 import Image from "next/image";
 import ProductCard from '../../ui/productCard'
@@ -11,15 +12,15 @@ import getProducts from '../../service/getProducts.js'
 import StartPopups from '../../components/startPopups'
 
 
-const urlPizza = 'getPizza.php'
+const i_types = await getIngredientsTypes()
 
 export default async function productList(params) {
     let decodedContent = {};
     for (let key in params.searchParams) {
-        if (key == settings.idForProduct) {
+        let decodedKey = decodeURIComponent(key);
+        if (!i_types.includes(decodedKey)) {
             continue
         }
-        let decodedKey = decodeURIComponent(key);
         let decodedValue = decodeURIComponent(params.searchParams[key]);
         decodedContent[decodedKey] = decodedValue;
     }

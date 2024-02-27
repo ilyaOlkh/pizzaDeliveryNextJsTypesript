@@ -1,20 +1,16 @@
 'use server'
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
-import { cache } from 'react'
 
-
-export const getProduct = cache(async (id) => {
+export default async (id) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
-
     let query = db
         .selectFrom('product')
-        // .leftJoin()
+        .innerJoin('composition', 'composition.product_id', 'product.product_id')
+        .leftJoin('ingredient', 'ingredient.ingredient_id', 'composition.ingredient_id')
         .select([
-            'product.product_id',
-            'product.p_name',
-            'product.added_date',
-            sql`COALESCE(product.image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
+            'ingredient.i_type',
+            'ingredient.i_name',
         ])
 
     if (id) {
@@ -22,7 +18,6 @@ export const getProduct = cache(async (id) => {
     } else (
         console.log('ОШИБКА!')
     )
-    query = query.groupBy('product.product_id');
     try {
         const result = await query.execute();
         return result
@@ -31,4 +26,4 @@ export const getProduct = cache(async (id) => {
 
         return []; // Возвращаем пустой массив в случае ошибки
     }
-});
+};

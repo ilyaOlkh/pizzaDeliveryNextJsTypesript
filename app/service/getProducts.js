@@ -1,5 +1,6 @@
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
+import getProductTypes from '../service/getProductTypes'
 
 export default async (req) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
@@ -29,18 +30,15 @@ export default async (req) => {
     if (filters) {
         let querytextGlobal = ``
         for (const value in filters) {
-
             const ingredients = filters[value].split(",").map((elem) => `'${elem}'`);
             let querytext = ''
             ingredients.forEach(element => {
-                console.log(querytext)
                 querytext += element + ', '
             });
             querytext = querytext.slice(0, -2);
-            querytextGlobal += `SUM(CASE WHEN i_name in (${querytext}) THEN 1 ELSE 0 END) >= 1 OR `
+            querytextGlobal += `SUM(CASE WHEN i_name in (${querytext}) THEN 1 ELSE 0 END) >= 1 AND `
         }
         querytextGlobal = querytextGlobal.slice(0, -4);
-        console.log(querytextGlobal)
 
         query = query.having(sql(querytextGlobal));
 
@@ -49,12 +47,11 @@ export default async (req) => {
     if (limit) {
         query = query.limit(limit);
     }
-
     try {
         const result = await query.execute();
-        return result; // Возвращаем результат
+        return result;
     } catch (err) {
         console.error('error:', err);
-        return []; // Возвращаем пустой массив в случае ошибки
+        return [];
     }
 };

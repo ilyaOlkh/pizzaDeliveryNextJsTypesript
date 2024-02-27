@@ -1,8 +1,10 @@
 'use client'
 import { settings } from '@/app/settings';
 import React, { useEffect, useState } from 'react';
-import getProduct from '../service/getProduct.js';
+import { getProduct } from '../service/getProduct.js';
+import getIngredients from '../service/getIngredients.js';
 
+export const revalidate = 10
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -13,6 +15,7 @@ const popupProductHash = '#card'
 export default function popupProduct() {
     const [isLoading, setLoading] = useState(true)
     const [product, setProduct] = useState(undefined)
+    const [ingredients, setIngredients] = useState([])
     let content;
     async function click1(e) {
         console.log(e)
@@ -30,6 +33,10 @@ export default function popupProduct() {
                 if (productRespons.length > 1) {
                     alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ДАННЫХ О ПРОДУКТЕ!')
                 }
+
+                let Ingredients = await getIngredients(id)
+                setIngredients(Ingredients)
+                console.log(ingredients)
                 setLoading(false)
             }
         }
@@ -63,13 +70,13 @@ export default function popupProduct() {
 
                                 </h2>
                                 <div class="card__ingridients">
-                                    {product.composition.split(', ').map((elem) => {
+                                    {ingredients.map(({ i_type, i_name }) => {
                                         return (
                                             <div class="card__ingridient ingridient">
                                                 <div class="ingridient__img">
-                                                    <div class="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt={elem} /></div>
+                                                    <div class="ingridient__img-inner"><img src={`/ingredients/${i_type}.png`} alt={i_type} /></div>
                                                 </div>
-                                                <div class="ingridient__text">{elem}</div>
+                                                <div class="ingridient__text">{i_name}</div>
                                             </div>
                                         )
                                     })}
