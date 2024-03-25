@@ -1,5 +1,5 @@
 'use client'
-import Image from "next/image";
+// import Image from "next/image";
 import { settings } from '@/app/settings';
 import React, { useEffect } from "react";
 export default function ProductCard({ productData }) {

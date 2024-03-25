@@ -1,16 +1,15 @@
 import ProductCard from '../ui/productCard.js'
-import Image from "next/image";
+// import Image from "next/image";
 import { settings } from '../settings'
-import '../js/app.js'
 import Header from "../header/page.js"
 import PopupProduct from '../components/popupProduct'
-import StartPopups from '../components/startPopups'
+import PopupReg from '../components/popupReg.js';
 
 export default function Home(pizzas, shushi) {
     return (
         <>
             <PopupProduct />
-            <StartPopups />
+            <PopupReg />
             <Header />
             <main className="page">
                 <section className="categories">
@@ -19,39 +18,39 @@ export default function Home(pizzas, shushi) {
                             <a href="" className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img">
-                                        <Image src="/Categories/Fire.svg" alt="Fire" width={32} height={32} />
+                                        <img src="/Categories/Fire.svg" alt="Fire" width={32} height={32} />
                                     </div><span>Акції   </span>
                                 </div>
                             </a>
                             <a href={settings.getURLPizza()} className="categories__category swiper-slide">
                                 <div className="categories__category-inner ">
-                                    <div className="categories__img"><Image src="/Categories/Pizza.svg" alt="Pizza" width={32} height={32} /></div><span>Піца</span>
+                                    <div className="categories__img"><img src="/Categories/Pizza.svg" alt="Pizza" width={32} height={32} /></div><span>Піца</span>
                                 </div>
                             </a>
                             <a href={settings.getURLSushi()} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Sushi.svg" alt="Sushi" width={32} height={32} /></div><span>Суші</span>
+                                    <div className="categories__img"><img src="/Categories/Sushi.svg" alt="Sushi" width={32} height={32} /></div><span>Суші</span>
                                 </div>
                             </a>
                             <a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Drink.svg" alt="Drink" width={32} height={32} /></div><span>Напої</span>
+                                    <div className="categories__img"><img src="/Categories/Drink.svg" alt="Drink" width={32} height={32} /></div><span>Напої</span>
                                 </div>
                             </a>
                             <a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Snacks.svg" alt="Snacks" width={32} height={32} /></div><span>Закуски</span>
+                                    <div className="categories__img"><img src="/Categories/Snacks.svg" alt="Snacks" width={32} height={32} /></div><span>Закуски</span>
                                 </div>
                             </a>
                             <a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Combo.svg" alt="Combo" width={32} height={32} /></div><span>Комбо</span>
+                                    <div className="categories__img"><img src="/Categories/Combo.svg" alt="Combo" width={32} height={32} /></div><span>Комбо</span>
                                 </div></a><a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Dessert.svg" alt="Dessert" width={32} height={32} /></div><span>Десерти</span>
+                                    <div className="categories__img"><img src="/Categories/Dessert.svg" alt="Dessert" width={32} height={32} /></div><span>Десерти</span>
                                 </div></a><a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
-                                    <div className="categories__img"><Image src="/Categories/Sauce.svg" alt="Sauce" width={32} height={32} /></div><span>Соуси</span>
+                                    <div className="categories__img"><img src="/Categories/Sauce.svg" alt="Sauce" width={32} height={32} /></div><span>Соуси</span>
                                 </div></a></nav>
                     </div>
                 </section>
@@ -59,19 +58,19 @@ export default function Home(pizzas, shushi) {
                     <div className="promotions__container swiper-container swiper">
                         <div className="swiper-wrapper">
                             <div className="promotions__promo promo promo_orange swiper-slide">
-                                <div className="promo__img"><Image src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
+                                <div className="promo__img"><img src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
                                 <div className="promo__text">3 средние пиццы от 999 гривен</div>
                             </div>
                             <div className="promotions__promo promo promo_red swiper-slide">
-                                <div className="promo__img"><Image src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
+                                <div className="promo__img"><img src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
                                 <div className="promo__text">Кэшбек 10% на самовывоз (доставка)</div>
                             </div>
                             <div className="promotions__promo promo promo_orange swiper-slide">
-                                <div className="promo__img"><Image src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
+                                <div className="promo__img"><img src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
                                 <div className="promo__text">3 средние пиццы от 999 гривен</div>
                             </div>
                             <div className="promotions__promo promo promo_red swiper-slide">
-                                <div className="promo__img"><Image src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
+                                <div className="promo__img"><img src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
                                 <div className="promo__text">Кэшбек 10% на самовывоз (доставка)</div>
                             </div>
                         </div>
@@ -82,10 +81,10 @@ export default function Home(pizzas, shushi) {
                         <div className="CheckAddress__inner">
                             <div className="CheckAddress__text">Проверить адрес доставки</div>
                             <form action="" className="CheckAddress__form">
-                                <div className="CheckAddress__input"><Image src="/Common/Location.svg" alt="Location" width={20} height={20} />
+                                <div className="CheckAddress__input"><img src="/Common/Location.svg" alt="Location" width={20} height={20} />
                                     <input type="text" placeholder="Адрес" />
                                 </div>
-                                <button type="submit" value="Проверить" className="CheckAddress__send"><span>Проверить</span><Image src="/Common/Send.svg" alt="send" width={20} height={20} /></button>
+                                <button type="submit" value="Проверить" className="CheckAddress__send"><span>Проверить</span><img src="/Common/Send.svg" alt="send" width={20} height={20} /></button>
                             </form>
                         </div>
                     </div>
