@@ -467,3 +467,103 @@ body::after
         background: #ff7010
         @media (max-width: 425px)
             width: 100%
+
+.popup-window
+    .popup
+        height: 100vh
+        &__wrapper
+            max-height: 100%
+            height: 100%
+
+            overflow: visible
+            @media (max-width: $mobile)
+                min-height: auto
+                height: auto
+        &__close
+            position: absolute
+            top: 0
+            right: toRem(-30)
+            transform: translate(100%)
+            visibility: visible
+        &__content
+            width: 100%
+            max-width: toRem(1070)
+            max-height: 100%
+            @media (max-width: $mobile)
+                height: 100%
+
+        &__body
+            border-radius: toRem(20)
+            overflow: hidden
+            display: flex
+            // max-height: 100%
+            // height: 100%
+            position: relative
+
+            @media (max-width: $mobile)
+                display: block
+
+.registration
+    &__content
+        background-color: #f9f9f9
+        display: flex
+        justify-content: center
+
+    &__body.popup__body
+        display: flex
+        flex-direction: column
+        padding: toRem(15)
+        max-width: toRem(500)
+        height: 100%
+        gap: toRem(15)
+        width: 100%
+
+        @media (max-width: $mobile)
+            display: flex
+    &__body-inner
+        flex: 100% 1 1
+        gap: toRem(15)
+        display: flex
+        flex-direction: column
+        overflow: auto
+    &__tabs
+        height: 100%
+        display: flex
+        gap: toRem(15)
+        flex-direction: column
+    &__input
+
+    &__input-row
+        width: 100%
+        display: flex
+        gap: toRem(15)
+
+.input-reg
+    width: 100%
+    &_submit &__input
+        background: #ff7010
+        color: #fff
+        font-size: toRem(14)
+        display: flex
+        align-items: center
+        justify-content: center
+        input
+            background: inherit
+            color: inherit
+
+    &__title
+        font-size: toRem(14)
+        line-height: 129%
+        color: #a5a5a5
+    &__input
+        border: 1px solid #f0f0f0
+        border-radius: toRem(6)
+        background: #fff
+        padding: toRem(13) toRem(16)
+        width: 100%
+        display: flex
+        gap: toRem(3)
+        align-items: center
+        input
+            outline: none
+            width: 100%

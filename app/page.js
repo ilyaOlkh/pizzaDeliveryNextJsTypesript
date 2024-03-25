@@ -1,7 +1,6 @@
-import Image from "next/image";
+// import Image from "next/image";
 // import styles from "./page.module.css";
 import Home from './screens/home.js'
-import prompt from './service/prompt'
 import getProducts from './service/getProducts.js'
 
 const urlPizza = 'getPizza.php'

@@ -1,20 +1,22 @@
-import prompt from '../../service/prompt'
 import getProductTypes from '../../service/getProductTypes'
 import getIngredientsTypes from '../../service/getIngredientsTypes'
 import { settings } from '@/app/settings';
-import Image from "next/image";
+// import Image from "next/image";
 import ProductCard from '../../ui/productCard'
 import Header from "../../header/page.js"
-import Filters from '../../components/popupFilters'
-import PopupProduct from '../../components/popupProduct'
-import '../../js/app.js'
+import Filters from '@/app/components/popupFilters'
+import PopupProduct from '@/app/components/popupProduct'
 import getProducts from '../../service/getProducts.js'
-import StartPopups from '../../components/startPopups'
-
+import PopupReg from '@/app/components/popupReg'
+import AuthStart from '@/app/components/authStart';
+import { GetUserInfoForServer } from '@/app/AuthControllers/GetDataController';
 
 const i_types = await getIngredientsTypes()
 
 export default async function productList(params) {
+    //------авторизация----------
+    const user = await GetUserInfoForServer();
+    /////////////////////////////
     let decodedContent = {};
     for (let key in params.searchParams) {
         let decodedKey = decodeURIComponent(key);
@@ -45,20 +47,6 @@ export default async function productList(params) {
             body = products.map(pizza => {
                 return (<ProductCard productData={pizza} />)
             })
-            if (body.length < 4) {
-                // for (let j = body.length; j < 4; j++) {
-                //     body.push((
-                //         <div className="priceList__item priceItem">
-                //             <div className="priceItem__inner">
-                //                 <div className="priceItem__img">
-                //                 </div>
-                //                 <div className="priceItem__info">
-                //                 </div>
-                //             </div>
-                //         </div>
-                //     ))
-                // }
-            }
         } else {
             body = (
                 <div className="error error_product">
@@ -74,10 +62,9 @@ export default async function productList(params) {
     }
     return (
         <>
-
             {ProductTypes.includes(type) ? <Filters type={type} /> : <></>}
             <PopupProduct />
-            <StartPopups />
+            <PopupReg />
             <Header />
             <main className="page">
                 <section className="priceList">
@@ -85,7 +72,9 @@ export default async function productList(params) {
                         <div className="priceList__header">
                             <h1 className="priceList__title">{typeUpper}</h1>
                             {!ProductTypes.includes(type) ? <></> :
-                                <button type="button" data-popup="#filters" className="priceList__filter button"><Image src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фильтры</span></button>
+                                <button type="button" data-popup="#filters" className="priceList__filter button">
+                                    <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фильтры</span>
+                                </button>
                             }
                         </div>
                         <div className="priceList__grid">

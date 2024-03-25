@@ -108,45 +108,49 @@ export default class Popup {
     eventsPopup() {
         // Клік по всьому документі
         document.addEventListener("click", function (e) {
-            // Клік по кнопці "відкрити"
-            const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
-            if (buttonOpen) {
-                e.preventDefault();
-                this._dataValue = buttonOpen.getAttribute(this.options.attributeOpenButton) ?
-                    buttonOpen.getAttribute(this.options.attributeOpenButton) :
-                    'error';
-                this.youTubeCode = buttonOpen.getAttribute(this.options.youtubeAttribute) ?
-                    buttonOpen.getAttribute(this.options.youtubeAttribute) :
-                    null;
-                if (this._dataValue !== 'error') {
-                    if (!this.isOpen) this.lastFocusEl = buttonOpen;
-                    this.targetOpen.selector = `${this._dataValue}`;
-                    this._selectorOpen = true;
-                    this.open();
+            if (!document.documentElement.classList.contains('lock_lock')) {
+                // Клік по кнопці "відкрити"
+                const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
+                if (buttonOpen) {
+                    e.preventDefault();
+                    this._dataValue = buttonOpen.getAttribute(this.options.attributeOpenButton) ?
+                        buttonOpen.getAttribute(this.options.attributeOpenButton) :
+                        'error';
+                    this.youTubeCode = buttonOpen.getAttribute(this.options.youtubeAttribute) ?
+                        buttonOpen.getAttribute(this.options.youtubeAttribute) :
+                        null;
+                    if (this._dataValue !== 'error') {
+                        if (!this.isOpen) this.lastFocusEl = buttonOpen;
+                        this.targetOpen.selector = `${this._dataValue}`;
+                        this._selectorOpen = true;
+                        this.open();
+                        return;
+
+                    } else this.popupLogging(`Йой, не заповнено атрибут у ${buttonOpen.classList}`);
+
                     return;
-
-                } else this.popupLogging(`Йой, не заповнено атрибут у ${buttonOpen.classList}`);
-
-                return;
-            }
-            // Закриття на порожньому місці (popup__wrapper) та кнопки закриття (popup__close) для закриття
-            const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
-            if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
-                e.preventDefault();
-                this.close();
-                return;
+                }
+                // Закриття на порожньому місці (popup__wrapper) та кнопки закриття (popup__close) для закриття
+                const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
+                if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
             }
         }.bind(this));
         // Закриття ESC
         document.addEventListener("keydown", function (e) {
-            if (this.options.closeEsc && e.which == 27 && e.code === 'Escape' && this.isOpen) {
-                e.preventDefault();
-                this.close();
-                return;
-            }
-            if (this.options.focusCatch && e.which == 9 && this.isOpen) {
-                this._focusCatch(e);
-                return;
+            if (!document.documentElement.classList.contains('lock_lock')) {
+                if (this.options.closeEsc && e.which == 27 && e.code === 'Escape' && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
+                if (this.options.focusCatch && e.which == 9 && this.isOpen) {
+                    this._focusCatch(e);
+                    return;
+                }
             }
         }.bind(this))
 
@@ -250,15 +254,18 @@ export default class Popup {
                         popup: this
                     }
                 }));
-                this.popupLogging(`Відкрив попап`);
 
             } else this.popupLogging(`Йой, такого попапу немає. Перевірте коректність введення. `);
         }
+        console.log(this.isOpen);
+
     }
     close(selectorValue) {
         if (selectorValue && typeof (selectorValue) === "string" && selectorValue.trim() !== "") {
             this.previousOpen.selector = selectorValue;
         }
+        console.log(this.isOpen, bodyLockStatus)
+
         if (!this.isOpen || !bodyLockStatus) {
             return;
         }
@@ -320,13 +327,17 @@ export default class Popup {
                 document.querySelector(`${window.location.hash}`) ? `${window.location.hash}` :
                     null;
             console.log(classInHash)
+            if (classInHash) {
 
-            const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace('.', "#")}"]`);
+                const buttons = document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) ? document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash}"]`) : document.querySelector(`[${this.options.attributeOpenButton} = "${classInHash.replace('.', "#")}"]`);
 
-            this.youTubeCode = buttons.getAttribute(this.options.youtubeAttribute) ?
-                buttons.getAttribute(this.options.youtubeAttribute) :
-                null;
-            if (buttons && classInHash) this.open(classInHash);
+                this.youTubeCode = buttons.getAttribute(this.options.youtubeAttribute) ?
+                    buttons.getAttribute(this.options.youtubeAttribute) :
+                    null;
+                if (buttons && classInHash) this.open(classInHash);
+            } else {
+                alert('хеша нет!')
+            }
         }
     }
     // Встановлення хеша
@@ -336,7 +347,7 @@ export default class Popup {
         }
     }
     _removeHash() {
-        history.pushState({ hash: this.hash }, true, window.location.href.split('#')[0])
+        history.pushState({}, false, window.location.href.split('#')[0])
     }
     _focusCatch(e) {
         const focusable = this.targetOpen.element.querySelectorAll(this._focusEl);

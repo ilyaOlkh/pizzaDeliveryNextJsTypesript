@@ -47,14 +47,14 @@ flsFunctions.menuInit();
 Документація: https://template.fls.guru/template-docs/modul-spojlery.html
 Сніппет (HTML): spollers
 */
-flsFunctions.spollers();
+// flsFunctions.spollers();
 
 /*
 Модуль "Таби"
 Документація: https://template.fls.guru/template-docs/modul-taby.html
 Сніппет (HTML): tabs
 */
-//flsFunctions.tabs();
+// flsFunctions.tabs();
 
 /*
 Модуль "Показати ще"
@@ -89,7 +89,7 @@ flsFunctions.spollers();
 Документація: https://template.fls.guru/template-docs/funkcional-popup.html
 Сніппет (HTML): pl, pop
 */
-import './libs/popup.js'
+// import './libs/popup.js'
 
 /*
 Модуль паралаксу мишею
@@ -100,7 +100,7 @@ import './libs/popup.js'
 // ========================================================================================================================================================================================================================================================
 // Робота з формами ========================================================================================================================================================================================================================================================
 // ========================================================================================================================================================================================================================================================
-import * as flsForms from "./files/forms/forms.js";
+// import * as flsForms from "./files/forms/forms.js";
 
 /* Робота з полями форми */
 /* Документація: https://template.fls.guru/template-docs/rabota-s-formami.html */
@@ -121,7 +121,7 @@ import './files/scroll/simplebar.js';
 /* Модуль роботи з select. */
 
 
-import './libs/select.js'
+// import './libs/select.js'
 
 /* Модуль роботи з календарем */
 // import './files/forms/datepicker.js'
@@ -239,19 +239,15 @@ flsScroll.headerScroll();
 
 /* Динамічний адаптив */
 // Документація: https://template.fls.guru/template-docs/dinamicheskij-adaptiv.html
-import DynamicAdapt from "./libs/dynamic_adapt.js";
+// import DynamicAdapt from "./libs/dynamic_adapt.js";
 
 // ========================================================================================================================================================================================================================================================
 // Інше ========================================================================================================================================================================================================================================================
 // ========================================================================================================================================================================================================================================================
 /* Підключаємо файли зі своїм кодом */
-import menuChecker from "./files/script.js";
+// import menuChecker from "./files/script.js";
 
-setTimeout(() => {
-    menuChecker()
-    const da = new DynamicAdapt("max");
-    da.init();
-}, 200)
+// menuChecker()
 
 let links = document.querySelectorAll('.categories__category_notWorking');
 links.forEach(link => {
@@ -259,6 +255,7 @@ links.forEach(link => {
         event.preventDefault();
     });
 });
+
 
 
 // import "./files/back.js";

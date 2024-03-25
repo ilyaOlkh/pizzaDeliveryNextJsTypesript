@@ -62,3 +62,26 @@ summary
     &__text
         text-align: center
         color: #FF7010
+
+.GlobalLoading
+    height: 100dvh
+    position: fixed
+    width: 100%
+    background-color: rgba(25, 25, 25, 0.4)
+    z-index: 1000
+    backdrop-filter: blur(16px)
+    visibility: visible
+    opacity: 1
+    transition: 0.3s
+    &_hidden
+        visibility: hidden
+        opacity: 0
+    &__inner
+        height: 100%
+        padding: toRem(20)
+        display: flex
+        align-items: center
+        justify-content: center
+        img
+            height: 100%
+            max-height: 50%

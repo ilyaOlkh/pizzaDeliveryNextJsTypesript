@@ -9,6 +9,7 @@ export default class DynamicAdapt {
         this.type = type
     }
     init() {
+        console.log('init da')
         // масив об'єктів
         this.оbjects = []
         this.daClassname = '_dynamic_adapt_'

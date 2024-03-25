@@ -1,9 +1,6 @@
 'use client'
 import getFilters from '../service/getFilters'
 import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { flsModules } from "../js/files/modules.js";
-import Popup from "../js/libs/popup"
 import { updateFilters } from '../service/updateFilters'
 
 const HTMLLoading = (
