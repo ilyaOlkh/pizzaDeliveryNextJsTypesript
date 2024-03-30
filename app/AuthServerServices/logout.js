@@ -1,5 +1,4 @@
 'use server'
-import logoutService from '@/app/AuthServerServices/logout'
 import { cookies } from 'next/headers'
 import { removeToken } from '@/app/AuthServerServices/tokenServices'
 

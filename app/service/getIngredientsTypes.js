@@ -1,12 +1,12 @@
+import { sql } from 'kysely'
+import { createKysely } from '@vercel/postgres-kysely';
+
 export default async function getIngredientsTypes() {
     let types = await query()
     return types.map(type => {
         return type.i_type
     })
 }
-import { sql } from 'kysely'
-
-import { createKysely } from '@vercel/postgres-kysely';
 
 async function query() {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });

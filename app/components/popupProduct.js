@@ -1,5 +1,4 @@
 'use client'
-import { settings } from '@/app/settings';
 import React, { useEffect, useState } from 'react';
 import { getProduct } from '../service/getProduct.js';
 import getIngredients from '../service/getIngredients.js';
@@ -18,15 +17,16 @@ export default function popupProduct() {
     const [avalibleSizes, setAvalibleSizes] = useState([])
     const [curentSize, setCurentSize] = useState({})
     let content;
+    let uniqueDivKey = 0
+    let uniqueLabelKey = 0
     async function click1(e) {
-        console.log(e)
         if (e.detail.popup.hash == popupProductHash) {
 
             let filters = window.location.search
             const params = new URLSearchParams(filters)
-            if (document.querySelector('#card').dataset.productId != params.get(settings.idForProduct)) {
+            if (document.querySelector('#card').dataset.productId != params.get(process.env.NEXT_PUBLIC_ID_FOR_PRODUCT)) {
                 setLoading(true)
-                const id = params.get(settings.idForProduct)
+                const id = params.get(process.env.NEXT_PUBLIC_ID_FOR_PRODUCT)
                 let productRespons = await getProduct(id)
                 setProduct(productRespons[0])
                 if (productRespons.length > 1) {
@@ -35,7 +35,6 @@ export default function popupProduct() {
                 let Ingredients = await getIngredients(id)
                 setIngredients(Ingredients)
                 let sizesRespons = await getSizes(id)
-                console.log(sizesRespons)
                 setAvalibleSizes(sizesRespons)
                 setCurentSize(sizesRespons[0])
                 setLoading(false)
@@ -60,108 +59,112 @@ export default function popupProduct() {
     } else {
         content =
             (<>
-                <div class="card__img">
-                    <div class="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
+                <div className="card__img">
+                    <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
                 </div>
-                <form action="" method="post" class="card__info">
-                    <div class="card__info-wrapper">
-                        <div class="card__phantom-img">
+                <form action="" method="post" className="card__info">
+                    <div className="card__info-wrapper">
+                        <div className="card__phantom-img">
                             <div> </div>
                         </div>
-                        <div class="card__info-blur">
-                            <div class="card__info-block">
-                                <h2 class="card__title-product">
+                        <div className="card__info-blur">
+                            <div className="card__info-block">
+                                <h2 className="card__title-product">
                                     {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
                                     <span>{product.p_name}</span>
 
                                 </h2>
-                                <div class="card__ingridients">
+                                <div className="card__ingridients">
                                     {ingredients.map(({ i_type, i_name }) => {
+                                        uniqueDivKey++
                                         return (
-                                            <div class="card__ingridient ingridient">
-                                                <div class="ingridient__img">
-                                                    <div class="ingridient__img-inner"><img src={`/ingredients/${i_type}.png`} alt={i_type} /></div>
+                                            <div key={uniqueDivKey} className="card__ingridient ingridient">
+                                                <div className="ingridient__img">
+                                                    <div className="ingridient__img-inner"><img src={`/ingredients/${i_type}.png`} alt={i_type} /></div>
                                                 </div>
-                                                <div class="ingridient__text">{i_name}</div>
+                                                <div className="ingridient__text">{i_name}</div>
                                             </div>
                                         )
                                     })}
                                 </div>
                             </div>
-                            <div class="card__info-block">
-                                <div class="card__block-buttons">
-                                    <label class="card__option">
+                            <div className="card__info-block">
+                                <div className="card__block-buttons">
+                                    <label className="card__option">
                                         <input type="radio" defaultChecked name="test1" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
                                     </label>
-                                    <label class="card__option">
+                                    <label className="card__option">
                                         <input type="radio" name="test1" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
                                     </label>
                                 </div>
-                                <div class="card__block-buttons">
+                                <div className="card__block-buttons">
                                     {
                                         avalibleSizes.map(size => {
-                                            return (<label class="card__option">
-                                                <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
-                                            </label>)
+                                            uniqueLabelKey++
+                                            return (
+                                                <label key={uniqueLabelKey} className="card__option">
+                                                    <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
+                                                </label>
+                                            )
                                         })
                                     }
                                 </div>
                             </div>
-                            {/* <div class="card__info-block">--------------------------------------------------блок на будующее-----------------------------
-                                <h3 class="card__title-second">Добавьте в пиццу</h3>
-                                <div class="card__ingridients">
-                                    <label class="card__option card__ingridient ingridient ingridient_not-worked">
+                            {/* <div className="card__info-block">--------------------------------------------------блок на будующее-----------------------------
+                                <h3 className="card__title-second">Добавьте в пиццу</h3>
+                                <div className="card__ingridients">
+                                    <label className="card__option card__ingridient ingridient ingridient_not-worked">
                                         <input type="checkbox" name="test1" style={{ display: 'none' }} />
-                                        <div class="ingridient__img">
-                                            <div class="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
+                                        <div className="ingridient__img">
+                                            <div className="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
                                         </div>
-                                        <div class="ingridient__text">Моцарелла</div>
-                                        <div class="ingridient__price">59<span> ₴</span></div>
+                                        <div className="ingridient__text">Моцарелла</div>
+                                        <div className="ingridient__price">59<span> ₴</span></div>
                                     </label>
-                                    <label class="card__option card__ingridient ingridient">
+                                    <label className="card__option card__ingridient ingridient">
                                         <input type="checkbox" name="test1" style={{ display: 'none' }} />
-                                        <div class="ingridient__img">
-                                            <div class="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
+                                        <div className="ingridient__img">
+                                            <div className="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
                                         </div>
-                                        <div class="ingridient__text">Моцарелла</div>
-                                        <div class="ingridient__price">59<span> ₴</span></div>
+                                        <div className="ingridient__text">Моцарелла</div>
+                                        <div className="ingridient__price">59<span> ₴</span></div>
                                     </label>
-                                    <label class="card__option card__ingridient ingridient">
+                                    <label className="card__option card__ingridient ingridient">
                                         <input type="checkbox" name="test1" style={{ display: 'none' }} />
-                                        <div class="ingridient__img">
-                                            <div class="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
+                                        <div className="ingridient__img">
+                                            <div className="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
                                         </div>
-                                        <div class="ingridient__text">Моцарелла</div>
-                                        <div class="ingridient__price">59<span> ₴</span></div>
+                                        <div className="ingridient__text">Моцарелла</div>
+                                        <div className="ingridient__price">59<span> ₴</span></div>
                                     </label>
-                                    <label class="card__option card__ingridient ingridient">
+                                    <label className="card__option card__ingridient ingridient">
                                         <input type="checkbox" name="test1" style={{ display: 'none' }} />
-                                        <div class="ingridient__img">
-                                            <div class="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
+                                        <div className="ingridient__img">
+                                            <div className="ingridient__img-inner"><img src="@img/Common/cheese.svg" alt="cheese" /></div>
                                         </div>
-                                        <div class="ingridient__text">Моцарелла</div>
-                                        <div class="ingridient__price">59<span> ₴</span></div>
+                                        <div className="ingridient__text">Моцарелла</div>
+                                        <div className="ingridient__price">59<span> ₴</span></div>
                                     </label>
                                 </div>
                             </div> */}
                         </div>
                     </div>
-                    <div class="card__info-send send">
-                        <div class="send__info">
-                            <div class="send__price">Итого: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
-                            <div class="send__weight">{curentSize.weight_g} <span> г</span></div>
+                    <div className="card__info-send send">
+                        <div className="send__info">
+                            <div className="send__price">Итого: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
+                            <div className="send__weight">{curentSize.weight_g} <span> г</span></div>
                         </div>
-                        <button type="submit" class="send__submit">Добавить</button>
+                        <button type="submit" className="send__submit">Добавить</button>
                     </div>
                 </form>
             </>)
     }
     return (
-        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" class="popup card">
-            <div class="popup__wrapper card__wrapper">
-                <div class="popup__content card__content">
-                    <button data-close="data-close" type="button" class="popup__close card__close"><img src="/Common/CrossWhite.svg" alt="Cross" /></button>
-                    <div class="card__body">
+        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className="popup card">
+            <div className="popup__wrapper card__wrapper">
+                <div className="popup__content card__content">
+                    <button data-close="data-close" type="button" className="popup__close card__close"><img src="/Common/CrossWhite.svg" alt="Cross" /></button>
+                    <div className="card__body">
                         {content}
                     </div>
                 </div>

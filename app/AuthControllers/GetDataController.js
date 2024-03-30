@@ -32,10 +32,28 @@ export async function CheckWithoutAccessToken() {
     if (!refreshtoken) {
         return [false, 'NeedAuth']
     }
+
     const refresh = validateRefreshToken(refreshtoken.value);
     if (!refresh) {
         return [false, 'NeedAuth']
     }
+
+    const db = createKysely({ connectionString: process.env.POSTGRES_URL })
+    const data = await db.selectFrom('customer').select(['refreshtoken'])
+        .where("customer_id", '=', refresh.customer_id)
+        .executeTakeFirst()
+    if (!data) {
+        return [false, 'NeedAuth']
+    }
+    if (data.refreshtoken != refreshtoken.value) {
+        return [false, 'NeedAuth']
+    }
+
+    const refreshFromDB = validateRefreshToken(data.refreshtoken);
+    if (refreshFromDB.customer_id != refresh.customer_id) {
+        return [false, 'NeedAuth']
+    }
+
     return [true, 'valid', refresh]
 }
 

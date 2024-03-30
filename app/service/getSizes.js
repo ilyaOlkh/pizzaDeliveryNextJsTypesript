@@ -1,6 +1,5 @@
 'use server'
 import { createKysely } from '@vercel/postgres-kysely';
-import { sql } from 'kysely'
 
 export default async (id) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });

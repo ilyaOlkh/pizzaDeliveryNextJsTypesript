@@ -9,6 +9,5 @@ export async function updateFilters(formData) {
         filters[key] = formData.getAll(key)
     }
     const params = new URLSearchParams(filters)
-    console.log(params)
     redirect(`?${params}`)
 }

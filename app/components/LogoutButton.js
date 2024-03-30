@@ -11,9 +11,7 @@ export default function LogoutButton() {
     async function logoutStart() {
         show()
         const res = await logout()
-        console.log(res)
         if (res[0]) {
-            console.log(res[1])
             setUser(undefined)
         } else {
             alert(res[1])

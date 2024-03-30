@@ -1,6 +1,5 @@
 import ProductCard from '../ui/productCard.js'
 // import Image from "next/image";
-import { settings } from '../settings'
 import Header from "../header/page.js"
 import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg.js';
@@ -22,12 +21,12 @@ export default function Home(pizzas, shushi) {
                                     </div><span>Акції   </span>
                                 </div>
                             </a>
-                            <a href={settings.getURLPizza()} className="categories__category swiper-slide">
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_PIZZA_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner ">
                                     <div className="categories__img"><img src="/Categories/Pizza.svg" alt="Pizza" width={32} height={32} /></div><span>Піца</span>
                                 </div>
                             </a>
-                            <a href={settings.getURLSushi()} className="categories__category swiper-slide">
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_SUSHI_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Sushi.svg" alt="Sushi" width={32} height={32} /></div><span>Суші</span>
                                 </div>
@@ -92,7 +91,7 @@ export default function Home(pizzas, shushi) {
                 <section id="pizza" className="priceList">
                     <div className="priceList__container">
                         <div className="priceList__header">
-                            <a href={settings.getURLPizza()}>
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_PIZZA_URL}>
                                 <h1 className="priceList__title">Пицца</h1>
                             </a>
                         </div>

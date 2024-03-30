@@ -1,6 +1,5 @@
 import getProductTypes from '../../service/getProductTypes'
 import getIngredientsTypes from '../../service/getIngredientsTypes'
-import { settings } from '@/app/settings';
 // import Image from "next/image";
 import ProductCard from '../../ui/productCard'
 import Header from "../../header/page.js"
@@ -8,7 +7,6 @@ import Filters from '@/app/components/popupFilters'
 import PopupProduct from '@/app/components/popupProduct'
 import getProducts from '../../service/getProducts.js'
 import PopupReg from '@/app/components/popupReg'
-import AuthStart from '@/app/components/authStart';
 import { GetUserInfoForServer } from '@/app/AuthControllers/GetDataController';
 
 const i_types = await getIngredientsTypes()

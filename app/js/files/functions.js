@@ -293,7 +293,6 @@ export function spollers() {
                         if (spollersBlock.classList.contains('_spoller-init')) {
                             const spollerSpeed = spollersBlock.dataset.spollersSpeed ? parseInt(spollersBlock.dataset.spollersSpeed) : 500;
                             spollerClose.classList.remove('_spoller-active');
-                            console.log(spollerClose.nextElementSibling)
                             _slideUp(spollerClose.nextElementSibling, spollerSpeed);
                             setTimeout(() => { spollerCloseBlock.open = false }, spollerSpeed);
                         }
@@ -424,7 +423,6 @@ export function tabs() {
         }
     }
     function setTabsAction(e) {
-        console.log(e)
         const el = e.target;
         if (el.closest('[data-tabs-title]')) {
             const tabTitle = el.closest('[data-tabs-title]');

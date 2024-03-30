@@ -257,15 +257,12 @@ export default class Popup {
 
             } else this.popupLogging(`Йой, такого попапу немає. Перевірте коректність введення. `);
         }
-        console.log(this.isOpen);
 
     }
     close(selectorValue) {
         if (selectorValue && typeof (selectorValue) === "string" && selectorValue.trim() !== "") {
             this.previousOpen.selector = selectorValue;
         }
-        console.log(this.isOpen, bodyLockStatus)
-
         if (!this.isOpen || !bodyLockStatus) {
             return;
         }

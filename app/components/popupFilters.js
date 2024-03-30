@@ -3,6 +3,7 @@ import getFilters from '../service/getFilters'
 import { useEffect, useState } from 'react';
 import { updateFilters } from '../service/updateFilters'
 
+
 const HTMLLoading = (
     <div className='filters__loading'>
         <img src="/Common/loading.svg" alt="loading" />
@@ -12,11 +13,12 @@ const HTMLLoading = (
 export default function popupFilters({ type }) {
     const [filters, setFilters] = useState([]);
     let content;
+    let uniqueKeyLable = 0
+    let uniqueDivKey = 0
     useEffect(() => {
         console.log('фильтры отрендерены')
         const fetchFilters = async () => {
             const filters = await getFilters(type);
-            console.log(filters)
             setFilters(filters);
         };
         fetchFilters();
@@ -28,14 +30,16 @@ export default function popupFilters({ type }) {
             <div className="filters__checks">
                 {
                     filters.map((block) => {
+                        uniqueDivKey++
                         return (
-                            <div className="filters__block">
+                            <div key={uniqueDivKey} className="filters__block">
                                 <div className="filters__block-title">{block.i_type}</div>
                                 <div className="filters__options">
                                     {
                                         block.i_name.split(', ').map((elem) => {
+                                            uniqueKeyLable++
                                             return (
-                                                <label className="filters__option">
+                                                <label className="filters__option" key={uniqueKeyLable}>
                                                     <input id={elem} type="checkbox" name={encodeURIComponent(block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
                                                 </label>
                                             )
@@ -51,7 +55,7 @@ export default function popupFilters({ type }) {
     }
     return (<div id="filters" aria-hidden="true" className="popup filters">
         <div className="popup__wrapper">
-            <form action={updateFilters} method="get" className="popup__content filters__body">
+            <form action={updateFilters} method="POST" className="popup__content filters__body">
                 <div className="filters__header popup__header">
                     <span className="filters__title popup__title">Фильтры</span>
                     <button data-close="data-close" type="button" className="popup__close">

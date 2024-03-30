@@ -1,15 +1,14 @@
 'use client'
 // import Image from "next/image";
-import { settings } from '@/app/settings';
-import React, { useEffect } from "react";
 export default function ProductCard({ productData }) {
     function click() {
+        let idForProduct = process.env.NEXT_PUBLIC_ID_FOR_PRODUCT
         let filters = window.location.search
         const params = new URLSearchParams(filters)
-        params.get(settings.idForProduct)
-        if (params.get(settings.idForProduct) != productData.product_id) {
-            params.delete(settings.idForProduct)
-            params.append(settings.idForProduct, productData.product_id)
+        params.get(idForProduct)
+        if (params.get(idForProduct) != productData.product_id) {
+            params.delete(idForProduct)
+            params.append(idForProduct, productData.product_id)
             history.pushState({}, '', `?${params}#card`)
         }
     }

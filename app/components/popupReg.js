@@ -1,6 +1,4 @@
 'use client'
-import loginStart from '../authClientServices/login'
-import registrationStart from '../authClientServices/registration'
 
 import LoginForm from './LoginForm'
 import RegistrationForm from './RegistrationForm'
@@ -13,18 +11,18 @@ export default function popupReg() {
     const { userState } = useContext(MyContext);
     if (!userState) {
         return <>
-            <div id="registration" aria-hidden="true" class="popup popup-window registration">
-                <div class="popup__wrapper">
-                    <div class="popup__content registration__content">
-                        <button data-close="data-close" type="button" class="popup__close">
-                            <img src="@img/Common/CrossWhite.svg" alt="Cross" />
+            <div id="registration" aria-hidden="true" className="popup popup-window registration">
+                <div className="popup__wrapper">
+                    <div className="popup__content registration__content">
+                        <button data-close="data-close" type="button" className="popup__close">
+                            <img src="/Common/CrossWhite.svg" alt="Cross" />
                         </button>
-                        <div data-tabs class="popup__body registration__body">
-                            <nav data-tabs-titles class="tabs__navigation">
-                                <button type="button" class="tabs__title _tab-active">Регистрация</button>
-                                <button type="button" class="tabs__title">Авторизація</button>
+                        <div data-tabs className="popup__body registration__body">
+                            <nav data-tabs-titles className="tabs__navigation">
+                                <button type="button" className="tabs__title _tab-active">Регистрация</button>
+                                <button type="button" className="tabs__title">Авторизація</button>
                             </nav>
-                            <div data-tabs-body class="tabs__content">
+                            <div data-tabs-body className="tabs__content">
                                 <RegistrationForm />
                                 <LoginForm />
                             </div>

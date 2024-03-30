@@ -1,6 +1,5 @@
-// import prompt from '../service/prompt.js'
-
-// const url = 'getProductTypes.php'
+import { sql } from 'kysely'
+import { createKysely } from '@vercel/postgres-kysely';
 
 export default async function getProductTypes() {
     let types = await query()
@@ -8,9 +7,6 @@ export default async function getProductTypes() {
         return type.p_type
     })
 }
-import { sql } from 'kysely'
-
-import { createKysely } from '@vercel/postgres-kysely';
 
 async function query() {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });

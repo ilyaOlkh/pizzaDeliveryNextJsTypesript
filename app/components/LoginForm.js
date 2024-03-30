@@ -10,11 +10,12 @@ import { flsModules } from "../js/files/modules.js";
 
 export default function LoginForm() {
     const { user, setUser } = useContext(MyContext);
-    async function loginStart(query) {
+    async function loginStart(event) {
+        event.preventDefault();
         show()
-        const res = await loginController(query)
+        const formData = new FormData(event.target);
+        const res = await loginController(formData)
         if (res[0]) {
-            console.log(res[1])
             localStorage.setItem('accessToken', res[2])
             setUser(res[3])
             hide()
@@ -26,34 +27,32 @@ export default function LoginForm() {
 
     }
     return (
-        <form method="post" action={loginStart} class="tabs__body">
-            <div class="registration__tabs">
-                <div class="registration__body-inner">
-                    <div class="registration__input-row">
-                        <div class="registration__input input-reg">
-                            <label class="input-reg__title">пошта *</label>
-                            <div class="input-reg__input">
-                                <input name='email' type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" required="required" />
+        <form method="post" onSubmit={loginStart} className="tabs__body">
+            <div className="registration__tabs">
+                <div className="registration__body-inner">
+                    <div className="registration__input-row">
+                        <div className="registration__input input-reg">
+                            <label className="input-reg__title">пошта *</label>
+                            <div className="input-reg__input">
+                                <input name='email' type="email" pattern=".+@.+\..+" required="required" />
                             </div>
                         </div>
                     </div>
-                    <div class="registration__input-row">
-                        <div class="registration__input input-reg">
-                            <label class="input-reg__title">Пароль *</label>
-                            <div class="input-reg__input">
+                    <div className="registration__input-row">
+                        <div className="registration__input input-reg">
+                            <label className="input-reg__title">Пароль *</label>
+                            <div className="input-reg__input">
                                 <input name='password' type="password" required="required" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="registration__input-row">
-                    <div class="registration__input input-reg input-reg_submit">
-                        <div class="input-reg__input">
-                            <button type="submit">
-                                Авторизуватися
-                            </button>
+                <div className="registration__input-row">
+                    <button type="submit" className="registration__input input-reg input-reg_submit">
+                        <div className="input-reg__input">
+                            Авторизуватися
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </form>
