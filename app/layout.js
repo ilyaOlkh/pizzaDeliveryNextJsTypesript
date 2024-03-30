@@ -17,10 +17,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-    console.log('старт')
     const user = await GetUserInfoForServer();
-    console.log('финиш')
-    console.log('user:', user)
     return (
         <html lang="uk">
             <head>
