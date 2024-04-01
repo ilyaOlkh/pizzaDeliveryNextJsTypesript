@@ -59,7 +59,7 @@ body::after
         transform: scale(1) translate(0,0)
         transition: transform 0.3s ease 0s
 
-    .filters.popup_show &__content
+    .popup-from-left.popup_show &__content
         transform: translate(0,0)
 
     &__wrapper
@@ -92,7 +92,7 @@ body::after
         @media (min-width: $mobile)
             transform: scale(0)
 
-        .filters &
+        .popup-from-left &
             transform: translate(0,100%)
             @media (min-width: $mobile)
                 transform: translate(100%,0)
@@ -106,7 +106,7 @@ body::after
     0%
         visibility: hidden
 
-.filters
+.popup-from-left
     .popup
         &__content
             width: 100%
@@ -147,6 +147,16 @@ body::after
         flex: 1 1 100%
         overflow: auto
         padding: toRem(20) toRem(20)
+    &__cart
+        display: flex
+        flex-direction: column
+        gap: toRem(24)
+        flex: 1 1 100%
+        overflow: auto
+        padding: toRem(20) toRem(20)
+        @media (max-width: 399px)
+            padding: toRem(0)
+            gap: 0
 
     &__block
         display: flex
@@ -180,7 +190,6 @@ body::after
         gap: toRem(20)
         padding: toRem(12) toRem(20)
         border-top: 1px solid #F0F0F0
-
         input
             border-radius: 6px
             border: 1px solid #FF7010
@@ -193,6 +202,14 @@ body::after
             &:hover
                 background: #FF7010
                 color: #fff
+    &__total
+        flex: 1 1 50%
+        font-weight: 600
+        font-size: toRem(18)
+        color: #FF7010
+        display: flex
+        align-items: center
+
 .popup-show
     .card
         &__option

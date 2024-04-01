@@ -2,6 +2,7 @@
 import { useContext, useEffect } from 'react';
 import { MyContext } from '@/app/context/contextProvider';
 import LogoutButton from "../components/LogoutButton";
+import CartButton from '../components/CartButton';
 
 import { refreshTabs, refreshSpollers } from '../components/startJS';
 
@@ -127,11 +128,7 @@ export default function Header() {
                             </nav>
                         </div>
                     </div>
-                    <a href="/" className="header__basket basket">
-                        <img src="/Common/basket.svg" alt="basket" className="basket__img" height={20} width={20} />
-                        <span className="basket__num">0</span>
-                        <span className="basket__Curr">&nbsp;₴</span>
-                    </a>
+                    <CartButton />
                 </div>
             </header>
         </>

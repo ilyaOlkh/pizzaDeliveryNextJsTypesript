@@ -1,8 +1,10 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getProduct } from '../service/getProduct.js';
 import getIngredients from '../service/getIngredients.js';
 import getSizes from '../service/getSizes.js';
+import { SubmitProductForm } from '../CartClientServises/CartServices.js';
+import { CartContext } from '../context/contextProvider'
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -11,6 +13,7 @@ const HTMLLoading = (
 const popupProductHash = '#card'
 
 export default function popupProduct() {
+    const { cartState, setCart } = useContext(CartContext)
     const [isLoading, setLoading] = useState(true)
     const [product, setProduct] = useState(undefined)
     const [ingredients, setIngredients] = useState([])
@@ -19,6 +22,33 @@ export default function popupProduct() {
     let content;
     let uniqueDivKey = 0
     let uniqueLabelKey = 0
+
+    function findById(id, dough) {
+        for (let item in cartState) {
+            if (cartState[item].id == id && cartState[item].dough == dough) {
+                return item
+            }
+        }
+        return false
+    }
+
+    function submit(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        console.log(Object.fromEntries(formData.entries()))
+        console.log(curentSize)
+        let isInCart = findById(curentSize.id, formData.get('dough'))
+        console.log(isInCart)
+        if (isInCart) {
+            let newCartState = [...cartState]
+            newCartState[isInCart].quantity++
+            setCart(newCartState)
+        } else {
+            setCart([...cartState, { id: curentSize.id, quantity: 1, dough: formData.get('dough') }])
+
+        }
+    }
+
     async function click1(e) {
         if (e.detail.popup.hash == popupProductHash) {
 
@@ -41,6 +71,7 @@ export default function popupProduct() {
             }
         }
     }
+
     function changeSize(e) {
         let newCurentSize = avalibleSizes.find((elem) => { return elem.size_cm == e.target.value })
         setCurentSize(newCurentSize)
@@ -62,7 +93,7 @@ export default function popupProduct() {
                 <div className="card__img">
                     <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
                 </div>
-                <form action="" method="post" className="card__info">
+                <form onSubmit={submit} method="post" className="card__info">
                     <div className="card__info-wrapper">
                         <div className="card__phantom-img">
                             <div> </div>
@@ -91,10 +122,10 @@ export default function popupProduct() {
                             <div className="card__info-block">
                                 <div className="card__block-buttons">
                                     <label className="card__option">
-                                        <input type="radio" defaultChecked name="test1" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
+                                        <input type="radio" defaultChecked value="традиционное тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
                                     </label>
                                     <label className="card__option">
-                                        <input type="radio" name="test1" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
+                                        <input type="radio" value="тонкое тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
                                     </label>
                                 </div>
                                 <div className="card__block-buttons">
