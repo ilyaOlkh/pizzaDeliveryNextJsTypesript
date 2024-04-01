@@ -1,5 +1,5 @@
 'use client'
-// import Image from "next/image";
+import Image from "next/image";
 export default function ProductCard({ productData }) {
     function click() {
         let idForProduct = process.env.NEXT_PUBLIC_ID_FOR_PRODUCT
@@ -15,7 +15,7 @@ export default function ProductCard({ productData }) {
     return (
         <button onClick={click} type="button" data-product-id={productData.product_id} data-popup="#card" className="priceList__item priceItem" >
             <div className="priceItem__inner">
-                <div className="priceItem__img"><img src={productData.image_url.split('img')[1]} alt="pizza" /></div>
+                <div className="priceItem__img"><Image src={productData.image_url.split('img')[1]} alt="pizza" width={400} height={400} /></div>
                 <div className="priceItem__info">
                     <h2 className="priceItem__name"> <span>{productData.p_name}</span></h2>
                     <div className="priceItem__composition">{productData.composition}</div>

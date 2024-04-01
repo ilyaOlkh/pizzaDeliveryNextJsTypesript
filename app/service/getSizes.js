@@ -7,6 +7,7 @@ export default async (id) => {
         .selectFrom('product')
         .innerJoin('pizzadetails', 'pizzadetails.product_id', 'product.product_id')
         .select([
+            'pizzadetails.id',
             'pizzadetails.size_cm',
             'pizzadetails.weight_g',
             'pizzadetails.price',

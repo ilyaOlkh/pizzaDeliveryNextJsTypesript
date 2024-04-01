@@ -85,3 +85,92 @@ summary
         img
             height: 100%
             max-height: 50%
+
+.quantity
+    width: toRem(92)
+    color: #FF7010
+    background-color: #ffeee2
+    display: flex
+    justify-content: space-around
+    padding: toRem(8)
+    border-radius: toRem(6)
+    font-weight: 600
+    @media (max-width: 399px)
+        width: toRem(80)
+        flex: 0 0 toRem(80)
+    &__button
+        font-weight: inherit
+    &__input
+        flex: 1 1 auto
+        background-color: #ffffff00
+        input
+            font-weight: inherit
+            color: inherit
+            display: inline-block
+            background-color: inherit
+            outline: none
+            cursor: default
+            flex: 1 1 auto
+            width: 100%
+            text-align: center
+
+.cart-item
+    padding: toRem(16)
+    border: 1px solid #f0f0f0
+    border-radius: 12px
+    // min-height: 60px
+    // height: max-content
+    display: flex
+    align-items: center
+    gap: toRem(16)
+    @media (max-width: 399px)
+        border: 0px
+        border-top: 1px solid #f0f0f0
+        border-radius: 0
+    &__img
+        height: 100%
+        max-height: 100px
+        border-radius: toRem(8)
+        img
+            height: 100%
+    &__content
+        display: flex
+        flex-direction: column
+        flex: 1 1 auto
+        // height: 300px
+        justify-content: space-between
+        gap: toRem(8)
+        height: 100%
+    &__info-block
+        display: flex
+        flex-direction: column
+    &__title
+        font-weight: 600
+        @media (max-width: 399px)
+            font-size: toRem(14)
+    &__info
+        font-size: toRem(14)
+        color: #aaa
+        @media (max-width: 399px)
+            font-size: toRem(12)
+    &__row
+        display: flex
+        gap: toRem(8)
+        flex-direction: row
+        align-items: center
+        justify-content: space-between
+        width: 100%
+
+    &__price
+        font-weight: 600
+        font-size: toRem(16)
+        color: #FF7010
+        white-space: nowrap
+        flex: 1 1 auto
+    &__delete
+        padding-right: 4px
+        height: 100%
+        display: flex
+        align-items: center
+        img
+            width: toRem(25)

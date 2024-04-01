@@ -6,9 +6,10 @@ import { Analytics } from '@vercel/analytics/react';
 import { GetUserInfoForServer } from "./AuthControllers/GetDataController";
 import { Providers } from '@/app/context/contextProvider';
 import { Loading } from '@/app/components/loading';
-
-
+import PopupCart from "./components/PopupCart";
 import StartJS from "./components/startJS";
+import { getCartCookie } from "./CartServerServices/getCartCookie";
+import { getProductsByIDs } from "./service/getProductsByIDs";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -18,6 +19,18 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
     const user = await GetUserInfoForServer();
+    const cart = await getCartCookie()
+    ////////////////////////////////
+    let dataArray = [];
+    console.log(cart.map(item => item.id))
+    let IDs = cart.map(item => item.id)
+    if (IDs.length > 0) {
+        const data = await getProductsByIDs(IDs);
+        data.forEach((elem) => {
+            dataArray[elem.id] = elem
+        })
+        ////////////////////////////////
+    };
     return (
         <html lang="uk">
             <head>
@@ -25,8 +38,9 @@ export default async function RootLayout({ children }) {
             </head>
             <body>
                 <Loading />
-                <Providers user={user[0] ? user[1] : undefined}>
+                <Providers user={user[0] ? user[1] : undefined} cart={cart} ProductsInfo={dataArray}>
                     <div className="wrapper">
+                        <PopupCart />
                         {children}
                     </div>
                     <SpeedInsights />
