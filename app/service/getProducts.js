@@ -18,7 +18,7 @@ export default async (req) => {
             'p_name',
             'is_available',
             'added_date',
-            'image_url',
+            // 'image_url',
             sql`COALESCE(image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
             sql`COALESCE(STRING_AGG(i_name, ', '), 'нет состава')`.as('composition')
         ])

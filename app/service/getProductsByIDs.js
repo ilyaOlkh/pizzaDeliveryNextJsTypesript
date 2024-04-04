@@ -11,7 +11,7 @@ export async function getProductsByIDs(idArray) {
         .leftJoin('product', 'pizzadetails.product_id', 'product.product_id')
         .select([
             'pizzadetails.id',
-            'product.product_id',
+            // 'product.product_id',
             'product.p_name',
             // 'product.image_url',
             sql`COALESCE(image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),

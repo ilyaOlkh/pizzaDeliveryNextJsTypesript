@@ -1,38 +1,17 @@
 'use client'
 import { CartContext } from '../context/contextProvider'
-import { ProductsInfoContext } from '../context/contextProvider';
-import { useContext, useEffect, useState } from 'react';
-import { getProductsByIDs } from '../service/getProductsByIDs';
+import { ProductsInfoContext, MyContext } from '../context/contextProvider';
+import { useContext } from 'react';
 import CartItem from '../ui/CartItem';
 import { getTotalPrice } from '../CartClientServises/CartServices';
 
 export default function PopupCart() {
     const { cartState, setCart } = useContext(CartContext)
     const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
-
+    const { userState, setUser } = useContext(MyContext);
+    console.log(userState)
+    console.log(productsInfoState)
     let uniqueCartItemKey = 0
-
-    useEffect(() => {
-        const fetchProductData = async () => {
-            const dataArray = [...productsInfoState];
-            let IDs = []
-            cartState.forEach((item) => {
-                if (!productsInfoState[item.id]) {
-                    IDs.push(item.id)
-                }
-            })
-            console.log(IDs)
-            if (IDs.length > 0) {
-                const data = await getProductsByIDs(IDs);
-                data.forEach((elem) => {
-                    dataArray[elem.id] = elem
-                })
-                setProductsInfo(dataArray);
-                console.log(productsInfoState)
-            }
-        };
-        fetchProductData();
-    }, [cartState]);
 
     return <>
         <div id="cart" aria-hidden="true" className="popup popup-from-left">
@@ -44,9 +23,10 @@ export default function PopupCart() {
                             <img src="/Common/Cross.svg" alt="Cross" />
                         </button>
                     </div>
-                    <div className="popup-from-left__cart">
+                    <div className="popup-from-left__cart popup-from-left__inner">
                         {
                             cartState.map((item, num) => {
+                                console.log('перерендер')
                                 uniqueCartItemKey++
                                 return (
                                     <CartItem key={uniqueCartItemKey} productData={productsInfoState[item.id]} number={num} />
@@ -56,7 +36,20 @@ export default function PopupCart() {
                     </div>
                     <div className="popup-from-left__buttons">
                         <div className="popup-from-left__total">{`Итого: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
-                        <input type="submit" value="Оформить заказ" />
+                        {
+                            !userState ?
+                                <button disabled className="popup-from-left__button popup-from-left__button_disable">
+                                    войдите в аккаунт
+                                </button> :
+                                cartState.length < 1 ?
+                                    <button disabled className="popup-from-left__button popup-from-left__button_disable" >
+                                        выберите хотя-бы один товар
+                                    </button>
+                                    :
+                                    <button className="popup-from-left__button" data-popup="#send" >
+                                        Оформить заказ
+                                    </button>
+                        }
                     </div>
                 </form>
             </div >

@@ -91,3 +91,17 @@ export async function GetUserInfoForServer() {
     // cookies().set('userObj', '1', { httpOnly: true, secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 })
     return [true, userData]
 }
+
+export async function getUserCookies() {
+    const refreshtoken = cookies().get('refreshtoken')
+    if (!refreshtoken) {
+        return [false, 'NeedAuth']
+    }
+
+    const refresh = validateRefreshToken(refreshtoken.value);
+    if (!refresh) {
+        return [false, 'NeedAuth']
+    }
+
+    return [true, refresh]
+}

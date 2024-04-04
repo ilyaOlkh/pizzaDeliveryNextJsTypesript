@@ -5,6 +5,7 @@ import getIngredients from '../service/getIngredients.js';
 import getSizes from '../service/getSizes.js';
 import { SubmitProductForm } from '../CartClientServises/CartServices.js';
 import { CartContext } from '../context/contextProvider'
+import { ProductsInfoContext } from '../context/contextProvider';
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -14,6 +15,7 @@ const popupProductHash = '#card'
 
 export default function popupProduct() {
     const { cartState, setCart } = useContext(CartContext)
+    const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
     const [isLoading, setLoading] = useState(true)
     const [product, setProduct] = useState(undefined)
     const [ingredients, setIngredients] = useState([])
@@ -35,17 +37,22 @@ export default function popupProduct() {
     function submit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        console.log(Object.fromEntries(formData.entries()))
-        console.log(curentSize)
         let isInCart = findById(curentSize.id, formData.get('dough'))
-        console.log(isInCart)
+
         if (isInCart) {
             let newCartState = [...cartState]
             newCartState[isInCart].quantity++
             setCart(newCartState)
         } else {
-            setCart([...cartState, { id: curentSize.id, quantity: 1, dough: formData.get('dough') }])
-
+            productsInfoState[curentSize.id] = {
+                id: curentSize.id,
+                image_url: product.image_url,
+                p_name: product.p_name,
+                price: curentSize.price,
+                size_cm: curentSize.size_cm,
+                weight_g: curentSize.weight_g
+            }
+            setCart([...cartState, { id: curentSize.id, quantity: 1, dough: formData.get('dough'), selled_price: curentSize.price }])
         }
     }
 
@@ -120,26 +127,35 @@ export default function popupProduct() {
                                 </div>
                             </div>
                             <div className="card__info-block">
-                                <div className="card__block-buttons">
-                                    <label className="card__option">
-                                        <input type="radio" defaultChecked value="традиционное тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
-                                    </label>
-                                    <label className="card__option">
-                                        <input type="radio" value="тонкое тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
-                                    </label>
-                                </div>
-                                <div className="card__block-buttons">
-                                    {
-                                        avalibleSizes.map(size => {
-                                            uniqueLabelKey++
-                                            return (
-                                                <label key={uniqueLabelKey} className="card__option">
-                                                    <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
-                                                </label>
-                                            )
-                                        })
-                                    }
-                                </div>
+                                {
+                                    product.p_type == "піца" ?
+                                        <div className="card__block-buttons">
+                                            <label className="card__option">
+                                                <input type="radio" defaultChecked value="традиционное тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
+                                            </label>
+                                            <label className="card__option">
+                                                <input type="radio" value="тонкое тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
+                                            </label>
+                                        </div>
+                                        :
+                                        <></>
+                                }
+                                {avalibleSizes.length > 1 || avalibleSizes[0].size_cm !== null ?
+                                    <div className="card__block-buttons">
+                                        {
+                                            avalibleSizes.map(size => {
+                                                uniqueLabelKey++
+                                                return (
+                                                    <label key={uniqueLabelKey} className="card__option">
+                                                        <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
+                                                    </label>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    :
+                                    <></>
+                                }
                             </div>
                             {/* <div className="card__info-block">--------------------------------------------------блок на будующее-----------------------------
                                 <h3 className="card__title-second">Добавьте в пиццу</h3>
@@ -187,7 +203,7 @@ export default function popupProduct() {
                         </div>
                         <button type="submit" className="send__submit">Добавить</button>
                     </div>
-                </form>
+                </form >
             </>)
     }
     return (
