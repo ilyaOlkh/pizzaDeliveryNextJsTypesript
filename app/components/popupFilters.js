@@ -27,7 +27,7 @@ export default function popupFilters({ type }) {
         content = HTMLLoading
     } else {
         content = (
-            <div className="popup-from-left__checks">
+            <div className="popup-from-left__inner">
                 {
                     filters.map((block) => {
                         uniqueDivKey++

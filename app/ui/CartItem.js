@@ -2,11 +2,7 @@
 import { CartContext } from '../context/contextProvider'
 import { useContext } from 'react';
 
-const HTMLLoading = (
-    <div className='popup-from-left__loading'>
-        <img src="/Common/loading.svg" alt="loading" />
-    </div>
-)
+
 
 export default function CartItem({ productData, number }) {
     const { cartState, setCart } = useContext(CartContext)
@@ -34,7 +30,6 @@ export default function CartItem({ productData, number }) {
         console.log(newCartState)
         setCart(newCartState)
     }
-
     return <>
         <div className="cart-item">
             {productData ? <>
@@ -42,13 +37,16 @@ export default function CartItem({ productData, number }) {
                 <div className="cart-item__content">
                     <div className="cart-item__info-block">
                         <h3 className="cart-item__title">{productData?.p_name}</h3>
-                        <div className="cart-item__info">{cartState[number].dough + ', ' + productData?.size_cm + ' см' + ', ' + productData?.weight_g + ' г'}</div>
+                        <div className="cart-item__info">{
+                            (cartState[number].dough ? `${cartState[number].dough}, ` : ``) +
+                            (productData.size_cm ? `${productData?.size_cm} см, ` : ``) +
+                            productData?.weight_g + ' г'}</div>
                     </div>
                     <div className="cart-item__row">
                         <div className="cart-item__quantity quantity">
                             <button onClick={decQuantity} className="quantity__button" type="button">-</button>
                             <div className="quantity__input">
-                                <input readOnly autocomplete="off" type="text" name="form[]" value={cartState[number].quantity} />
+                                <input readOnly autoсomplete="off" type="text" name="form[]" value={cartState[number].quantity} />
                             </div>
                             <button onClick={incQuantity} className="quantity__button" type="button">+</button>
                         </div>

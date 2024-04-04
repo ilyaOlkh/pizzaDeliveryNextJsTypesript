@@ -10,6 +10,8 @@ import PopupCart from "./components/PopupCart";
 import StartJS from "./components/startJS";
 import { getCartCookie } from "./CartServerServices/getCartCookie";
 import { getProductsByIDs } from "./service/getProductsByIDs";
+import PopupSend from "./components/PopupSend";
+import PopupReg from "./components/popupReg";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -22,7 +24,6 @@ export default async function RootLayout({ children }) {
     const cart = await getCartCookie()
     ////////////////////////////////
     let dataArray = [];
-    console.log(cart.map(item => item.id))
     let IDs = cart.map(item => item.id)
     if (IDs.length > 0) {
         const data = await getProductsByIDs(IDs);
@@ -41,6 +42,8 @@ export default async function RootLayout({ children }) {
                 <Providers user={user[0] ? user[1] : undefined} cart={cart} ProductsInfo={dataArray}>
                     <div className="wrapper">
                         <PopupCart />
+                        <PopupSend />
+                        <PopupReg />
                         {children}
                     </div>
                     <SpeedInsights />

@@ -3,5 +3,5 @@ import { redirect } from 'next/navigation'
 
 
 export default async function redirectUrl(url) {
-    redirect(url, 'replace')
+    redirect(url)
 }

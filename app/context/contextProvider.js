@@ -14,6 +14,7 @@ export function Providers({ children, user, cart, ProductsInfo }) {
     function setCart(cartState) {
         setCartWithoutCookie(cartState)
         setCartCookie(JSON.stringify(cartState))
+        console.log('cartState изменен')
     }
 
     return (

@@ -13,6 +13,7 @@ export const getProduct = cache(async (id) => {
         .select([
             'product.product_id',
             'product.p_name',
+            'product.p_type',
             'product.added_date',
             sql`COALESCE(product.image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
         ])

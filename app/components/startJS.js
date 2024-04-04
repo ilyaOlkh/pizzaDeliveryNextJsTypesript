@@ -32,6 +32,7 @@ export default function StartJS() {
             console.log('Старт попапов')
             flsModules.popup = new Popup({});
             flsModules.popup._openToHash()
+            console.log(1111)
 
             /* Модуль роботи з select. */
             flsModules.select = new SelectConstructor({});

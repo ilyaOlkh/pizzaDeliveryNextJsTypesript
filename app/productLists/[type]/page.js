@@ -41,7 +41,7 @@ export default async function productList(params) {
     let body;
 
     if (ProductTypes.includes(type)) {
-        if (products != undefined) {
+        if (products.length > 0) {
             body = products.map(pizza => {
                 return (<ProductCard productData={pizza} />)
             })
@@ -62,7 +62,6 @@ export default async function productList(params) {
         <>
             {ProductTypes.includes(type) ? <Filters type={type} /> : <></>}
             <PopupProduct />
-            <PopupReg />
             <Header />
             <main className="page">
                 <section className="priceList">

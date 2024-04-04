@@ -17,9 +17,9 @@ export default function LoginForm() {
         const res = await loginController(formData)
         if (res[0]) {
             localStorage.setItem('accessToken', res[2])
+            flsModules.popup.close('#registration')
             setUser(res[3])
             hide()
-            flsModules.popup.close('#registration')
         } else {
             alert(res[1])
             hide()
