@@ -34,9 +34,9 @@ export async function getOrders(page, numInPage, all = false) {
                 'order_.status',
                 'order_.payment',
                 'order_.delivery',
-                (isAdmin ? 'customer.first_name' : ''),
-                (isAdmin ? 'customer.last_name' : ''),
-            ])
+                (isAdmin ? 'customer.first_name' : null),
+                (isAdmin ? 'customer.last_name' : null),
+            ].filter(Boolean))
             if (!isAdmin) {
                 if (userData) {
                     query = query.where(sql(`order_.customer_id = ${userData.customer_id}`));

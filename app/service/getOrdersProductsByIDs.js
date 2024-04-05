@@ -9,6 +9,7 @@ export default async function getOrdersProductsByIDs(idArray) {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
     let userData;
     let isAdmin = false;
+    console.log(idArray)
     if (idArray) {
         userData = await getUserCookies()
     } else {
