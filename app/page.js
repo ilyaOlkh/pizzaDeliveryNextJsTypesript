@@ -13,4 +13,4 @@ export default async function homePage(params) {
     const pizzas = await getProducts({ type: "піца", limit: 8 })
     const shushi = await getProducts({ type: "суші", limit: 8 })
     return Home(pizzas, shushi)
-}
+}// test
