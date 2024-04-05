@@ -2,6 +2,7 @@
 
 import { validateAccessToken, validateRefreshToken } from '@/app/AuthServerServices/tokenServices'
 import { createKysely } from '@vercel/postgres-kysely';
+import { sql } from 'kysely'
 import { cookies } from 'next/headers'
 
 export async function CheckAccess(accesstoken) {
@@ -104,4 +105,12 @@ export async function getUserCookies() {
     }
 
     return [true, refresh]
+}
+
+export async function checkIsAdmin(id) {
+    const db = createKysely({ connectionString: process.env.POSTGRES_URL })
+    const data = await db.selectFrom('worker').select(['worker_id'])
+        .where(sql(`account=${id} AND role='admin'`))
+        .execute()
+    return data.length > 0
 }

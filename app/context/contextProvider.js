@@ -6,6 +6,9 @@ export const MyContext = createContext();
 export const CartContext = createContext();
 export const ProductsInfoContext = createContext();
 
+export const OrdersContext = createContext();
+export const OrdersDetailsContext = createContext();
+
 export function Providers({ children, user, cart, ProductsInfo }) {
     const [userState, setUser] = useState(user);
     const [cartState, setCartWithoutCookie] = useState(cart);
@@ -25,5 +28,18 @@ export function Providers({ children, user, cart, ProductsInfo }) {
                 </MyContext.Provider>
             </CartContext.Provider>
         </ProductsInfoContext.Provider>
+    );
+}
+
+export function UserProviders({ children, orders, ordersDetails }) {
+    const [ordersState, setOrders] = useState(orders);
+    const [ordersDetailsState, setOrdersDetails] = useState(ordersDetails);
+
+    return (
+        <OrdersContext.Provider value={{ ordersState, setOrders }}>
+            <OrdersDetailsContext.Provider value={{ ordersDetailsState, setOrdersDetails }}>
+                {children}
+            </OrdersDetailsContext.Provider>
+        </OrdersContext.Provider>
     );
 }

@@ -1,6 +1,7 @@
-export default function OrderItem({ orderData, orderProductsData }) {
+import { setParam } from "../service/setSearchParam";
 
-    return <div className="order">
+export default function OrderItem({ orderData, orderProductsData }) {
+    return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className="order">
         <div className={"order__row " + (orderData.status == 'готовится' ? "order__row_red " : (orderData.status == 'доставляется' ? "order__row_orange " : ""))}>
             <div className="order__info">
                 <div className="order__info-title">
@@ -10,6 +11,17 @@ export default function OrderItem({ orderData, orderProductsData }) {
                     №{orderData.order_id}
                 </div>
             </div>
+            {orderData.first_name ?
+                <div className="order__info">
+                    <div className="order__info-title">
+                        Заказчик
+                    </div>
+                    <div className="order__info-value">
+                        {orderData.first_name + ' ' + orderData.last_name}
+                    </div>
+                </div> :
+                <></>
+            }
             <div className="order__info">
                 <div className="order__info-title">
                     Сумма заказа
@@ -52,7 +64,7 @@ export default function OrderItem({ orderData, orderProductsData }) {
                 }
             </div>
         </div>
-    </div >
+    </button >
 }
 
 function getOrderPrice(orderProductsData) {

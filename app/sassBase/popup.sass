@@ -530,7 +530,25 @@ body::after
 
             @media (max-width: $mobile)
                 display: block
-
+    &__inner
+        flex: 1 1 auto
+        &_product
+            display: flex
+            flex-direction: column
+            flex: 1 1 auto
+            padding: toRem(15)
+            gap: toRem(15)
+            overflow: auto
+            @media (max-width: $mobile)
+                padding: 0
+                gap: 0
+                .cart-item
+                    border-radius: 0
+                    border-left: 0px
+                    border-right: 0px
+                    border-bottom: 0px
+                    &:first-child
+                        border-top: 0px
 .registration
     &__content
         background-color: #f9f9f9
@@ -595,3 +613,32 @@ body::after
         input
             outline: none
             width: 100%
+
+.popup-order
+    height: 100%
+    display: flex
+    flex-direction: column
+    &__data
+        height: 100%
+        overflow: auto
+        padding-bottom: toRem(15)
+        padding-top: toRem(15)
+        display: flex
+        flex-direction: column
+        gap: toRem(15)
+    &__data-block
+    &__data-title
+        display: inline-block
+        font-weight: 600
+        font-size: toRem(20)
+        padding: 0 toRem(5) 0 toRem(15)
+    &__data-value
+        display: inline-block
+        &_product
+            display: block
+            padding-left: toRem(30)
+            padding-right: toRem(15)
+            padding-top: toRem(15)
+        .popup-window__inner
+            border: 1px solid #f0f0f0
+            border-radius: toRem(16)

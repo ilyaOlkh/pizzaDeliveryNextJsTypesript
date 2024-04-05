@@ -61,7 +61,7 @@ export default function popupProduct() {
 
             let filters = window.location.search
             const params = new URLSearchParams(filters)
-            if (document.querySelector('#card').dataset.productId != params.get(process.env.NEXT_PUBLIC_ID_FOR_PRODUCT)) {
+            if (document.querySelector(popupProductHash).dataset.productId != params.get(process.env.NEXT_PUBLIC_ID_FOR_PRODUCT)) {
                 setLoading(true)
                 const id = params.get(process.env.NEXT_PUBLIC_ID_FOR_PRODUCT)
                 let productRespons = await getProduct(id)

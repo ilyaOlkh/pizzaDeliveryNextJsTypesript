@@ -35,10 +35,10 @@ export default function PopupSend() {
                         <img src="/Common/CrossWhite.svg" alt="Cross" />
                     </button>
                     <div className="popup__inner-wrapper">
-                        <div className="popup-from-left__header popup__header">
-                            <h2 className="popup-from-left__title popup__title">Уточнение заказа</h2>
+                        <div className="popup__header popup__header">
+                            <h2 className="popup__title popup__title">Уточнение заказа</h2>
                         </div>
-                        <div className="popup-from-left__inner">
+                        <div className="popup-window__inner popup-window__inner_product">
                             {
                                 cartState.map((item, num) => {
                                     console.log('перерендер')
@@ -48,7 +48,6 @@ export default function PopupSend() {
                                     )
                                 })
                             }
-
                         </div>
                         <div className="popup-from-left__clarification clarification">
                             <div className="clarification__title">

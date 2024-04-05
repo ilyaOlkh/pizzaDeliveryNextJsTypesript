@@ -1,8 +1,6 @@
 'use client'
 
 import Header from "../header/page"
-import PopupReg from "../components/popupReg"
-import StartJS from "../components/startJS"
 
 import { useContext, useEffect, useState, useRef } from "react"
 import { MyContext } from "../context/contextProvider"
@@ -33,8 +31,8 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     const updateOrders = async () => {
         console.log('rerender')
         setLoading(true)
-        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
-        let ordersProducts = await getOrdersProductsByIDs(Object.keys(orders), +page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
+        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true) || []
+        let ordersProducts = await getOrdersProductsByIDs() || []
         setOrdersDetails(ordersProducts)
         setOrders(orders)
         setLoading(false)
