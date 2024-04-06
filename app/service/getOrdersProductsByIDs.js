@@ -15,14 +15,14 @@ export default async function getOrdersProductsByIDs(idArray) {
     } else {
         userData = await GetUserInfoForServer()
     }
+    console.log("--------------------------------------", userData)
+
+    if (!idArray) {
+        isAdmin = userData[2]
+    }
+
     if (userData[0]) {
         userData = userData[1]
-        console.log(userData)
-
-        if (!idArray) {
-            isAdmin = await checkIsAdmin(userData.customer_id)
-        }
-
         let query = db
             .selectFrom('orderdetails')
             .leftJoin('pizzadetails', 'orderdetails.pizzadetails_id', 'pizzadetails.id')

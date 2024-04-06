@@ -8,6 +8,7 @@ export const ProductsInfoContext = createContext();
 
 export const OrdersContext = createContext();
 export const OrdersDetailsContext = createContext();
+export const isAdminContext = createContext();
 
 export function Providers({ children, user, cart, ProductsInfo }) {
     const [userState, setUser] = useState(user);
@@ -31,14 +32,17 @@ export function Providers({ children, user, cart, ProductsInfo }) {
     );
 }
 
-export function UserProviders({ children, orders, ordersDetails }) {
+export function UserProviders({ children, orders, ordersDetails, isAdmin = false }) {
     const [ordersState, setOrders] = useState(orders);
     const [ordersDetailsState, setOrdersDetails] = useState(ordersDetails);
+    const [isAdminState, setIsAdmin] = useState(isAdmin);
 
     return (
         <OrdersContext.Provider value={{ ordersState, setOrders }}>
             <OrdersDetailsContext.Provider value={{ ordersDetailsState, setOrdersDetails }}>
-                {children}
+                <isAdminContext.Provider value={{ isAdminState, setIsAdmin }}>
+                    {children}
+                </isAdminContext.Provider>
             </OrdersDetailsContext.Provider>
         </OrdersContext.Provider>
     );

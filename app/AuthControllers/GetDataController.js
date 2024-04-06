@@ -40,7 +40,9 @@ export async function CheckWithoutAccessToken() {
     }
 
     const db = createKysely({ connectionString: process.env.POSTGRES_URL })
-    const data = await db.selectFrom('customer').select(['refreshtoken'])
+    const data = await db.selectFrom('customer')
+        .leftJoin('worker', 'customer.customer_id', "worker.account")
+        .select(['customer.refreshtoken', 'worker.role'])
         .where("customer_id", '=', refresh.customer_id)
         .executeTakeFirst()
     if (!data) {
@@ -55,7 +57,7 @@ export async function CheckWithoutAccessToken() {
         return [false, 'NeedAuth']
     }
 
-    return [true, 'valid', refresh]
+    return [true, 'valid', refresh, data.role]
 }
 
 export async function GetUserInfo(accesstoken) {
@@ -85,12 +87,13 @@ export async function GetUserInfoForServer() {
         return res
     }
     const userData = res[2]
+    const isAdmin = res[3]
     // const db = createKysely({ connectionString: process.env.POSTGRES_URL })
     // const data = await db.selectFrom('customer').select(['customer_id', 'first_name', 'last_name', 'phone', 'email', 'street', 'house', 'entrance', 'floor', 'apartment', 'intercom_code', 'discount'])
     //     .where("customer_id", '=', userData.id)
     //     .execute()
     // cookies().set('userObj', '1', { httpOnly: true, secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 })
-    return [true, userData]
+    return [true, userData, isAdmin]
 }
 
 export async function getUserCookies() {
@@ -107,10 +110,10 @@ export async function getUserCookies() {
     return [true, refresh]
 }
 
-export async function checkIsAdmin(id) {
-    const db = createKysely({ connectionString: process.env.POSTGRES_URL })
-    const data = await db.selectFrom('worker').select(['worker_id'])
-        .where(sql(`account=${id} AND role='admin'`))
-        .execute()
-    return data.length > 0
-}
+// export async function checkIsAdmin(id) {
+//     const db = createKysely({ connectionString: process.env.POSTGRES_URL })
+//     const data = await db.selectFrom('worker').select(['worker_id'])
+//         .where(sql(`account=${id} AND role='admin'`))
+//         .execute()
+//     return data.length > 0
+// }

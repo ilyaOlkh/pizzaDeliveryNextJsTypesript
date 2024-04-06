@@ -73,10 +73,11 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
             <section className="personal">
                 <div className="personal__container">
                     <div className="personal__orders">
-                        {userState ? (
-                            loadingState ? <div className="error">{HTMLLoading}</div> :
-                                (
-                                    Object.keys(ordersState).length > 0 ?
+                        {ordersState != 'no access' ?
+                            (userState ? (
+                                loadingState ?
+                                    <div className="error">{HTMLLoading}</div> :
+                                    (Object.keys(ordersState).length > 0 ?
                                         Object.entries(ordersState).map(([id, item]) => {
                                             console.log('item', item, item.order_id)
                                             return (
@@ -85,11 +86,14 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                                         }) :
                                         <div className="error">
                                             <span className="error__code">вы еще ничего не заказали</span>
-                                        </div>
-                                )
-                        ) :
+                                        </div>)
+                            ) :
+                                <div className="error">
+                                    <span className="error__code">вы не вошли в аккаунт</span>
+                                </div>)
+                            :
                             <div className="error">
-                                <span className="error__code">вы не вошли в аккаунт</span>
+                                <span className="error__code">нет доступа</span>
                             </div>
                         }
                     </div>

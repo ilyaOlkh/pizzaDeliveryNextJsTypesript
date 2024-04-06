@@ -13,12 +13,18 @@ export async function getOrders(page, numInPage, all = false) {
     } else {
         userData = await GetUserInfoForServer()
     }
+
+    if (all) {
+        isAdmin = userData[2]
+        if (!isAdmin) {
+            return 'no access'
+        }
+    }
+
     if (userData[0]) {
         userData = userData[1]
 
-        if (all) {
-            isAdmin = await checkIsAdmin(userData.customer_id)
-        }
+
 
         try {
             const db = createKysely({ connectionString: process.env.POSTGRES_URL });

@@ -4,12 +4,12 @@ import getOrdersProductsByIDs from "../service/getOrdersProductsByIDs"
 import ClientPersonalPage from "./clientPage"
 
 import { getNumOfPages } from "../service/getNumOfPages"
-import { checkIsAdmin, getUserCookies } from "../AuthControllers/GetDataController"
+import { GetUserInfoForServer } from "../AuthControllers/GetDataController"
 
 import { UserProviders } from "../context/contextProvider"
 
 export default async function personalPage(params) {
-    const userData = await getUserCookies()
+    const userData = await GetUserInfoForServer()
     let NumOfPages = Math.ceil((userData[0] ? (await getNumOfPages()).count : 1) / process.env.NEXT_PUBLIC_NUM_IN_PAGE)
 
     if (!params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE] ||
@@ -25,7 +25,7 @@ export default async function personalPage(params) {
         OrdersProducts = await getOrdersProductsByIDs()
     }
     return (
-        <UserProviders orders={orders} ordersDetails={OrdersProducts}>
+        <UserProviders orders={orders} ordersDetails={OrdersProducts} isAdmin={userData[2]}>
             <ClientPersonalPage searchParams={params.searchParams} numOfPages={NumOfPages} />
         </UserProviders>
     )

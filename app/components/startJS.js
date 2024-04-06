@@ -20,6 +20,10 @@ export function refreshSpollers() {
     flsFunctions.spollers();
 }
 
+export function refreshSelect() {
+    flsModules.select = new SelectConstructor({});
+}
+
 export default function StartJS() {
     let isStarted = false
     useEffect(() => {
