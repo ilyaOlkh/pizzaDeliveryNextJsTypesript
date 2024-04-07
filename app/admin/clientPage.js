@@ -10,7 +10,7 @@ import getOrdersProductsByIDs from "../service/getOrdersProductsByIDs"
 import { Pagination } from "@mui/material";
 import PopupOrder from "../components/PopupOrder"
 
-import { OrdersContext, OrdersDetailsContext } from "../context/contextProvider"
+import { OrdersContext, OrdersDetailsContext, isAdminContext } from "../context/contextProvider"
 
 const HTMLLoading = (
     <div className='error__loading'>
@@ -22,17 +22,25 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     const [page, setPage] = useState(searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE])
     const { userState, setUser } = useContext(MyContext)
     const { ordersState, setOrders } = useContext(OrdersContext)
+    const { isAdminState, setIsAdmin } = useContext(isAdminContext)
     const { ordersDetailsState, setOrdersDetails } = useContext(OrdersDetailsContext)
     const [loadingState, setLoading] = useState(false)
     const userStateRef = useRef(userState);
     const pageRef = useRef(page);
 
+    console.log(ordersState)
 
     const updateOrders = async () => {
         console.log('rerender')
         setLoading(true)
         let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true) || []
         let ordersProducts = await getOrdersProductsByIDs() || []
+        console.log('admin', userState ? userState.role : userState)
+        if (userState && userState.role === 'admin') {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
         setOrdersDetails(ordersProducts)
         setOrders(orders)
         setLoading(false)
@@ -98,7 +106,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                         }
                     </div>
                     {
-                        (numOfPages && numOfPages > 1) ? <div className="personal__pagination"><Pagination defaultPage={+page} hidePrevButton hideNextButton count={+numOfPages} onChange={handleChange} /></div> : <></>
+                        (numOfPages && numOfPages > 1 && ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <div className="personal__pagination"><Pagination defaultPage={+page} hidePrevButton hideNextButton count={+numOfPages} onChange={handleChange} /></div> : <></>
                     }
 
                 </div>

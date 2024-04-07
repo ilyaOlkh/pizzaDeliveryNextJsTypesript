@@ -34,7 +34,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
         console.log('rerender')
         setLoading(true)
         let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
-        let ordersProducts = await getOrdersProductsByIDs(Object.keys(orders), +page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
+        let ordersProducts = await getOrdersProductsByIDs(orders.map(value => value.order_id), +page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
         setOrdersDetails(ordersProducts)
         setOrders(orders)
         setLoading(false)
@@ -81,6 +81,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                                     Object.keys(ordersState).length > 0 ?
                                         Object.entries(ordersState).map(([id, item]) => {
                                             console.log('item', item, item.order_id)
+                                            console.log(ordersDetailsState)
                                             return (
                                                 <OrderItem orderData={item} orderProductsData={ordersDetailsState[item.order_id]} />
                                             )

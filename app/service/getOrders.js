@@ -48,15 +48,17 @@ export async function getOrders(page, numInPage, all = false) {
                     query = query.where(sql(`order_.customer_id = ${userData.customer_id}`));
                 }
             }
+            query = query.orderBy('order_.order_id', 'asc')
             if (page && numInPage) {
                 query = query.limit(numInPage).offset((page - 1) * numInPage)
             }
             let result = await query.execute()
-            let groupedOrders = result.reduce((acc, cur) => {
-                acc[cur.order_id] = cur;
-                return acc;
-            }, {});
-            return groupedOrders
+            // let groupedOrders = result.reduce((acc, cur) => {
+            //     acc[cur.order_id] = cur;
+            //     return acc;
+            // }, {});
+            // return groupedOrders
+            return result
 
         } catch (error) {
             console.log({ error: `Ошибка: ${error.message}` })

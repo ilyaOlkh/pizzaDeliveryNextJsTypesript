@@ -22,7 +22,7 @@ export default async function personalPage(params) {
     let orders = await getOrders(params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE], process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
     let OrdersProducts = [];
     if (Object.keys(orders).length > 0) {
-        OrdersProducts = await getOrdersProductsByIDs(Object.keys(orders), params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE], process.env.NEXT_PUBLIC_NUM_IN_PAGE)
+        OrdersProducts = await getOrdersProductsByIDs(orders.map(value => value.order_id), params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE], process.env.NEXT_PUBLIC_NUM_IN_PAGE)
     }
     return (
         <UserProviders orders={orders} ordersDetails={OrdersProducts}>

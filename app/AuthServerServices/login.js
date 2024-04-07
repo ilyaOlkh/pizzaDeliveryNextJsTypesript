@@ -10,8 +10,12 @@ export default async function login(query) {
     }
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
 
-    let candidateEmail = await db.selectFrom('customer').where('email', '=', queryObj.email).select(['customer_id', 'first_name', 'last_name', 'phone', 'email', 'street',
-        'house', 'entrance', 'floor', 'apartment', 'intercom_code', 'discount', 'password']).execute()
+    let candidateEmail = await db.selectFrom('customer')
+        .leftJoin('worker', 'customer.customer_id', "worker.account")
+        .where('email', '=', queryObj.email)
+        .select(['customer.customer_id', 'customer.first_name', 'customer.last_name', 'customer.phone', 'customer.email', 'customer.street',
+            'customer.house', 'customer.entrance', 'customer.floor', 'customer.apartment', 'customer.intercom_code', 'customer.discount', 'customer.password', 'worker.role'])
+        .execute()
     if (candidateEmail.length == 0) {
         throw `Пользователь с почтовым индексом ${queryObj.email} не найден`
     }
@@ -32,6 +36,7 @@ export default async function login(query) {
         apartment: candidateEmail.apartment,
         intercom_code: candidateEmail.intercom_code,
         discount: candidateEmail.discount,
+        role: candidateEmail.role,
     })
     await saveToken(candidateEmail.customer_id, tokens.refreshtoken)
 
@@ -50,6 +55,7 @@ export default async function login(query) {
             apartment: candidateEmail.apartment,
             intercom_code: candidateEmail.intercom_code,
             discount: candidateEmail.discount,
+            role: candidateEmail.role,
         }
     }
 }
