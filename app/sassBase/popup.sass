@@ -206,6 +206,19 @@ body::after
             &:hover
                 background: #FF7010
                 color: #fff
+    &__button-wrapper
+        align-self: start
+    &__button-sort
+        display: flex
+        gap: toRem(5)
+        width: auto
+        img
+            width: 100%
+            max-width: toRem(15)
+            display: inline-block
+            transition: 0.1s
+        .reversed
+            transform: rotate(180deg)
     button.popup-from-left__button
         &_disable
             border: 1px solid #c4c4c4

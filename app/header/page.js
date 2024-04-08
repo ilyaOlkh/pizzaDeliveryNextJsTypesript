@@ -47,6 +47,11 @@ export default function Header() {
                                         <div className="spollers__body">
                                             <div className="spollers__body-inner">
                                                 <ul className="menu__more menu-more">
+                                                    {userState.role ?
+                                                        <a href="/admin" id="account" className="header__link header__link_account header__link_right">
+                                                            <span>Панель адміна</span>
+                                                        </a>
+                                                        : <></>}
                                                     <a href="/personal" id="account" className="header__link header__link_account header__link_right">
                                                         <span>Сторінка заказів</span>
                                                     </a>

@@ -5,7 +5,7 @@ import { getUserCookies } from "../AuthControllers/GetDataController"
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
 
-export async function getOrders(page, numInPage, all = false) {
+export async function getOrders(page, numInPage, all = false, sort) {
     let userData;
     let isAdmin = false;
     if (!all) {
@@ -33,6 +33,9 @@ export async function getOrders(page, numInPage, all = false) {
             if (isAdmin) {
                 query = query.leftJoin('customer', 'order_.customer_id', 'customer.customer_id')
             }
+            if (sort) {
+                query = query.leftJoin('orderdetails', 'order_.order_id', 'orderdetails.order_id')
+            }
             query = query.select([
                 'order_.order_id',
                 // 'order_.customer_id',
@@ -48,7 +51,10 @@ export async function getOrders(page, numInPage, all = false) {
                     query = query.where(sql(`order_.customer_id = ${userData.customer_id}`));
                 }
             }
-            query = query.orderBy('order_.order_id', 'asc')
+            if (sort) {
+                query = query.orderBy(sql(sort.sortRule), sort.direction)
+                query = query.groupBy(sql("order_.order_id, customer.first_name, customer.last_name"))
+            }
             if (page && numInPage) {
                 query = query.limit(numInPage).offset((page - 1) * numInPage)
             }
@@ -62,6 +68,7 @@ export async function getOrders(page, numInPage, all = false) {
 
         } catch (error) {
             console.log({ error: `Ошибка: ${error.message}` })
+            setTimeout(() => { console.log({ error: `Ошибка: ${error.message}` }) }, 3000)
             return 'error'
         }
     }

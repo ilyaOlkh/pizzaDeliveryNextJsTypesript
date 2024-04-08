@@ -9,8 +9,9 @@ import OrderItem from "../ui/orderItem"
 import getOrdersProductsByIDs from "../service/getOrdersProductsByIDs"
 import { Pagination } from "@mui/material";
 import PopupOrder from "../components/PopupOrder"
+import PopupSort from "../components/PopupSort"
 
-import { OrdersContext, OrdersDetailsContext, isAdminContext } from "../context/contextProvider"
+import { OrdersContext, OrdersDetailsContext, isAdminContext, sortContext } from "../context/contextProvider"
 
 const HTMLLoading = (
     <div className='error__loading'>
@@ -24,18 +25,18 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     const { ordersState, setOrders } = useContext(OrdersContext)
     const { isAdminState, setIsAdmin } = useContext(isAdminContext)
     const { ordersDetailsState, setOrdersDetails } = useContext(OrdersDetailsContext)
+    const { sortState, setSort } = useContext(sortContext);
     const [loadingState, setLoading] = useState(false)
     const userStateRef = useRef(userState);
     const pageRef = useRef(page);
+    const sortRef = useRef(sortState);
 
-    console.log(ordersState)
 
     const updateOrders = async () => {
         console.log('rerender')
         setLoading(true)
-        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true) || []
+        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true, sortState) || []
         let ordersProducts = await getOrdersProductsByIDs() || []
-        console.log('admin', userState ? userState.role : userState)
         if (userState && userState.role === 'admin') {
             setIsAdmin(true)
         } else {
@@ -53,7 +54,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
         }
     }, [userState])
     useEffect(() => {
-        if (pageRef.current != page) {
+        if (pageRef.current != page || sortRef.current != sortState) {
             console.log('rerender')
 
             pageRef.current = page
@@ -62,7 +63,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
             setPageParam()
 
         }
-    }, [page])
+    }, [page, sortState])
 
     function handleChange(event, page) {
         setPage(page)
@@ -75,12 +76,23 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
         history.pushState({}, '', `?${params}`)
     }
     return <>
-        <PopupOrder />
+        {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <PopupOrder /> : <></>}
+        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupSort /> : <></>}
         <Header />
         <main className="page">
             <section className="personal">
                 <div className="personal__container">
                     <div className="personal__orders">
+                        {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ?
+                            <div className="personal__buttons">
+                                <button type="button" data-popup="#filters" className="button button_white">
+                                    <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фільтри</span>
+                                </button>
+                                <button type="button" data-popup="#sort" className="button button_white">
+                                    <img src="/Common/Sort.svg" alt="sort" width={20} height={20} /><span>Сортування</span>
+                                </button>
+                            </div> : <></>
+                        }
                         {ordersState != 'no access' ?
                             (userState ? (
                                 loadingState ?

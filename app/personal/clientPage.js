@@ -69,7 +69,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
         history.pushState({}, '', `?${params}`)
     }
     return <>
-        <PopupOrder />
+        {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <PopupOrder /> : <></>}
         <Header />
         <main className="page">
             <section className="personal">

@@ -8,6 +8,8 @@ import { GetUserInfoForServer } from "../AuthControllers/GetDataController"
 
 import { UserProviders } from "../context/contextProvider"
 
+const sortRuleId = 'sort'
+
 export default async function personalPage(params) {
     const userData = await GetUserInfoForServer()
     let NumOfPages = Math.ceil((userData[0] ? (await getNumOfPages()).count : 1) / process.env.NEXT_PUBLIC_NUM_IN_PAGE)
@@ -19,13 +21,14 @@ export default async function personalPage(params) {
         params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE] = '1'
         await redirectUrl(`?${new URLSearchParams(params.searchParams)}`)
     }
-    let orders = await getOrders(params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE], process.env.NEXT_PUBLIC_NUM_IN_PAGE, true) || []
+    let sort = { sortRule: params.searchParams[sortRuleId] || 'order_date_time', direction: params.searchParams['direction'] || 'asc' }
+    let orders = await getOrders(params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE], process.env.NEXT_PUBLIC_NUM_IN_PAGE, true, sort) || []
     let OrdersProducts = [];
     if (Object.keys(orders).length > 0) {
         OrdersProducts = await getOrdersProductsByIDs()
     }
     return (
-        <UserProviders orders={orders} ordersDetails={OrdersProducts} isAdmin={userData[2]}>
+        <UserProviders orders={orders} ordersDetails={OrdersProducts} isAdmin={userData[2]} sort={sort}>
             <ClientPersonalPage searchParams={params.searchParams} numOfPages={NumOfPages} />
         </UserProviders>
     )
