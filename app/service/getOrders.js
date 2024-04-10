@@ -5,9 +5,11 @@ import { getUserCookies } from "../AuthControllers/GetDataController"
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
 
-export async function getOrders(page, numInPage, all = false, sort) {
+export async function getOrders(page, numInPage, all = false, sort, filters) {
     let userData;
     let isAdmin = false;
+    let querytextGlobal = ``
+
     if (!all) {
         userData = await getUserCookies()
     } else {
@@ -23,9 +25,6 @@ export async function getOrders(page, numInPage, all = false, sort) {
 
     if (userData[0]) {
         userData = userData[1]
-
-
-
         try {
             const db = createKysely({ connectionString: process.env.POSTGRES_URL });
 
@@ -46,29 +45,47 @@ export async function getOrders(page, numInPage, all = false, sort) {
                 (isAdmin ? 'customer.first_name' : null),
                 (isAdmin ? 'customer.last_name' : null),
             ].filter(Boolean))
-            if (!isAdmin) {
-                if (userData) {
-                    query = query.where(sql(`order_.customer_id = ${userData.customer_id}`));
+
+            if (filters) {
+                for (const value in filters) {
+                    const ingredients = filters[value].split(",").map((elem) => `'${elem}'`);
+                    let querytext = ''
+                    ingredients.forEach(element => {
+                        querytext += element + ', '
+                    });
+                    querytext = querytext.slice(0, -2);
+                    querytextGlobal += ` ${value} in (${querytext}) AND `
                 }
+                querytextGlobal = querytextGlobal.slice(0, -4);
+
+                console.log(querytextGlobal)
+
             }
+
+            if (!isAdmin && userData) {
+                query = query.where(sql(`${querytextGlobal}order_.customer_id = ${userData.customer_id}`));
+            } else if (filters) {
+
+                console.log(querytextGlobal)
+
+                query = query.where(sql(`${querytextGlobal}`))
+            }
+
             if (sort) {
                 query = query.orderBy(sql(sort.sortRule), sort.direction)
                 query = query.groupBy(sql("order_.order_id, customer.first_name, customer.last_name"))
+            } else {
+                query = query.orderBy('order_date_time', 'desc')
             }
             if (page && numInPage) {
                 query = query.limit(numInPage).offset((page - 1) * numInPage)
             }
             let result = await query.execute()
-            // let groupedOrders = result.reduce((acc, cur) => {
-            //     acc[cur.order_id] = cur;
-            //     return acc;
-            // }, {});
-            // return groupedOrders
             return result
 
         } catch (error) {
-            console.log({ error: `Ошибка: ${error.message}` })
-            setTimeout(() => { console.log({ error: `Ошибка: ${error.message}` }) }, 3000)
+            console.log({ error: `1Ошибка: ${error.message}` })
+            setTimeout(() => { console.log({ error: `1Ошибка: ${error.message}` }) }, 3000)
             return 'error'
         }
     }

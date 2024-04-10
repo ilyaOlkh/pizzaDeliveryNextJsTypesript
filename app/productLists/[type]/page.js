@@ -7,6 +7,7 @@ import Filters from '@/app/components/popupFilters'
 import PopupProduct from '@/app/components/popupProduct'
 import getProducts from '../../service/getProducts.js'
 import PopupReg from '@/app/components/popupReg'
+import getFilters from '@/app/service/getFilters'
 import { GetUserInfoForServer } from '@/app/AuthControllers/GetDataController';
 
 const i_types = await getIngredientsTypes()
@@ -29,6 +30,7 @@ export default async function productList(params) {
 
 
     let type = decodeURIComponent(params.params.type)
+    const filtersContent = await getFilters(type);
     let typeUpper = type.charAt(0).toUpperCase() + type.slice(1);
     let products
     if (Object.keys(filters).length !== 0) {
@@ -60,7 +62,7 @@ export default async function productList(params) {
     }
     return (
         <>
-            {ProductTypes.includes(type) ? <Filters type={type} /> : <></>}
+            {ProductTypes.includes(type) ? <Filters filtersContent={filtersContent} /> : <></>}
             <PopupProduct />
             <Header />
             <main className="page">

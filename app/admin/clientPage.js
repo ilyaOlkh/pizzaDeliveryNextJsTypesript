@@ -10,6 +10,7 @@ import getOrdersProductsByIDs from "../service/getOrdersProductsByIDs"
 import { Pagination } from "@mui/material";
 import PopupOrder from "../components/PopupOrder"
 import PopupSort from "../components/PopupSort"
+import PopupFilters from "../components/popupFilters"
 
 import { OrdersContext, OrdersDetailsContext, isAdminContext, sortContext } from "../context/contextProvider"
 
@@ -19,7 +20,7 @@ const HTMLLoading = (
     </div>
 )
 
-export default function ClientPersonalPage({ searchParams, numOfPages }) {
+export default function ClientPersonalPage({ searchParams, numOfPages, filters }) {
     const [page, setPage] = useState(searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE])
     const { userState, setUser } = useContext(MyContext)
     const { ordersState, setOrders } = useContext(OrdersContext)
@@ -35,7 +36,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     const updateOrders = async () => {
         console.log('rerender')
         setLoading(true)
-        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true, sortState) || []
+        let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE, true, sortState, filters) || []
         let ordersProducts = await getOrdersProductsByIDs() || []
         if (userState && userState.role === 'admin') {
             setIsAdmin(true)
@@ -78,6 +79,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     return <>
         {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <PopupOrder /> : <></>}
         {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupSort /> : <></>}
+        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupFilters filtersContent={JSON.parse(process.env.NEXT_PUBLIC_SORTS_ORDER)} /> : <></>}
         <Header />
         <main className="page">
             <section className="personal">
@@ -99,13 +101,12 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                                     <div className="error">{HTMLLoading}</div> :
                                     (Object.keys(ordersState).length > 0 ?
                                         Object.entries(ordersState).map(([id, item]) => {
-                                            console.log('item', item, item.order_id)
                                             return (
                                                 <OrderItem orderData={item} orderProductsData={ordersDetailsState[item.order_id]} />
                                             )
                                         }) :
                                         <div className="error">
-                                            <span className="error__code">вы еще ничего не заказали</span>
+                                            <span className="error__code">Немає замовлень</span>
                                         </div>)
                             ) :
                                 <div className="error">

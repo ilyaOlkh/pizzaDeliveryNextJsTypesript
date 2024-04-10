@@ -9,13 +9,11 @@ export default async function getOrdersProductsByIDs(idArray) {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
     let userData;
     let isAdmin = false;
-    console.log(idArray)
     if (idArray) {
         userData = await getUserCookies()
     } else {
         userData = await GetUserInfoForServer()
     }
-    console.log("--------------------------------------", userData)
 
     if (!idArray) {
         isAdmin = userData[2]
@@ -46,12 +44,10 @@ export default async function getOrdersProductsByIDs(idArray) {
                 return []
             }
             for (const value of idArray) {
-                console.log(value)
                 querytextGlobal += `orderdetails.order_id = ${value} OR `
             }
             querytextGlobal = querytextGlobal.slice(0, -4);
             querytextGlobal = `(${querytextGlobal}) AND order_.customer_id = ${userData.customer_id}`
-            console.log(querytextGlobal)
             query = query.where(sql(querytextGlobal));
         }
         // query = query.having('order_.customer_id', '=', userData.customer_id)
@@ -66,10 +62,9 @@ export default async function getOrdersProductsByIDs(idArray) {
                 acc[cur.order_id].push(cur);
                 return acc;
             }, {});
-            console.log('groupedOrders', groupedOrders)
             return groupedOrders;
         } catch (err) {
-            console.error('error:', err);
+            console.error('2error:', err);
             return [];
         }
     }

@@ -9,7 +9,6 @@ export default function PopupCart() {
     const { cartState, setCart } = useContext(CartContext)
     const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
     const { userState, setUser } = useContext(MyContext);
-    console.log(userState)
     let uniqueCartItemKey = 0
 
     return <>

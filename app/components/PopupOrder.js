@@ -18,7 +18,6 @@ export default function PopupOrder() {
     const [thisOrderState, setThisOrder] = useState({})
     let uniqueCartItemKey = 0
 
-    console.log(thisOrderState)
 
     async function onSubmit(event) {
         show()
@@ -29,7 +28,6 @@ export default function PopupOrder() {
             const formObj = Object.fromEntries(formData.entries())
             const keys = Object.keys(formObj)
             const thisOrder = thisOrderState.thisOrder
-            console.log(formObj)
             if (thisOrder) {
                 keys.forEach((key) => {
                     if (thisOrder[key] && thisOrder[key] != formObj[key]) {
@@ -37,7 +35,6 @@ export default function PopupOrder() {
                     }
                 })
             }
-            console.log(Changes)
             let res;
             if (Object.keys(Changes).length > 0) {
                 res = await updateOrder(Changes, thisOrderState.order_id)
@@ -53,7 +50,6 @@ export default function PopupOrder() {
                 })
                 setOrders(newOrdersState)
             }
-            console.log(res, ordersState)
         }
         hide()
     }
@@ -176,10 +172,8 @@ function getOrderPrice(orderProductsData) {
 }
 
 function findById(id, ordersState) {
-    console.log(ordersState)
     for (let item in ordersState) {
         if (ordersState[item].order_id == id) {
-            console.log(ordersState[item])
             return +item
         }
     }

@@ -1,7 +1,8 @@
 'use client';
+import { useRouter } from "next/router";
 import { createContext, useState } from "react";
 import { setCartCookie } from "../CartServerServices/SetCartCookie";
-import { setParam } from "../service/setSearchParam";
+import { setParams } from "../service/setSearchParams";
 
 export const MyContext = createContext();
 export const CartContext = createContext();
@@ -41,8 +42,7 @@ export function UserProviders({ children, orders, ordersDetails, isAdmin = false
     const [sortState, setSortState] = useState(sort);
 
     function setSort(sortState) {
-        setParam('sort', sortState.sortRule)
-        setParam('direction', sortState.direction)
+        setParams(sortState)
         setSortState(sortState)
     }
     return (

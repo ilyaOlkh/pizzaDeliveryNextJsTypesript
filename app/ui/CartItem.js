@@ -6,7 +6,6 @@ import { useContext } from 'react';
 
 export default function CartItem({ productData, number, lock = false }) {
     const { cartState, setCart } = useContext(CartContext)
-    console.log(productData, number)
     let info = !lock ? cartState[number] : productData
     function incQuantity() {
         if (!lock) {
@@ -29,10 +28,8 @@ export default function CartItem({ productData, number, lock = false }) {
     function deleteItem(event) {
         event.preventDefault()
         if (!lock) {
-            console.log(cartState)
             let newCartState = [...cartState]
             newCartState.splice(number, 1);
-            console.log(newCartState)
             setCart(newCartState)
         }
     }

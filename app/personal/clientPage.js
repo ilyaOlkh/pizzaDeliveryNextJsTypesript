@@ -31,7 +31,6 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
 
 
     const updateOrders = async () => {
-        console.log('rerender')
         setLoading(true)
         let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
         let ordersProducts = await getOrdersProductsByIDs(orders.map(value => value.order_id), +page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
@@ -41,18 +40,15 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     }
     useEffect(() => {
         if (userStateRef.current != userState) {
-            console.log('rerender')
             userStateRef.current = userState
             updateOrders()
         }
     }, [userState])
     useEffect(() => {
         if (pageRef.current != page) {
-            console.log('rerender')
 
             pageRef.current = page
             updateOrders()
-            console.log(page)
             setPageParam()
 
         }
@@ -80,8 +76,6 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                                 (
                                     Object.keys(ordersState).length > 0 ?
                                         Object.entries(ordersState).map(([id, item]) => {
-                                            console.log('item', item, item.order_id)
-                                            console.log(ordersDetailsState)
                                             return (
                                                 <OrderItem orderData={item} orderProductsData={ordersDetailsState[item.order_id]} />
                                             )

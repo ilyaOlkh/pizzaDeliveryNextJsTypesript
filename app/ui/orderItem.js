@@ -24,6 +24,14 @@ export default function OrderItem({ orderData, orderProductsData }) {
             }
             <div className="order__info">
                 <div className="order__info-title">
+                    Дата та час
+                </div>
+                <div className="order__info-value">
+                    {orderData.order_date_time.toLocaleString()}
+                </div>
+            </div>
+            <div className="order__info">
+                <div className="order__info-title">
                     Сумма заказа
                 </div>
                 <div className="order__info-value">

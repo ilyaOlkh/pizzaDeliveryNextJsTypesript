@@ -14,7 +14,6 @@ const HTMLLoading = (
 export default function PopupSort() {
     const [filters, setFilters] = useState([]);
     const { sortState, setSort } = useContext(sortContext);
-    console.log(sortState)
     let content;
     let uniqueKeyLable = 0
     let uniqueDivKey = 0
@@ -31,30 +30,23 @@ export default function PopupSort() {
         { sortRule: "delivery", value: "Тип доставки" },
     ]
 
-    function updateSort(event) {
-        event.preventDefault()
-    }
-
     function handleClick(event) {
         event.preventDefault()
         const newSortRule = event.target.closest('button').dataset.sortRule
         let newSortDir = 'asc'
-        console.log(newSortRule, 'hf')
         if (sortState.sortRule == newSortRule) {
-            console.log('hf')
             if (sortState.direction == 'asc') {
                 newSortDir = 'desc'
             } else {
                 newSortDir = 'asc'
             }
         }
-        console.log(sortState)
         setSort({ sortRule: newSortRule, direction: newSortDir })
     }
 
     return (<div id="sort" aria-hidden="true" className="popup popup-from-left">
         <div className="popup__wrapper">
-            <form onSubmit={updateSort} method="POST" className="popup__content popup-from-left__body">
+            <div className="popup__content popup-from-left__body">
                 <div className="popup-from-left__header popup__header">
                     <span className="popup-from-left__title popup__title">Сортування</span>
                     <button data-close="data-close" type="button" className="popup__close">
@@ -76,7 +68,7 @@ export default function PopupSort() {
 
                     </div>
                 </div>
-            </form>
+            </div>
         </div >
     </div >);
 }

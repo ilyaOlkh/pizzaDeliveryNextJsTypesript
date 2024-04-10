@@ -16,7 +16,6 @@ export default function PopupSend() {
         event.preventDefault()
         const formData = new FormData(event.target);
         let delivery = formData.get('delivery')
-        console.log(userState)
         const res = await insertOrder(delivery, 1, userState.customer_id, cartState)
         if (res === 'success') {
             setCart([])

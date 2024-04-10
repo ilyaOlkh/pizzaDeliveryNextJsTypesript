@@ -10,19 +10,11 @@ const HTMLLoading = (
     </div>
 )
 
-export default function popupFilters({ type }) {
-    const [filters, setFilters] = useState([]);
+export default function popupFilters({ filtersContent }) {
+    const [filters, setFilters] = useState(filtersContent);
     let content;
     let uniqueKeyLable = 0
     let uniqueDivKey = 0
-    useEffect(() => {
-        console.log('фильтры отрендерены')
-        const fetchFilters = async () => {
-            const filters = await getFilters(type);
-            setFilters(filters);
-        };
-        fetchFilters();
-    }, []);
     if (filters.length == 0) {
         content = HTMLLoading
     } else {
@@ -40,7 +32,7 @@ export default function popupFilters({ type }) {
                                             uniqueKeyLable++
                                             return (
                                                 <label className="popup-from-left__option" key={uniqueKeyLable}>
-                                                    <input id={elem} type="checkbox" name={encodeURIComponent(block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
+                                                    <input id={elem} type="checkbox" name={encodeURIComponent(block.filterRule ? block.filterRule : block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
                                                 </label>
                                             )
                                         })
@@ -53,9 +45,16 @@ export default function popupFilters({ type }) {
             </div>
         )
     }
+
+    function onSubmit(event) {
+        event.preventDefault()
+        const formData = new FormData(event.target);
+        updateFilters(formData, window.location.search)
+    }
+
     return (<div id="filters" aria-hidden="true" className="popup popup-from-left">
         <div className="popup__wrapper">
-            <form action={updateFilters} method="POST" className="popup__content popup-from-left__body">
+            <form onSubmit={onSubmit} method="POST" className="popup__content popup-from-left__body">
                 <div className="popup-from-left__header popup__header">
                     <span className="popup-from-left__title popup__title">Фильтры</span>
                     <button data-close="data-close" type="button" className="popup__close">

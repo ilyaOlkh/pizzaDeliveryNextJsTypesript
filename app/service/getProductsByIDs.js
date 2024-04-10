@@ -28,7 +28,6 @@ export async function getProductsByIDs(idArray) {
         querytextGlobal += `pizzadetails.id = ${value} OR `
     }
     querytextGlobal = querytextGlobal.slice(0, -4);
-    console.log(querytextGlobal)
     query = query.where(sql(querytextGlobal));
 
     query = query.orderBy('pizzadetails.id');
