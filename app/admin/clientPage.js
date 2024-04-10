@@ -20,6 +20,18 @@ const HTMLLoading = (
     </div>
 )
 
+const sortParams = [
+    { sortRule: "order_id", value: "Номер замовлення" },
+    { sortRule: "order_date_time", value: "час" },
+    { sortRule: "status", value: "статус" },
+    { sortRule: "count(order_details_id)", value: "Кількість унікальних продуктів" },
+    { sortRule: "sum(quantity)", value: "Кількість продуктів" },
+    { sortRule: "sum(selled_price*quantity)", value: "Загальна ціна" },
+    { sortRule: "first_name || ' ' || last_name", value: "замовник" },
+    { sortRule: "payment", value: "Оплата" },
+    { sortRule: "delivery", value: "Тип доставки" },
+]
+
 export default function ClientPersonalPage({ searchParams, numOfPages, filters }) {
     const [page, setPage] = useState(searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE])
     const { userState, setUser } = useContext(MyContext)
@@ -57,7 +69,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages, filters }
     useEffect(() => {
         if (pageRef.current != page || sortRef.current != sortState) {
             console.log('rerender')
-
+            sortRef.current = sortState
             pageRef.current = page
             updateOrders()
             console.log(page)
@@ -78,7 +90,7 @@ export default function ClientPersonalPage({ searchParams, numOfPages, filters }
     }
     return <>
         {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <PopupOrder /> : <></>}
-        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupSort /> : <></>}
+        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupSort sortParams={sortParams} /> : <></>}
         {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupFilters filtersContent={JSON.parse(process.env.NEXT_PUBLIC_SORTS_ORDER)} /> : <></>}
         <Header />
         <main className="page">

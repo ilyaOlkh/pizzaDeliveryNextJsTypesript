@@ -6,7 +6,7 @@ import ClientPersonalPage from "./clientPage"
 import { getNumOfPages } from "../service/getNumOfPages"
 import { GetUserInfoForServer } from "../AuthControllers/GetDataController"
 
-import { UserProviders } from "../context/contextProvider"
+import { UserProviders, SortProvider } from "../context/contextProvider"
 
 const sortRuleId = process.env.NEXT_PUBLIC_SORT_PARAM
 
@@ -45,8 +45,10 @@ export default async function personalPage(params) {
         OrdersProducts = await getOrdersProductsByIDs()
     }
     return (
-        <UserProviders orders={orders} ordersDetails={OrdersProducts} isAdmin={userData[2]} sort={sort}>
-            <ClientPersonalPage searchParams={params.searchParams} numOfPages={NumOfPages} filters={Object.keys(filters).length > 0 ? filters : undefined} />
+        <UserProviders orders={orders} ordersDetails={OrdersProducts} isAdmin={userData[2]} >
+            <SortProvider sort={sort}>
+                <ClientPersonalPage searchParams={params.searchParams} numOfPages={NumOfPages} filters={Object.keys(filters).length > 0 ? filters : undefined} />
+            </SortProvider>
         </UserProviders>
     )
 }

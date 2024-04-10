@@ -13,6 +13,23 @@ export const OrdersDetailsContext = createContext();
 export const isAdminContext = createContext();
 export const sortContext = createContext();
 
+export function SortProvider({ children, sort }) {
+    const [sortState, setSortState] = useState(sort);
+
+    function setSort(sortState) {
+        setParams(sortState)
+        setSortState(sortState)
+    }
+
+    return (
+        <sortContext.Provider value={{ sortState, setSort }}>
+            {children}
+        </sortContext.Provider>
+    );
+}
+
+
+
 export function Providers({ children, user, cart, ProductsInfo }) {
     const [userState, setUser] = useState(user);
     const [cartState, setCartWithoutCookie] = useState(cart);
@@ -35,23 +52,17 @@ export function Providers({ children, user, cart, ProductsInfo }) {
     );
 }
 
-export function UserProviders({ children, orders, ordersDetails, isAdmin = false, sort }) {
+export function UserProviders({ children, orders, ordersDetails, isAdmin = false }) {
     const [ordersState, setOrders] = useState(orders);
     const [ordersDetailsState, setOrdersDetails] = useState(ordersDetails);
     const [isAdminState, setIsAdmin] = useState(isAdmin);
-    const [sortState, setSortState] = useState(sort);
 
-    function setSort(sortState) {
-        setParams(sortState)
-        setSortState(sortState)
-    }
+
     return (
         <OrdersContext.Provider value={{ ordersState, setOrders }}>
             <OrdersDetailsContext.Provider value={{ ordersDetailsState, setOrdersDetails }}>
                 <isAdminContext.Provider value={{ isAdminState, setIsAdmin }}>
-                    <sortContext.Provider value={{ sortState, setSort }}>
-                        {children}
-                    </sortContext.Provider>
+                    {children}
                 </isAdminContext.Provider>
             </OrdersDetailsContext.Provider>
         </OrdersContext.Provider >

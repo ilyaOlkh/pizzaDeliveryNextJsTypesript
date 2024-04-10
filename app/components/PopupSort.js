@@ -1,7 +1,5 @@
 'use client'
-import getFilters from '../service/getFilters'
-import { useEffect, useState, useContext } from 'react';
-import { updateFilters } from '../service/updateFilters'
+import { useState, useContext } from 'react';
 import { sortContext } from '../context/contextProvider';
 
 
@@ -11,24 +9,9 @@ const HTMLLoading = (
     </div>
 )
 
-export default function PopupSort() {
+export default function PopupSort({ sortParams }) {
     const [filters, setFilters] = useState([]);
     const { sortState, setSort } = useContext(sortContext);
-    let content;
-    let uniqueKeyLable = 0
-    let uniqueDivKey = 0
-
-    const sortParams = [
-        { sortRule: "order_id", value: "Номер замовлення" },
-        { sortRule: "order_date_time", value: "час" },
-        { sortRule: "status", value: "статус" },
-        { sortRule: "count(order_details_id)", value: "Кількість унікальних продуктів" },
-        { sortRule: "sum(quantity)", value: "Кількість продуктів" },
-        { sortRule: "sum(selled_price*quantity)", value: "Загальна ціна" },
-        { sortRule: "first_name || ' ' || last_name", value: "замовник" },
-        { sortRule: "payment", value: "Оплата" },
-        { sortRule: "delivery", value: "Тип доставки" },
-    ]
 
     function handleClick(event) {
         event.preventDefault()
