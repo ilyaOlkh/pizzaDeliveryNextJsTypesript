@@ -109,9 +109,11 @@ body::after
     &__messages
         position: absolute
         top: 0
-        left: 50vw
-        transform: translate(-50%,0)
-        margin: auto
+        // left: 50vw
+        // right: -50vw
+        transform: translate(calc(50vw - 50%),0)
+        // margin: auto
+        width: auto
         z-index: 1
 
     &__messages-wrapper
