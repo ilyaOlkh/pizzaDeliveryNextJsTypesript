@@ -11,6 +11,7 @@ import { UserProviders } from "../context/contextProvider"
 export default async function personalPage(params) {
     const userData = await getUserCookies()
     let NumOfPages = Math.ceil((userData[0] ? (await getNumOfPages(userData[1].customer_id)).count : 1) / process.env.NEXT_PUBLIC_NUM_IN_PAGE)
+    NumOfPages = NumOfPages === 0 ? 1 : NumOfPages
 
     if (!params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE] ||
         params.searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE] < 1 ||

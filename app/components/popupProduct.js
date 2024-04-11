@@ -7,11 +7,29 @@ import { SubmitProductForm } from '../CartClientServises/CartServices.js';
 import { CartContext } from '../context/contextProvider'
 import { ProductsInfoContext } from '../context/contextProvider';
 
+import ReactDOMServer from 'react-dom/server';
+
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
 )
 
 const popupProductHash = '#card'
+
+function addMessage() {
+    let thisMessages = document.querySelector('.card .popup__messages-wrapper')
+    let newMessage = document.createElement('div');
+    newMessage.classList.add('popup__message', 'popup__message_hidden')
+    // newMessage.classList.add('popup__message_hidden')
+    newMessage.innerHTML = `<div class="popup__message-inner"><img src="/common/checkMark.svg" alt="checkMark" />Товар додан до корзини!</div>`
+    thisMessages.appendChild(newMessage);
+    setTimeout(() => { newMessage.classList.remove('popup__message_hidden') }, 10)
+    setTimeout(() => {
+        newMessage.classList.add('popup__message_hidden')
+        setTimeout(() => { newMessage.remove() }, 3000);
+    }, 3000)
+
+    console.log(newMessage)
+}
 
 export default function popupProduct() {
     const { cartState, setCart } = useContext(CartContext)
@@ -54,6 +72,7 @@ export default function popupProduct() {
             }
             setCart([...cartState, { id: curentSize.id, quantity: 1, dough: formData.get('dough'), selled_price: curentSize.price }])
         }
+        addMessage()
     }
 
     async function click1(e) {
@@ -208,6 +227,10 @@ export default function popupProduct() {
     }
     return (
         <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className="popup card">
+            <div className="popup__messages">
+                <div className="popup__messages-wrapper">
+                </div>
+            </div>
             <div className="popup__wrapper card__wrapper">
                 <div className="popup__content card__content">
                     <button data-close="data-close" type="button" className="popup__close card__close"><img src="/Common/CrossWhite.svg" alt="Cross" /></button>
@@ -216,6 +239,6 @@ export default function popupProduct() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

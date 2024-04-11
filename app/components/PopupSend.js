@@ -5,6 +5,7 @@ import CartItem from "../ui/CartItem"
 import insertOrder from "../CartServerServices/SendCart"
 import { flsModules } from "../js/files/modules"
 import { show, hide } from "./loading"
+import { getTotalPrice } from '../CartClientServises/CartServices';
 
 export default function PopupSend() {
     const { cartState, setCart } = useContext(CartContext)
@@ -48,7 +49,9 @@ export default function PopupSend() {
                                 })
                             }
                         </div>
-                        <div className="popup-from-left__clarification clarification">
+                        <div className="popup-window__total">{`Итого: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
+                        <div className="popup-window__clarification clarification">
+
                             <div className="clarification__title">
                                 Доставка
                             </div>
@@ -60,6 +63,7 @@ export default function PopupSend() {
                                     <input type="radio" value="самовывоз" name="delivery" style={{ display: 'none' }} /><span id="word_opts">Самовывоз</span>
                                 </label>
                             </div>
+
                         </div>
                         <div className="popup-from-left__buttons">
                             {cartState.length < 1 ?

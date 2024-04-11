@@ -106,6 +106,53 @@ body::after
         .lock &
             visibility: visible
             transition: transform 0.3s ease 0s
+    &__messages
+        position: absolute
+        top: 0
+        left: 50vw
+        transform: translate(-50%,0)
+        margin: auto
+        z-index: 1
+
+    &__messages-wrapper
+        background: rgba(25, 25, 25, 0.0)
+        backdrop-filter: blur(16px)
+        padding: 0 toRem(10)
+        border-radius: 0 0 15px 15px
+        overflow: hidden
+        display: flex
+        flex-direction: column
+        // gap: toRem(10)
+    &__message
+        padding: 0
+        transition: 0.3s
+        // transition-property: padding-top
+        &_hidden
+            padding: 0 0 0 0 !important
+            .popup__message-inner
+                height: 0 !important
+                padding: 0 toRem(5) !important
+    &_show &__message
+        overflow: hidden
+        padding: toRem(10) 0 0 0
+        &:last-child
+            padding: toRem(10) 0 toRem(10) 0
+
+    &__message-inner
+        background-color: #fff
+        border-radius: toRem(5)
+        padding: 0 toRem(5)
+        display: flex
+        align-items: center
+        height: 0
+        transition: 0.3s
+        overflow: hidden
+        img
+            height: 100%
+            width: toRem(17)
+    &_show &__message-inner
+        height: toRem(25)
+        padding: toRem(5)
 
 @keyframes visAnimaton
     100%
@@ -268,7 +315,6 @@ body::after
         // height: 100%
         &:has(.card__loading)
             height: 100%
-
     &__header
 
     &__title
@@ -506,10 +552,26 @@ body::after
         text-align: center
         color: #fff
         background: #ff7010
+        transition: 0.1s
+        transition-property: color,background
+        &:active
+            color: #ff7010
+            background: #fff
+            border: 1px solid #ff7010
+            padding: toRem(12) toRem(39)
+            box-sizing: border-box
         @media (max-width: 425px)
             width: 100%
 
 .popup-window
+    &__total
+        font-weight: 600
+        font-size: toRem(18)
+        color: #FF7010
+        display: flex
+        align-items: center
+        padding: toRem(10) toRem(20)
+        border-top: 1px solid #F0F0F0
     .popup
         height: 100vh
         &__wrapper
@@ -552,6 +614,7 @@ body::after
             padding: toRem(15)
             gap: toRem(15)
             overflow: auto
+            min-height: toRem(50)
             @media (max-width: $mobile)
                 padding: 0
                 gap: 0
