@@ -20,7 +20,7 @@ function addMessage() {
     let newMessage = document.createElement('div');
     newMessage.classList.add('popup__message', 'popup__message_hidden')
     // newMessage.classList.add('popup__message_hidden')
-    newMessage.innerHTML = `<div class="popup__message-inner"><img src="/Common/checkMark.svg" alt="checkMark" />Товар додан до корзини!</div>`
+    newMessage.innerHTML = `<div class="popup__message-inner"><img src="/Common/checkmark.svg" alt="checkMark" />Товар додан до корзини!</div>`
     thisMessages.appendChild(newMessage);
     setTimeout(() => { newMessage.classList.remove('popup__message_hidden') }, 10)
     setTimeout(() => {
