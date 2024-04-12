@@ -58,19 +58,19 @@ export default function Home(pizzas, shushi) {
                         <div className="swiper-wrapper">
                             <div className="promotions__promo promo promo_orange swiper-slide">
                                 <div className="promo__img"><img src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
-                                <div className="promo__text">3 средние пиццы от 999 гривен</div>
+                                <div className="promo__text">3 середні піци від 999 гривень</div>
                             </div>
                             <div className="promotions__promo promo promo_red swiper-slide">
                                 <div className="promo__img"><img src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
-                                <div className="promo__text">Кэшбек 10% на самовывоз (доставка)</div>
+                                <div className="promo__text">Кешбек 10% на самовивіз (доставка)</div>
                             </div>
                             <div className="promotions__promo promo promo_orange swiper-slide">
                                 <div className="promo__img"><img src="/promotions/back1.png" alt="pizza" width={458} height={269} /></div>
-                                <div className="promo__text">3 средние пиццы от 999 гривен</div>
+                                <div className="promo__text">3 середні піци від 999 гривень</div>
                             </div>
                             <div className="promotions__promo promo promo_red swiper-slide">
                                 <div className="promo__img"><img src="/promotions/back2.svg" alt="pizza" width={279} height={116} /></div>
-                                <div className="promo__text">Кэшбек 10% на самовывоз (доставка)</div>
+                                <div className="promo__text">Кешбек 10% на самовивіз (доставка)</div>
                             </div>
                         </div>
                     </div>
@@ -78,12 +78,12 @@ export default function Home(pizzas, shushi) {
                 <section className="CheckAddress">
                     <div className="CheckAddress__container">
                         <div className="CheckAddress__inner">
-                            <div className="CheckAddress__text">Проверить адрес доставки</div>
+                            <div className="CheckAddress__text">Перевірити адресу доставки</div>
                             <form action="" className="CheckAddress__form">
                                 <div className="CheckAddress__input"><img src="/Common/Location.svg" alt="Location" width={20} height={20} />
                                     <input type="text" placeholder="Адрес" />
                                 </div>
-                                <button type="submit" value="Проверить" className="CheckAddress__send"><span>Проверить</span><img src="/Common/Send.svg" alt="send" width={20} height={20} /></button>
+                                <button type="submit" value="Перевірити" className="CheckAddress__send"><span>Перевірити</span><img src="/Common/Send.svg" alt="send" width={20} height={20} /></button>
                             </form>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ export default function Home(pizzas, shushi) {
                     <div className="priceList__container">
                         <div className="priceList__header">
                             <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_PIZZA_URL}>
-                                <h1 className="priceList__title">Пицца</h1>
+                                <h1 className="priceList__title">Піца</h1>
                             </a>
                         </div>
                         <div className="priceList__grid">
@@ -105,14 +105,12 @@ export default function Home(pizzas, shushi) {
                 <section id="shushi" className="priceList">
                     <div className="priceList__container">
                         <div className="priceList__header">
-                            <h1 className="priceList__title">Суши</h1>
+                            <h1 className="priceList__title">Суші</h1>
                         </div>
                         <div className="priceList__grid">
                             {shushi.map(shushka => {
                                 return (<ProductCard productData={shushka} />)
                             })}
-                            {/* <div className="error"> <span className="error__code">сервер не отвечает</span>
-                            </div> */}
                         </div>
                     </div>
                 </section>

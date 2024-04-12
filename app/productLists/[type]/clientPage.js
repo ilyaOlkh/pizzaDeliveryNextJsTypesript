@@ -53,14 +53,14 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
         } else {
             body = (
                 <div className="error error_product">
-                    <span className="error__code">таких продуктов нет</span>
+                    <span className="error__code">таких продуктів немає</span>
                 </div>)
         }
 
     } else {
         body = (
             <div className="error error_product">
-                <span className="error__code">таких типов продуктов нет</span>
+                <span className="error__code">таких типів продуктів немає</span>
             </div>)
     }
     return <>
@@ -81,7 +81,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
                                     </button>
                                     {
                                         (productsState.length > 0) ? (<button type="button" data-popup="#sort" className="priceList__filter button">
-                                            <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Сортування</span>
+                                            <img src="/Common/Sort.svg" alt="sort" width={20} height={20} /><span>Сортування</span>
                                         </button>) : <></>
                                     }
                                 </>

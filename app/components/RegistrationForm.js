@@ -10,11 +10,8 @@ export default function registrationForm() {
     const { user, setUser } = useContext(MyContext);
     async function registrationStart(event) {
         event.preventDefault();
-
         show()
-
         const formData = new FormData(event.target);
-
         const res = await registrationController(formData)
         if (res[0]) {
             localStorage.setItem('accessToken', res[2])

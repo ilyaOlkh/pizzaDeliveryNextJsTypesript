@@ -20,14 +20,14 @@ export const getProduct = cache(async (id) => {
     if (id) {
         query = query.where('product.product_id', '=', +id);
     } else {
-        console.log('ОШИБКА!')
+        console.log('Помилка!')
     }
     query = query.groupBy('product.product_id');
     try {
         const result = await query.execute();
         return result
     } catch (err) {
-        console.error('error:', err);
+        console.error('Помилка:', err);
 
         return []; // Возвращаем пустой массив в случае ошибки
     }

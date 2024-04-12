@@ -22,7 +22,7 @@ export default function PopupSend() {
             setCart([])
             flsModules.popup.close('#send')
         } else {
-            alert('что-то пошло не так')
+            alert('щось пішло не так')
         }
         hide()
 
@@ -36,7 +36,7 @@ export default function PopupSend() {
                     </button>
                     <div className="popup__inner-wrapper">
                         <div className="popup__header popup__header">
-                            <h2 className="popup__title popup__title">Уточнение заказа</h2>
+                            <h2 className="popup__title popup__title">Уточнення замовлення</h2>
                         </div>
                         <div className="popup-window__inner popup-window__inner_product">
                             {
@@ -49,7 +49,7 @@ export default function PopupSend() {
                                 })
                             }
                         </div>
-                        <div className="popup-window__total">{`Итого: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
+                        <div className="popup-window__total">{`Загалом: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
                         <div className="popup-window__clarification clarification">
 
                             <div className="clarification__title">
@@ -60,7 +60,7 @@ export default function PopupSend() {
                                     <input type="radio" defaultChecked value="доставка" name="delivery" style={{ display: 'none' }} /><span id="word_opts">Доставка</span>
                                 </label>
                                 <label className="block-buttons__option">
-                                    <input type="radio" value="самовывоз" name="delivery" style={{ display: 'none' }} /><span id="word_opts">Самовывоз</span>
+                                    <input type="radio" value="самовивіз" name="delivery" style={{ display: 'none' }} /><span id="word_opts">Самовивіз</span>
                                 </label>
                             </div>
 
@@ -68,11 +68,11 @@ export default function PopupSend() {
                         <div className="popup-from-left__buttons">
                             {cartState.length < 1 ?
                                 <button disabled className="popup-from-left__button popup-from-left__button_disable" >
-                                    выберите хотя-бы один товар
+                                    виберіть хоча б один товар
                                 </button>
                                 :
                                 <button type="submit" className="popup-from-left__button">
-                                    Оформить заказ
+                                    Оформити замовлення
                                 </button>
                             }
                         </div>

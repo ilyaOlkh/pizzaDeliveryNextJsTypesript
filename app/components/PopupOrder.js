@@ -41,7 +41,7 @@ export default function PopupOrder() {
             }
             if (res == 'no access') {
                 setIsAdmin(false)
-                alert('отказано в доступе!')
+                alert('відмовлено в доступі!')
             }
             if (res == 'Order updated successfully') {
                 let newOrdersState = { ...ordersState }
@@ -81,7 +81,7 @@ export default function PopupOrder() {
         }
 
 
-        console.log('заказы отрендерены')
+        console.log('замовлення відрендерені')
         document.addEventListener('beforePopupOpen', open);
         document.addEventListener('afterPopupClose', close);
 
@@ -99,18 +99,18 @@ export default function PopupOrder() {
                         <img src="/Common/CrossWhite.svg" alt="Cross" />
                     </button>
                     <form onSubmit={onSubmit} method="POST" className="popup-order">
-                        {Object.keys(thisOrderState).length === 0 ? <div className="error"><span className="error__code">заказ не выбран</span></div> :
-                            (!thisOrderState.thisOrderDetails ? <div className="error"><span className="error__code">этот заказ вам не доступен</span></div> :
+                        {Object.keys(thisOrderState).length === 0 ? <div className="error"><span className="error__code">замовлення не обрано</span></div> :
+                            (!thisOrderState.thisOrderDetails ? <div className="error"><span className="error__code">це замовлення вам недоступне</span></div> :
                                 (<>
                                     <div className="popup__header popup__header">
-                                        <h2 className="popup__title popup__title">Заказ №{thisOrderState.order_id}</h2>
+                                        <h2 className="popup__title popup__title">Замовлення №{thisOrderState.order_id}</h2>
                                     </div>
                                     <div className="popup-order__data">
                                         <div className="popup-order__data-block">
                                             <h3 className="popup-order__data-title">Статус:</h3>
                                             {!isAdminState ?
                                                 <div className="popup-order__data-value">{thisOrderState.thisOrder.status}</div> :
-                                                isOpen ? <OrderSelect name={'status'} statusArray={['готовится', 'доставляется', 'доставлено', 'отменено']} status={thisOrderState.thisOrder.status} id={1} /> : <></>}
+                                                isOpen ? <OrderSelect name={'status'} statusArray={['готується', 'доставляється', 'доставлено', 'скасовано']} status={thisOrderState.thisOrder.status} id={1} /> : <></>}
                                         </div>
                                         <div className="popup-order__data-block">
                                             <h3 className="popup-order__data-title">Доставка:</h3>
@@ -121,7 +121,7 @@ export default function PopupOrder() {
                                             <div className="popup-order__data-value">{thisOrderState.thisOrder.order_date_time.toLocaleDateString()}</div>
                                         </div>
                                         <div className="popup-order__data-block">
-                                            <h3 className="popup-order__data-title">Время:</h3>
+                                            <h3 className="popup-order__data-title">Час:</h3>
                                             <div className="popup-order__data-value">{thisOrderState.thisOrder.order_date_time.toLocaleTimeString()}</div>
                                         </div>
                                         <div className="popup-order__data-block">
@@ -129,14 +129,14 @@ export default function PopupOrder() {
                                             <h3 className="popup-order__data-title">Оплачено:</h3>
                                             {!isAdminState ?
                                                 <div className="popup-order__data-value">{thisOrderState.thisOrder.payment}</div> :
-                                                isOpen ? <OrderSelect name={'payment'} statusArray={['оплачено', 'нужно оплатить']} status={thisOrderState.thisOrder.payment} id={2} /> : <></>}
+                                                isOpen ? <OrderSelect name={'payment'} statusArray={['оплачено', 'потрібно оплатити']} status={thisOrderState.thisOrder.payment} id={2} /> : <></>}
                                         </div>
                                         <div className="popup-order__data-block">
-                                            <h3 className="popup-order__data-title">Общая цена:</h3>
+                                            <h3 className="popup-order__data-title">Загальна ціна:</h3>
                                             <div className="popup-order__data-value">{getOrderPrice(thisOrderState.thisOrderDetails)} ₴</div>
                                         </div>
                                         <div className="popup-order__data-block">
-                                            <h3 className="popup-order__data-title">Продукты:</h3>
+                                            <h3 className="popup-order__data-title">Продукти:</h3>
                                             <div className="popup-order__data-value popup-order__data-value_product">
                                                 <div className="popup-window__inner popup-window__inner_product">
                                                     {
@@ -155,7 +155,7 @@ export default function PopupOrder() {
                                 </>)
                             )
                         }
-                        {isAdminState ? <div className="popup-from-left__buttons"><button className="popup-from-left__button" type="submit"> Отправить</button></div> : <></>}
+                        {isAdminState ? <div className="popup-from-left__buttons"><button className="popup-from-left__button" type="submit"> Відправити</button></div> : <></>}
                     </form>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 'use client'
-import getFilters from '../service/getFilters'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateFilters } from '../service/updateFilters'
 
 
@@ -56,15 +55,15 @@ export default function popupFilters({ filtersContent }) {
         <div className="popup__wrapper">
             <form onSubmit={onSubmit} method="POST" className="popup__content popup-from-left__body">
                 <div className="popup-from-left__header popup__header">
-                    <span className="popup-from-left__title popup__title">Фильтры</span>
+                    <span className="popup-from-left__title popup__title">Фільтри</span>
                     <button data-close="data-close" type="button" className="popup__close">
                         <img src="/Common/Cross.svg" alt="Cross" />
                     </button>
                 </div>
                 {content}
                 <div className="popup-from-left__buttons">
-                    <input type="reset" value="Сбросить" />
-                    <input type="submit" value="Применить" />
+                    <input type="reset" value="Скинути" />
+                    <input type="submit" value="Застосувати" />
                 </div>
             </form>
         </div >

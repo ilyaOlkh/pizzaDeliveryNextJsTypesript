@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from "next/router";
 import { createContext, useState } from "react";
 import { setCartCookie } from "../CartServerServices/SetCartCookie";
 import { setParams } from "../service/setSearchParams";
@@ -38,7 +37,7 @@ export function Providers({ children, user, cart, ProductsInfo }) {
     function setCart(cartState) {
         setCartWithoutCookie(cartState)
         setCartCookie(JSON.stringify(cartState))
-        console.log('cartState изменен')
+        console.log('cartState змінено')
     }
 
     return (

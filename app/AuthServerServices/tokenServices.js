@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import { createKysely } from '@vercel/postgres-kysely';
-import { sql } from 'kysely'
 
 export function generateTokens(payload) {
     const accesstoken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '30s' })
@@ -40,7 +39,7 @@ export async function removeToken(refreshtoken) {
 
 export async function refreshToken(refreshtoken) {
     if (!refreshtoken) {
-        console.log('пользователь не авторизован')
+        console.log('користувач не авторизований')
         return
     }
 }

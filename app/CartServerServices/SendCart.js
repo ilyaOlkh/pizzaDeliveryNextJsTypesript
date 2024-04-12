@@ -2,7 +2,6 @@
 import { createKysely } from '@vercel/postgres-kysely';
 
 export default async function insertOrder(delivery, worker_id, customer_id, cartItems) {
-    console.log('старт вставки заказа')
     let OrderId;
     try {
         const db = createKysely({ connectionString: process.env.POSTGRES_URL });
@@ -10,25 +9,24 @@ export default async function insertOrder(delivery, worker_id, customer_id, cart
             customer_id: customer_id,
             worker_id: worker_id,
             order_date_time: new Date(),
-            status: 'готовится',
-            payment: 'нужно оплатить',
+            status: 'готується',
+            payment: 'потрібно оплатити',
             delivery: delivery,
         }).returning('order_id').executeTakeFirst()
     } catch (error) {
-        console.log({ error: `Ошибка при вставке данных: ${error.message}` })
+        console.log({ error: `Помилка при вставці даних: ${error.message}` })
         return 'error'
     }
-    console.log('старт вставки товаров')
     if (OrderId) {
         try {
 
             insertOrderDetails(OrderId.order_id, cartItems)
         } catch (error) {
-            console.log({ error: `Ошибка при вставке данных: ${error.message}` })
+            console.log({ error: `Помилка при вставці даних: ${error.message}` })
             return 'error'
         }
     } else {
-        console.log('нет айдишника')
+        console.log('немає айдішника')
         return 'error'
     }
     return 'success'

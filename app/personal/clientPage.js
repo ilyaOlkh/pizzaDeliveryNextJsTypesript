@@ -1,8 +1,6 @@
 'use client'
 
 import Header from "../header/page"
-import PopupReg from "../components/popupReg"
-import StartJS from "../components/startJS"
 
 import { useContext, useEffect, useState, useRef } from "react"
 import { MyContext } from "../context/contextProvider"
@@ -81,12 +79,12 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
                                             )
                                         }) :
                                         <div className="error">
-                                            <span className="error__code">вы еще ничего не заказали</span>
+                                            <span className="error__code">Ви ще нічого не замовили</span>
                                         </div>
                                 )
                         ) :
                             <div className="error">
-                                <span className="error__code">вы не вошли в аккаунт</span>
+                                <span className="error__code">Ви не увійшли в аккаунт</span>
                             </div>
                         }
                     </div>

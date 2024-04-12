@@ -2,10 +2,10 @@ import { setParam } from "../service/setSearchParam";
 
 export default function OrderItem({ orderData, orderProductsData }) {
     return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className="order">
-        <div className={"order__row " + (orderData.status == 'готовится' ? "order__row_red " : (orderData.status == 'доставляется' ? "order__row_orange " : ""))}>
+        <div className={"order__row " + (orderData.status == 'готується' ? "order__row_red " : (orderData.status == 'доставляється' ? "order__row_orange " : ""))}>
             <div className="order__info">
                 <div className="order__info-title">
-                    Заказ
+                    Замовлення
                 </div>
                 <div className="order__info-value">
                     №{orderData.order_id}
@@ -14,7 +14,7 @@ export default function OrderItem({ orderData, orderProductsData }) {
             {orderData.first_name ?
                 <div className="order__info">
                     <div className="order__info-title">
-                        Заказчик
+                        Замовник
                     </div>
                     <div className="order__info-value">
                         {orderData.first_name + ' ' + orderData.last_name}
@@ -32,7 +32,7 @@ export default function OrderItem({ orderData, orderProductsData }) {
             </div>
             <div className="order__info">
                 <div className="order__info-title">
-                    Сумма заказа
+                    Сума замовлення
                 </div>
                 <div className="order__info-value">
                     {getOrderPrice(orderProductsData)} ₴
@@ -76,7 +76,6 @@ export default function OrderItem({ orderData, orderProductsData }) {
 }
 
 function getOrderPrice(orderProductsData) {
-    // alert(JSON.stringify(orderProductsData))
     let sum = 0;
     for (let i = 0; i < orderProductsData.length; i++) {
         sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;

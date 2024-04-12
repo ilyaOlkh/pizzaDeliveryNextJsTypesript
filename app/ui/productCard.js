@@ -20,7 +20,7 @@ export default function ProductCard({ productData }) {
                     <h2 className="priceItem__name"> <span>{productData.p_name}</span></h2>
                     <div className="priceItem__composition">{productData.composition}</div>
                     <div className="priceItem__row">
-                        <div className="priceItem__select button">Выбрать</div>
+                        <div className="priceItem__select button">Вибрати</div>
                         <div className="priceItem__price">от 100 ₴</div>
                     </div>
                 </div>

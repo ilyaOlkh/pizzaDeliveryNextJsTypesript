@@ -11,7 +11,7 @@ export default async function refresh() {
             return userData
         } else {
             return {
-                message: 'вы не вошли!'
+                message: 'ви не увійшли!'
             }
         }
     } catch (e) {

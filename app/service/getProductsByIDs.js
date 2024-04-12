@@ -36,7 +36,7 @@ export async function getProductsByIDs(idArray) {
         const result = await query.execute();
         return result;
     } catch (err) {
-        console.error('error:', err);
+        console.error('Помилка:', err);
         return [];
     }
 }

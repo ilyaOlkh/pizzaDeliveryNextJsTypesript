@@ -14,14 +14,14 @@ export default async function getUserData() {
             response = await GetUserInfo(accessToken)
             return response
         } else if (response[1] == 'NeedAuth') {
-            alert('нужна авторизация')
-            console.log('перекидываю на главную страницу')
+            alert('потрібна авторизация')
+            console.log('перекидаю на головну сторінку')
             let url = process.env.NEXT_PUBLIC_GLOBAL_URL
             redirectUrl(url)
             return
         } else if (response[1] == 'IDs are not equal') {
-            alert('несовпадение айди')
-            console.log('перекидываю на главную страницу')
+            alert('невідповідність айді')
+            console.log('перекидаю на головну сторінку')
             let url = process.env.NEXT_PUBLIC_GLOBAL_URL
             redirectUrl(url)
             return

@@ -7,11 +7,6 @@ export default function OrderSelect({ statusArray, status, id, name }) {
         refreshSelect()
     }, [statusArray, status]);
     return (
-        // <select value={status} name="status" data-show-selected >
-        //     {
-        //         statusArray.map(item => <option value={item}>{item}</option>)
-        //     }
-        // </select>
         <div class=" popup-order__data-select select _select-active" data-id={id}>
             <select value={status} name={name} data-show-selected="true" hidden data-id={id} data-speed="150">
                 {

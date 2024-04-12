@@ -1,6 +1,5 @@
 'use server'
 import { createKysely } from '@vercel/postgres-kysely';
-import { sql } from 'kysely'
 import bcrypt from 'bcrypt'
 import { generateTokens, saveToken } from '@/app/AuthServerServices/tokenServices'
 
@@ -16,10 +15,10 @@ export default async function registration(query) {
     const candidatePhone = await db.selectFrom('customer').where('phone', '=', queryObj.phone).execute()
 
     if (candidateEmail.length > 0) {
-        throw `Пользователь с почтовым индексом ${queryObj.email} уже существует`
+        throw `Користувач із поштовим індексом ${queryObj.email} вже існує`
     }
     if (candidatePhone.length > 0) {
-        throw `Пользователь с номером ${queryObj.phone} уже существует`
+        throw `Користувач із номером ${queryObj.phone} вже існує`
     }
     queryObj.password = await bcrypt.hash(queryObj.password, 3)
     await db.insertInto('customer').values({

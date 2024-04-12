@@ -1,7 +1,6 @@
 'use server'
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
-import getProductTypes from '../service/getProductTypes'
 
 export default async (req) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
@@ -37,7 +36,7 @@ export default async (req) => {
         'added_date',
         // 'image_url',
         sql`COALESCE(image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
-        sql`COALESCE(STRING_AGG(i_name, ', '), 'нет состава')`.as('composition')
+        sql`COALESCE(STRING_AGG(i_name, ', '), 'немає складу')`.as('composition')
     ].filter(Boolean))
 
     if (type) {
@@ -71,7 +70,7 @@ export default async (req) => {
         const result = await query.execute();
         return result;
     } catch (err) {
-        console.error('error:', err);
+        console.error('Помилка:', err);
         return [];
     }
 };

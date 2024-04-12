@@ -3,11 +3,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { getProduct } from '../service/getProduct.js';
 import getIngredients from '../service/getIngredients.js';
 import getSizes from '../service/getSizes.js';
-import { SubmitProductForm } from '../CartClientServises/CartServices.js';
 import { CartContext } from '../context/contextProvider'
 import { ProductsInfoContext } from '../context/contextProvider';
-
-import ReactDOMServer from 'react-dom/server';
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -19,8 +16,7 @@ function addMessage() {
     let thisMessages = document.querySelector('.card .popup__messages-wrapper')
     let newMessage = document.createElement('div');
     newMessage.classList.add('popup__message', 'popup__message_hidden')
-    // newMessage.classList.add('popup__message_hidden')
-    newMessage.innerHTML = `<div class="popup__message-inner"><img src="/Common/checkmark.svg" alt="checkMark" />Товар додан до корзини!</div>`
+    newMessage.innerHTML = `<div class="popup__message-inner"><img src="/Common/checkmark.svg" alt="checkMark" />Товар додан до кошика!</div>`
     thisMessages.appendChild(newMessage);
     setTimeout(() => { newMessage.classList.remove('popup__message_hidden') }, 10)
     setTimeout(() => {
@@ -86,7 +82,7 @@ export default function popupProduct() {
                 let productRespons = await getProduct(id)
                 setProduct(productRespons[0])
                 if (productRespons.length > 1) {
-                    alert('ОШИБКА ПРИ ПОЛУЧЕНИИ ДАННЫХ О ПРОДУКТЕ!')
+                    alert('ПОМИЛКА ПРИ ОТРИМАННІ ДАНИХ ПРО ПРОДУКТ!')
                 }
                 let Ingredients = await getIngredients(id)
                 setIngredients(Ingredients)
@@ -104,7 +100,7 @@ export default function popupProduct() {
         // let newCurentSize = setAvalibleSizes.find()
     }
     useEffect(() => {
-        console.log('продукты отрендерены')
+        console.log('продукти відрендерені')
         document.addEventListener('beforePopupOpen', click1);
 
         return () => {
@@ -150,10 +146,10 @@ export default function popupProduct() {
                                     product.p_type == "піца" ?
                                         <div className="card__block-buttons">
                                             <label className="card__option">
-                                                <input type="radio" defaultChecked value="традиционное тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиционное</span>
+                                                <input type="radio" defaultChecked value="традиційне тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиційне</span>
                                             </label>
                                             <label className="card__option">
-                                                <input type="radio" value="тонкое тесто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонкое</span>
+                                                <input type="radio" value="тонке тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонке</span>
                                             </label>
                                         </div>
                                         :
@@ -217,10 +213,10 @@ export default function popupProduct() {
                     </div>
                     <div className="card__info-send send">
                         <div className="send__info">
-                            <div className="send__price">Итого: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
+                            <div className="send__price">Загалом: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
                             <div className="send__weight">{curentSize.weight_g} <span> г</span></div>
                         </div>
-                        <button type="submit" className="send__submit">Добавить</button>
+                        <button type="submit" className="send__submit">Додати</button>
                     </div>
                 </form >
             </>)

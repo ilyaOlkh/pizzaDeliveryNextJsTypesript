@@ -22,12 +22,12 @@ const HTMLLoading = (
 
 const sortParams = [
     { sortRule: "order_id", value: "Номер замовлення" },
-    { sortRule: "order_date_time", value: "час" },
-    { sortRule: "status", value: "статус" },
+    { sortRule: "order_date_time", value: "Час" },
+    { sortRule: "status", value: "Статус" },
     { sortRule: "count(order_details_id)", value: "Кількість унікальних продуктів" },
     { sortRule: "sum(quantity)", value: "Кількість продуктів" },
     { sortRule: "sum(selled_price*quantity)", value: "Загальна ціна" },
-    { sortRule: "first_name || ' ' || last_name", value: "замовник" },
+    { sortRule: "first_name || ' ' || last_name", value: "Замовник" },
     { sortRule: "payment", value: "Оплата" },
     { sortRule: "delivery", value: "Тип доставки" },
 ]
@@ -122,11 +122,11 @@ export default function ClientPersonalPage({ searchParams, numOfPages, filters }
                                         </div>)
                             ) :
                                 <div className="error">
-                                    <span className="error__code">вы не вошли в аккаунт</span>
+                                    <span className="error__code">ви не увійшли в акаунт</span>
                                 </div>)
                             :
                             <div className="error">
-                                <span className="error__code">нет доступа</span>
+                                <span className="error__code">немає доступу</span>
                             </div>
                         }
                     </div>

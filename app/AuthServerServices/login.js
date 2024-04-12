@@ -17,11 +17,11 @@ export default async function login(query) {
             'customer.house', 'customer.entrance', 'customer.floor', 'customer.apartment', 'customer.intercom_code', 'customer.discount', 'customer.password', 'worker.role'])
         .execute()
     if (candidateEmail.length == 0) {
-        throw `Пользователь с почтовым индексом ${queryObj.email} не найден`
+        throw `Користувача з поштовим індексом ${queryObj.email} не знайдено`
     }
     candidateEmail = candidateEmail[0]
     if (!(await bcrypt.compare(queryObj.password, candidateEmail.password))) {
-        throw `Пароль не верный!`
+        throw `Пароль не є вірним!`
     }
     const tokens = generateTokens({
         customer_id: candidateEmail.customer_id,

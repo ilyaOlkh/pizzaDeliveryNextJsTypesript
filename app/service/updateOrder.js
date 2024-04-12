@@ -1,7 +1,6 @@
 'use server'
 
 import { createKysely } from '@vercel/postgres-kysely';
-import { sql } from 'kysely'
 import { GetUserInfoForServer } from '../AuthControllers/GetDataController';
 
 export async function updateOrder(changes, order_id) {
@@ -9,9 +8,6 @@ export async function updateOrder(changes, order_id) {
         const db = createKysely({ connectionString: process.env.POSTGRES_URL });
         let userData = await GetUserInfoForServer()
         if (userData[2]) {
-            // Object.entries(changes).forEach(([key, value]) => {
-            //     // код
-            // });
             if (Object.keys(changes).length > 0) {
                 await db.updateTable('order_').set(changes).where('order_id', '=', order_id).execute();
                 return 'Order updated successfully';
@@ -22,7 +18,7 @@ export async function updateOrder(changes, order_id) {
             return 'no access'
         }
     } catch (e) {
-        console.log('error', e)
+        console.log('Помилка', e)
     }
 
 }

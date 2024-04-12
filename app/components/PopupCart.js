@@ -16,7 +16,7 @@ export default function PopupCart() {
             <div className="popup__wrapper">
                 <form action="" method="POST" className="popup__content popup-from-left__body">
                     <div className="popup-from-left__header popup__header">
-                        <h2 className="popup-from-left__title popup__title">Корзина</h2>
+                        <h2 className="popup-from-left__title popup__title">Кошик</h2>
                         <button data-close="data-close" type="button" className="popup__close">
                             <img src="/Common/Cross.svg" alt="Cross" />
                         </button>
@@ -33,19 +33,19 @@ export default function PopupCart() {
                         }
                     </div>
                     <div className="popup-from-left__buttons">
-                        <div className="popup-from-left__total">{`Итого: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
+                        <div className="popup-from-left__total">{`Загалом: ${getTotalPrice(cartState, productsInfoState)} ₴`}</div>
                         {
                             !userState ?
                                 <button disabled className="popup-from-left__button popup-from-left__button_disable">
-                                    войдите в аккаунт
+                                    увійдіть в аккаунт
                                 </button> :
                                 cartState.length < 1 ?
                                     <button disabled className="popup-from-left__button popup-from-left__button_disable" >
-                                        выберите хотя-бы один товар
+                                        виберіть хоча б один товар
                                     </button>
                                     :
                                     <button className="popup-from-left__button" data-popup="#send" >
-                                        Оформить заказ
+                                        Оформити замовлення
                                     </button>
                         }
                     </div>

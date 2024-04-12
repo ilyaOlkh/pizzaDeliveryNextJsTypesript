@@ -64,7 +64,7 @@ export default async function getOrdersProductsByIDs(idArray) {
             }, {});
             return groupedOrders;
         } catch (err) {
-            console.error('2error:', err);
+            console.error('2Помилка:', err);
             return [];
         }
     }

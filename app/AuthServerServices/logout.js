@@ -9,6 +9,6 @@ export default async function logout() {
         cookies().delete('refreshtoken')
         return res
     } else {
-        throw 'вы не вошли!'
+        throw 'ви не увійшли!'
     }
 }

@@ -19,7 +19,7 @@ export default function popupReg() {
                         </button>
                         <div data-tabs className="popup__body registration__body">
                             <nav data-tabs-titles className="tabs__navigation">
-                                <button type="button" className="tabs__title _tab-active">Регистрация</button>
+                                <button type="button" className="tabs__title _tab-active">Реєстрація</button>
                                 <button type="button" className="tabs__title">Авторизація</button>
                             </nav>
                             <div data-tabs-body className="tabs__content">

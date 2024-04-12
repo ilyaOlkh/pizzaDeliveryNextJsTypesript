@@ -23,7 +23,7 @@ export default async (type) => {
         const result = await query.execute();
         return result
     } catch (err) {
-        console.error('error:', err);
+        console.error('помилка:', err);
 
         return []; // Возвращаем пустой массив в случае ошибки
     }

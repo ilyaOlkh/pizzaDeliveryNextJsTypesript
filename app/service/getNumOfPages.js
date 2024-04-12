@@ -11,11 +11,6 @@ export async function getNumOfPages(userId, filters) {
         let query = db.selectFrom('order_')
             .select([
                 sql('count(order_.order_id)'),
-                // 'order_.customer_id',
-                // 'order_.order_date_time',
-                // 'order_.status',
-                // 'order_.payment',
-                // 'order_.delivery',
             ])
 
         if (filters) {
@@ -44,7 +39,7 @@ export async function getNumOfPages(userId, filters) {
         }
         return await query.executeTakeFirst()
     } catch (error) {
-        console.log({ error: `3Ошибка: ${error.message}` })
+        console.log({ error: `3помилка: ${error.message}` })
         return 'error'
     }
 }
