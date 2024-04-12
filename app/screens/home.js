@@ -4,7 +4,7 @@ import Header from "../header/page.js"
 import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg.js';
 
-export default function Home(pizzas, shushi) {
+export default function Home(pizzas, shushi, drinks) {
     return (
         <>
             <PopupProduct withComposition={true} />
@@ -110,6 +110,18 @@ export default function Home(pizzas, shushi) {
                         <div className="priceList__grid">
                             {shushi.map(shushka => {
                                 return (<ProductCard productData={shushka} />)
+                            })}
+                        </div>
+                    </div>
+                </section>
+                <section id="shushi" className="priceList">
+                    <div className="priceList__container">
+                        <div className="priceList__header">
+                            <h1 className="priceList__title">Напої</h1>
+                        </div>
+                        <div className="priceList__grid">
+                            {drinks.map(drink => {
+                                return (<ProductCard productData={drink} />)
                             })}
                         </div>
                     </div>
