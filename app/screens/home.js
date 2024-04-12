@@ -7,7 +7,7 @@ import PopupReg from '../components/popupReg.js';
 export default function Home(pizzas, shushi) {
     return (
         <>
-            <PopupProduct />
+            <PopupProduct withComposition={true} />
             <PopupReg />
             <Header />
             <main className="page">
@@ -31,7 +31,7 @@ export default function Home(pizzas, shushi) {
                                     <div className="categories__img"><img src="/Categories/Sushi.svg" alt="Sushi" width={32} height={32} /></div><span>Суші</span>
                                 </div>
                             </a>
-                            <a href="" className="categories__category categories__category_notWorking swiper-slide">
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_DRINKS_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Drink.svg" alt="Drink" width={32} height={32} /></div><span>Напої</span>
                                 </div>

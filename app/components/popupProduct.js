@@ -27,7 +27,7 @@ function addMessage() {
     console.log(newMessage)
 }
 
-export default function popupProduct() {
+export default function popupProduct({ withComposition }) {
     const { cartState, setCart } = useContext(CartContext)
     const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
     const [isLoading, setLoading] = useState(true)
@@ -112,67 +112,76 @@ export default function popupProduct() {
     } else {
         content =
             (<>
-                <div className="card__img">
-                    <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
-                </div>
+                {withComposition ?
+                    <div className="card__img">
+                        <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
+                    </div> : <></>
+                }
                 <form onSubmit={submit} method="post" className="card__info">
-                    <div className="card__info-wrapper">
-                        <div className="card__phantom-img">
-                            <div> </div>
-                        </div>
-                        <div className="card__info-blur">
-                            <div className="card__info-block">
-                                <h2 className="card__title-product">
-                                    {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
-                                    <span>{product.p_name}</span>
-
-                                </h2>
-                                <div className="card__ingridients">
-                                    {ingredients.map(({ i_type, i_name }) => {
-                                        uniqueDivKey++
-                                        return (
-                                            <div key={uniqueDivKey} className="card__ingridient ingridient">
-                                                <div className="ingridient__img">
-                                                    <div className="ingridient__img-inner"><img src={`/ingredients/${i_type}.png`} alt={i_type} /></div>
-                                                </div>
-                                                <div className="ingridient__text">{i_name}</div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
+                    {!withComposition ?
+                        <h2 className="card__title-product">
+                            {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
+                            <span>{product.p_name}</span>
+                        </h2> : <></>
+                    }
+                    {withComposition ?
+                        <div className="card__info-wrapper">
+                            <div className="card__phantom-img">
+                                <div> </div>
                             </div>
-                            <div className="card__info-block">
-                                {
-                                    product.p_type == "піца" ?
+                            <div className="card__info-blur">
+                                <div className="card__info-block">
+                                    <h2 className="card__title-product">
+                                        {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
+                                        <span>{product.p_name}</span>
+
+                                    </h2>
+                                    <div className="card__ingridients">
+                                        {ingredients.map(({ i_type, i_name }) => {
+                                            uniqueDivKey++
+                                            return (
+                                                <div key={uniqueDivKey} className="card__ingridient ingridient">
+                                                    <div className="ingridient__img">
+                                                        <div className="ingridient__img-inner"><img src={`/ingredients/${i_type}.png`} alt={i_type} /></div>
+                                                    </div>
+                                                    <div className="ingridient__text">{i_name}</div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                                <div className="card__info-block">
+                                    {
+                                        product.p_type == "піца" ?
+                                            <div className="card__block-buttons">
+                                                <label className="card__option">
+                                                    <input type="radio" defaultChecked value="традиційне тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиційне</span>
+                                                </label>
+                                                <label className="card__option">
+                                                    <input type="radio" value="тонке тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонке</span>
+                                                </label>
+                                            </div>
+                                            :
+                                            <></>
+                                    }
+                                    {avalibleSizes.length > 1 || avalibleSizes[0].size_cm !== null ?
                                         <div className="card__block-buttons">
-                                            <label className="card__option">
-                                                <input type="radio" defaultChecked value="традиційне тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Традиційне</span>
-                                            </label>
-                                            <label className="card__option">
-                                                <input type="radio" value="тонке тісто" name="dough" style={{ display: 'none' }} /><span id="word_opts">Тонке</span>
-                                            </label>
+                                            {
+                                                avalibleSizes.map(size => {
+                                                    uniqueLabelKey++
+                                                    return (
+                                                        <label key={uniqueLabelKey} className="card__option">
+                                                            <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
+                                                        </label>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                         :
                                         <></>
-                                }
-                                {avalibleSizes.length > 1 || avalibleSizes[0].size_cm !== null ?
-                                    <div className="card__block-buttons">
-                                        {
-                                            avalibleSizes.map(size => {
-                                                uniqueLabelKey++
-                                                return (
-                                                    <label key={uniqueLabelKey} className="card__option">
-                                                        <input onClick={changeSize} type="radio" defaultChecked={size.size_cm == curentSize.size_cm ? true : false} name="size" value={size.size_cm} style={{ display: 'none' }} /><span id="word_opts">{`${size.size_cm} см`}</span>
-                                                    </label>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                    :
-                                    <></>
-                                }
-                            </div>
-                            {/* <div className="card__info-block">--------------------------------------------------блок на будующее-----------------------------
+                                    }
+                                </div>
+                                {/* <div className="card__info-block">--------------------------------------------------блок на будующее-----------------------------
                                 <h3 className="card__title-second">Добавьте в пиццу</h3>
                                 <div className="card__ingridients">
                                     <label className="card__option card__ingridient ingridient ingridient_not-worked">
@@ -209,11 +218,19 @@ export default function popupProduct() {
                                     </label>
                                 </div>
                             </div> */}
-                        </div>
-                    </div>
+                            </div>
+                        </div> :
+                        <>
+                            <div className="card__info-wrapper">
+                                <div className="card__img">
+                                    <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
+                                </div>
+                            </div>
+                        </>
+                    }
                     <div className="card__info-send send">
                         <div className="send__info">
-                            <div className="send__price">Загалом: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
+                            <div className="send__price">Ціна: <span id="send__price">{curentSize.price}</span><span> ₴</span></div>
                             <div className="send__weight">{curentSize.weight_g} <span> г</span></div>
                         </div>
                         <button type="submit" className="send__submit">Додати</button>
@@ -222,7 +239,7 @@ export default function popupProduct() {
             </>)
     }
     return (
-        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className="popup card">
+        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className={"popup card" + (!withComposition ? " card_simplified" : "")}>
             <div className="popup__messages">
                 <div className="popup__messages-wrapper">
                 </div>

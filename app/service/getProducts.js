@@ -24,7 +24,7 @@ export default async (req) => {
     LEFT JOIN 
         orderdetails ON pizzadetails.id = orderdetails.pizzadetails_id
     WHERE 
-        p_type = 'піца'
+        p_type = '${type}'
     GROUP BY 
         product.product_id) AS order_counts`), 'product.product_id', 'order_counts.product_id')
     }

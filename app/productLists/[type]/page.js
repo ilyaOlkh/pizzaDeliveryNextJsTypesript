@@ -11,7 +11,7 @@ import ClientPage from './clientPage'
 const i_types = await getIngredientsTypes()
 const sortRuleId = process.env.NEXT_PUBLIC_SORT_PARAM
 const sortParams = [
-    { sortRule: "product_id", value: "Номер піци" },
+    { sortRule: "product_id", value: "Номер" },
     { sortRule: "rating", value: "Рейтинг" },
 ]
 

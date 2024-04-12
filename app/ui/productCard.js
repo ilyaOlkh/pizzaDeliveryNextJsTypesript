@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-export default function ProductCard({ productData }) {
+export default function ProductCard({ productData, withComposition = true }) {
     function click() {
         let idForProduct = process.env.NEXT_PUBLIC_ID_FOR_PRODUCT
         let filters = window.location.search
@@ -18,7 +18,7 @@ export default function ProductCard({ productData }) {
                 <div className="priceItem__img"><Image src={productData.image_url.split('img')[1]} alt="pizza" width={400} height={400} /></div>
                 <div className="priceItem__info">
                     <h2 className="priceItem__name"> <span>{productData.p_name}</span></h2>
-                    <div className="priceItem__composition">{productData.composition}</div>
+                    {withComposition ? <div className="priceItem__composition">{productData.composition}</div> : <></>}
                     <div className="priceItem__row">
                         <div className="priceItem__select button">Вибрати</div>
                         <div className="priceItem__price">от 100 ₴</div>

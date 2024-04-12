@@ -21,6 +21,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     const [productsState, setProducts] = useState(products)
     const [loadingState, setLoading] = useState(false)
     const sortRef = useRef(sortState);
+    const withComposition = process.env.NEXT_PUBLIC_TYPES_WITH_COMPOSITION.split(', ').includes(type)
 
     let body
     let typeUpper = type.charAt(0).toUpperCase() + type.slice(1);
@@ -48,7 +49,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     if (ProductTypes.includes(type)) {
         if (productsState.length > 0) {
             body = productsState.map(pizza => {
-                return (<ProductCard productData={pizza} />)
+                return (<ProductCard withComposition={withComposition} productData={pizza} />)
             })
         } else {
             body = (
@@ -66,7 +67,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     return <>
         {ProductTypes.includes(type) ? <Filters filtersContent={filtersContent} /> : <></>}
         {ProductTypes.includes(type) && (productsState.length > 0) ? <PopupSort sortParams={sortParams} /> : <></>}
-        <PopupProduct />
+        <PopupProduct withComposition={withComposition} />
         <Header />
         <main className="page">
             <section className="priceList">
@@ -76,9 +77,11 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
                         <div className="priceList__button-container">
                             {!ProductTypes.includes(type) ? <></> :
                                 <>
-                                    <button type="button" data-popup="#filters" className="priceList__filter button">
-                                        <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фільтри</span>
-                                    </button>
+                                    {withComposition ?
+                                        <button type="button" data-popup="#filters" className="priceList__filter button">
+                                            <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фільтри</span>
+                                        </button> : <></>
+                                    }
                                     {
                                         (productsState.length > 0) ? (<button type="button" data-popup="#sort" className="priceList__filter button">
                                             <img src="/Common/Sort.svg" alt="sort" width={20} height={20} /><span>Сортування</span>

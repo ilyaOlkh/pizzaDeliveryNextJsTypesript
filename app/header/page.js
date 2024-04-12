@@ -78,7 +78,7 @@ export default function Header() {
                                         <li className="menu__item"><a href="/" className="menu__link">Акції</a></li>
                                         <li className="menu__item"><a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_PIZZA_URL} className="menu__link">Піца</a></li>
                                         <li className="menu__item"><a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_SUSHI_URL} className="menu__link">Суші</a></li>
-                                        <li className="menu__item"><a href="/" className="menu__link">Напої</a></li>
+                                        <li className="menu__item"><a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_DRINKS_URL} className="menu__link">Напої</a></li>
                                         <li className="menu__item"><a href="/" className="menu__link">Закуски</a></li>
                                         <li className="menu__item"><a href="/" className="menu__link">Комбо</a></li>
                                         <li className="menu__item"><a href="/" className="menu__link">Десерти</a></li>
