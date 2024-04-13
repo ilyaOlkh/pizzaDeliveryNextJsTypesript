@@ -90,14 +90,14 @@ export default function ClientPersonalPage({ searchParams, numOfPages, filters }
     }
     return <>
         {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ? <PopupOrder /> : <></>}
-        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupSort sortParams={sortParams} /> : <></>}
-        {(ordersState != 'no access' && userState && Object.keys(ordersState).length > 0) ? <PopupFilters filtersContent={JSON.parse(process.env.NEXT_PUBLIC_SORTS_ORDER)} /> : <></>}
+        {(ordersState != 'no access' && userState) ? <PopupSort sortParams={sortParams} /> : <></>}
+        {(ordersState != 'no access' && userState) ? <PopupFilters filtersContent={JSON.parse(process.env.NEXT_PUBLIC_SORTS_ORDER)} /> : <></>}
         <Header />
         <main className="page">
             <section className="personal">
                 <div className="personal__container">
                     <div className="personal__orders">
-                        {(ordersState != 'no access' && userState && !loadingState && Object.keys(ordersState).length > 0) ?
+                        {(ordersState != 'no access' && userState && !loadingState) ?
                             <div className="personal__buttons">
                                 <button type="button" data-popup="#filters" className="button button_white">
                                     <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фільтри</span>

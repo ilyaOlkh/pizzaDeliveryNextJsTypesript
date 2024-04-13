@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { getProduct } from '../service/getProduct.js';
 import getIngredients from '../service/getIngredients.js';
 import getSizes from '../service/getSizes.js';
 import { CartContext } from '../context/contextProvider'
 import { ProductsInfoContext } from '../context/contextProvider';
+import { Skeleton } from '@mui/material';
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -90,6 +91,8 @@ export default function popupProduct({ withComposition }) {
                 setAvalibleSizes(sizesRespons)
                 setCurentSize(sizesRespons[0])
                 setLoading(false)
+                withComposition = (avalibleSizes.length > 1 || avalibleSizes[0]?.size_cm !== null) || ingredients.length > 0 || product?.p_type === "піца"
+
             }
         }
     }

@@ -21,7 +21,7 @@ export default function ProductCard({ productData, withComposition = true }) {
                     {withComposition ? <div className="priceItem__composition">{productData.composition}</div> : <></>}
                     <div className="priceItem__row">
                         <div className="priceItem__select button">Вибрати</div>
-                        <div className="priceItem__price">от 100 ₴</div>
+                        <div className="priceItem__price">{(+productData.numofprice > 1 ? 'от ' : '') + +productData.minprice} ₴</div>
                     </div>
                 </div>
             </div>

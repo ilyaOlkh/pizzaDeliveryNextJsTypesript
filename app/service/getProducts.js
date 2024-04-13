@@ -28,25 +28,41 @@ export default async (req) => {
     GROUP BY 
         product.product_id) AS order_counts`), 'product.product_id', 'order_counts.product_id')
     }
-    query = query.select([
-        'product.product_id',
-        'p_name',
-        (sort?.sortRule == 'rating') ? 'order_counts.rating' : null,
-        'is_available',
-        'added_date',
-        // 'image_url',
-        sql`COALESCE(image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
-        sql`COALESCE(STRING_AGG(i_name, ', '), 'немає складу')`.as('composition')
-    ].filter(Boolean))
+    query = query.leftJoin(sql(`(
+        SELECT 
+            product.product_id as product_id,
+            min(pizzadetails.price) as minprice, 
+            count(pizzadetails.price) as numofprice
+        FROM 
+            product
+        LEFT JOIN 
+            pizzadetails ON product.product_id = pizzadetails.product_id
+        GROUP BY 
+            product.product_id) AS prices`), 'prices.product_id', 'product.product_id')
+        .select([
+            'product.product_id',
+            `prices.minprice`,
+            `prices.numofprice`,
+            'p_name',
+            (sort?.sortRule == 'rating') ? 'order_counts.rating' : null,
+            'is_available',
+            'added_date',
+            // 'image_url',
+            sql`COALESCE(image_url, 'img/pizzas/noPhoto.png')`.as('image_url'),
+            sql`COALESCE(STRING_AGG(i_name, ', '), 'немає складу')`.as('composition'),
+        ].filter(Boolean))
 
     if (type) {
         query = query.where('p_type', '=', type);
     }
-    query = query.groupBy(sql(`product.product_id${(sort?.sortRule == 'rating') ? ', rating' : ''}`));
+    query = query.groupBy(sql(`product.product_id, minprice, numofprice${(sort?.sortRule == 'rating') ? ', rating' : ''}`));
     if (filters) {
         let querytextGlobal = ``
         for (const value in filters) {
-            const ingredients = filters[value].split(",").map((elem) => `'${elem}'`);
+            const ingredients = filters[value].split(",").map((elem) => {
+                elem = elem.replace(/'/g, "''")
+                return `'${elem}'`
+            });
             let querytext = ''
             ingredients.forEach(element => {
                 querytext += element + ', '
@@ -68,6 +84,7 @@ export default async (req) => {
     }
     try {
         const result = await query.execute();
+        console.log(result)
         return result;
     } catch (err) {
         console.error('Помилка:', err);

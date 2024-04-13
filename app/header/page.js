@@ -24,7 +24,7 @@ export default function Header() {
                                 <select defaultValue="1" name="form[]" data-class-modif="form">
                                     <option value="1">Харків</option>
                                     <option value="2">Київ</option>
-                                    <option value="3">львів</option>
+                                    <option value="3">Львів</option>
                                     <option value="4">Дніпро</option>
                                     <option value="5">Івано-Франківськ</option>
                                 </select>

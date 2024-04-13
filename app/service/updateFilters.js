@@ -4,7 +4,15 @@ import { flsModules } from "../js/files/modules.js";
 
 
 export async function updateFilters(formData, searchParams) {
+    let oldSearchParams = new URLSearchParams(searchParams)
+    console.log(oldSearchParams)
     let filters = new URLSearchParams({});
+    if (oldSearchParams.get([process.env.NEXT_PUBLIC_SORT_PARAM])) {
+        filters.set(process.env.NEXT_PUBLIC_SORT_PARAM, oldSearchParams.get([process.env.NEXT_PUBLIC_SORT_PARAM]))
+    }
+    if (oldSearchParams.get([process.env.NEXT_PUBLIC_DIR_PARAM])) {
+        filters.set(process.env.NEXT_PUBLIC_DIR_PARAM, oldSearchParams.get([process.env.NEXT_PUBLIC_DIR_PARAM]))
+    }
     for (var key of formData.keys()) {
         filters.set(key, formData.getAll(key))
     }

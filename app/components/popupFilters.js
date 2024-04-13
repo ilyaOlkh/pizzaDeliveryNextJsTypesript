@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { updateFilters } from '../service/updateFilters'
+import { useSearchParams } from 'next/navigation';
 
 
 const HTMLLoading = (
@@ -11,6 +12,7 @@ const HTMLLoading = (
 
 export default function popupFilters({ filtersContent }) {
     const [filters, setFilters] = useState(filtersContent);
+    const searchParams = useSearchParams()
     let content;
     let uniqueKeyLable = 0
     let uniqueDivKey = 0
@@ -21,6 +23,7 @@ export default function popupFilters({ filtersContent }) {
             <div className="popup-from-left__inner">
                 {
                     filters.map((block) => {
+                        let searchParam = decodeURIComponent(searchParams.getAll(encodeURIComponent(block.filterRule ? block.filterRule : block.i_type))).split(',')
                         uniqueDivKey++
                         return (
                             <div key={uniqueDivKey} className="popup-from-left__block">
@@ -31,7 +34,7 @@ export default function popupFilters({ filtersContent }) {
                                             uniqueKeyLable++
                                             return (
                                                 <label className="popup-from-left__option" key={uniqueKeyLable}>
-                                                    <input id={elem} type="checkbox" name={encodeURIComponent(block.filterRule ? block.filterRule : block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
+                                                    <input id={elem} type="checkbox" defaultChecked={searchParam.includes(elem)} name={encodeURIComponent(block.filterRule ? block.filterRule : block.i_type)} value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
                                                 </label>
                                             )
                                         })
@@ -48,7 +51,7 @@ export default function popupFilters({ filtersContent }) {
     function onSubmit(event) {
         event.preventDefault()
         const formData = new FormData(event.target);
-        updateFilters(formData, window.location.search)
+        updateFilters(formData, searchParams)
     }
 
     return (<div id="filters" aria-hidden="true" className="popup popup-from-left">
