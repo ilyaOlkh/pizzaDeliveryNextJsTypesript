@@ -1,10 +1,9 @@
 'use server'
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
-import { cache } from 'react'
 
 
-export const getProduct = cache(async (id) => {
+export const getProduct = async (id) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
 
     let query = db
@@ -31,4 +30,4 @@ export const getProduct = cache(async (id) => {
 
         return []; // Возвращаем пустой массив в случае ошибки
     }
-});
+};
