@@ -97,7 +97,7 @@ export default function Home(pizzas, shushi, drinks) {
                         </div>
                         <div className="priceList__grid">
                             {pizzas.map(pizza => {
-                                return (<ProductCard productData={pizza} />)
+                                return (<ProductCard productData={pizza} type={'піца'} />)
                             })}
                         </div>
                     </div>
@@ -109,7 +109,7 @@ export default function Home(pizzas, shushi, drinks) {
                         </div>
                         <div className="priceList__grid">
                             {shushi.map(shushka => {
-                                return (<ProductCard productData={shushka} />)
+                                return (<ProductCard productData={shushka} type={'суші'} />)
                             })}
                         </div>
                     </div>
@@ -121,7 +121,7 @@ export default function Home(pizzas, shushi, drinks) {
                         </div>
                         <div className="priceList__grid">
                             {drinks.map(drink => {
-                                return (<ProductCard productData={drink} />)
+                                return (<ProductCard productData={drink} type={'напої'} />)
                             })}
                         </div>
                     </div>

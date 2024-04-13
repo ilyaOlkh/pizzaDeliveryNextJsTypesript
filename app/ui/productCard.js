@@ -1,6 +1,7 @@
 'use client'
 import Image from "next/image";
-export default function ProductCard({ productData, withComposition = true }) {
+export default function ProductCard({ productData, type }) {
+    let withComposition = process.env.NEXT_PUBLIC_TYPES_WITH_COMPOSITION.split(', ').includes(type) || productData.composition !== "немає складу"
     function click() {
         let idForProduct = process.env.NEXT_PUBLIC_ID_FOR_PRODUCT
         let filters = window.location.search
@@ -21,7 +22,7 @@ export default function ProductCard({ productData, withComposition = true }) {
                     {withComposition ? <div className="priceItem__composition">{productData.composition}</div> : <></>}
                     <div className="priceItem__row">
                         <div className="priceItem__select button">Вибрати</div>
-                        <div className="priceItem__price">{(+productData.numofprice > 1 ? 'от ' : '') + +productData.minprice} ₴</div>
+                        <div className="priceItem__price">{(+productData.numofprice > 1 ? 'від ' : '') + +productData.minprice} ₴</div>
                     </div>
                 </div>
             </div>

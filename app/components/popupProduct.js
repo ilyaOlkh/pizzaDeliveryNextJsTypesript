@@ -28,7 +28,7 @@ function addMessage() {
     console.log(newMessage)
 }
 
-export default function popupProduct({ withComposition }) {
+export default function popupProduct() {
     const { cartState, setCart } = useContext(CartContext)
     const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
     const [isLoading, setLoading] = useState(true)
@@ -39,6 +39,7 @@ export default function popupProduct({ withComposition }) {
     let content;
     let uniqueDivKey = 0
     let uniqueLabelKey = 0
+
 
     function findById(id, dough) {
         for (let item in cartState) {
@@ -91,7 +92,6 @@ export default function popupProduct({ withComposition }) {
                 setAvalibleSizes(sizesRespons)
                 setCurentSize(sizesRespons[0])
                 setLoading(false)
-                withComposition = (avalibleSizes.length > 1 || avalibleSizes[0]?.size_cm !== null) || ingredients.length > 0 || product?.p_type === "піца"
 
             }
         }
@@ -115,19 +115,19 @@ export default function popupProduct({ withComposition }) {
     } else {
         content =
             (<>
-                {withComposition ?
+                {(avalibleSizes.length > 1 || ingredients.length > 0) ?
                     <div className="card__img">
                         <div className="card__img-inner"><img src={product.image_url.slice(3)} alt="pizza" /></div>
                     </div> : <></>
                 }
                 <form onSubmit={submit} method="post" className="card__info">
-                    {!withComposition ?
+                    {!(avalibleSizes.length > 1 || ingredients.length > 0) ?
                         <h2 className="card__title-product">
                             {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
                             <span>{product.p_name}</span>
                         </h2> : <></>
                     }
-                    {withComposition ?
+                    {(avalibleSizes.length > 1 || ingredients.length > 0) ?
                         <div className="card__info-wrapper">
                             <div className="card__phantom-img">
                                 <div> </div>
@@ -167,7 +167,7 @@ export default function popupProduct({ withComposition }) {
                                             :
                                             <></>
                                     }
-                                    {avalibleSizes.length > 1 || avalibleSizes[0].size_cm !== null ?
+                                    {avalibleSizes.length > 1 ?
                                         <div className="card__block-buttons">
                                             {
                                                 avalibleSizes.map(size => {
@@ -242,12 +242,12 @@ export default function popupProduct({ withComposition }) {
             </>)
     }
     return (
-        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className={"popup card" + (!withComposition ? " card_simplified" : "")}>
+        <div data-product-id={product ? product.product_id : 'loading'} id="card" aria-hidden="true" className={"popup card"}>
             <div className="popup__messages">
                 <div className="popup__messages-wrapper">
                 </div>
             </div>
-            <div className="popup__wrapper card__wrapper">
+            <div className={"popup__wrapper card__wrapper" + (!(avalibleSizes.length > 1 || ingredients.length > 0) ? " card__wrapper_simplified" : "")}>
                 <div className="popup__content card__content">
                     <button data-close="data-close" type="button" className="popup__close card__close"><img src="/Common/CrossWhite.svg" alt="Cross" /></button>
                     <div className="card__body">

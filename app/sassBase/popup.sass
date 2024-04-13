@@ -301,7 +301,7 @@ body::after
         @media (max-width: $mobile)
             min-height: auto
             height: auto
-    &_simplified &__wrapper
+    &__wrapper_simplified &__wrapper
         @media (max-width: $mobile)
             top: auto
             justify-content: flex-end
@@ -324,7 +324,7 @@ body::after
         position: relative
         &:has(.card__loading)
             height: 100%
-    &_simplified &__content
+    &__wrapper_simplified &__content
         // &:has(.card__loading)
         //     height: 100%
         //     display: flex
@@ -367,7 +367,7 @@ body::after
 
         @media (max-width: $mobile)
             display: block
-    &_simplified &__body
+    &__wrapper_simplified &__body
         @media (max-width: $mobile)
             height: 100%
 
@@ -384,7 +384,7 @@ body::after
             padding-bottom: toRem(0)
             display: flex
             justify-content: center
-    &_simplified &__img
+    &__wrapper_simplified &__img
         height: 100%
         justify-content: center
         padding-top: 0
@@ -410,7 +410,7 @@ body::after
             height: 100%
             top: 0
             border-radius: toRem(24)
-    &_simplified &__img-inner
+    &__wrapper_simplified &__img-inner
         height: 100%
 
     &__info
@@ -423,7 +423,7 @@ body::after
         @media (max-width: $mobile)
             padding-top: 0
             overflow: hidden
-    &_simplified &__info
+    &__wrapper_simplified &__info
         flex: 1 1 100%
         padding-top: 0
         @media (max-width: $mobile)
@@ -444,7 +444,7 @@ body::after
     &__info-wrapper
         overflow: auto
         flex: 1 1 auto
-    &_simplified &__info-wrapper
+    &__wrapper_simplified &__info-wrapper
         flex: 0 1 auto
         // display: flex
         // justify-content: center
@@ -480,7 +480,7 @@ body::after
         align-items: center
         gap: toRem(8)
         z-index: 1
-    &_simplified &__title-product
+    &__wrapper_simplified &__title-product
         padding: toRem(12) toRem(20)
     &__ingridients
         width: 100%

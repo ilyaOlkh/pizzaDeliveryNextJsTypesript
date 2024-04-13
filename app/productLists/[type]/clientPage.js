@@ -49,7 +49,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     if (ProductTypes.includes(type)) {
         if (productsState.length > 0) {
             body = productsState.map(pizza => {
-                return (<ProductCard withComposition={withComposition} productData={pizza} />)
+                return (<ProductCard withComposition={withComposition} productData={pizza} type={type} />)
             })
         } else {
             body = (
