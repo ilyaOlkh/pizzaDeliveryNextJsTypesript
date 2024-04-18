@@ -1,7 +1,7 @@
 import { setParam } from "../service/setSearchParam";
 
 export default function OrderItem({ orderData, orderProductsData }) {
-    return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className="order">
+    return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className={"order" + (orderData.status == 'скасовано' ? " order_gray " : "")}>
         <div className={"order__row " + (orderData.status == 'готується' ? "order__row_red " : (orderData.status == 'доставляється' ? "order__row_orange " : ""))}>
             <div className="order__info">
                 <div className="order__info-title">

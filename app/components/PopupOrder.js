@@ -132,7 +132,7 @@ export default function PopupOrder() {
                     <button data-close="data-close" type="button" className="popup__close">
                         <img src="/Common/CrossWhite.svg" alt="Cross" />
                     </button>
-                    <form onSubmit={onSubmit} method="POST" className="popup-order">
+                    <form onSubmit={onSubmit} method="POST" className={"popup-order" + (thisOrderState.thisOrder?.status == 'скасовано' ? " popup-order_gray " : "")}>
                         {Object.keys(thisOrderState).length === 0 ? <div className="error"><span className="error__code">замовлення не обрано</span></div> :
                             // ((!thisOrderState.thisOrderDetails && !isAdminState) ? <div className="error"><span className="error__code">це замовлення вам недоступне</span></div> :
                             (<>

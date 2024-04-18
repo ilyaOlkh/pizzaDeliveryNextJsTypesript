@@ -252,6 +252,8 @@ summary
     border-radius: 12px
     background-color: #fff
     padding: toRem(16) toRem(20)
+    &_gray
+        filter: grayscale(1)
     &__row
         gap: toRem(20) toRem(15)
         width: 100%
@@ -284,6 +286,7 @@ summary
         &_orange
             &::before
                 background-color: #ff7010 !important
+
     &__info
         display: flex
         flex-direction: column
