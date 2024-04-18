@@ -39,6 +39,8 @@ export default async function RootLayout({ children, params }) {
         <html lang="uk">
             <head>
                 <meta charSet="UTF-8" />
+                <meta name="google-site-verification" content="-CUDsbySMtgufUXLVrp7UMdXFnSr7Xe1n9G-LVuLZh8" />
+                <title>pizzaDelivery</title>
             </head>
             <body>
                 <Loading />
