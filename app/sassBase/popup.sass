@@ -235,7 +235,18 @@ body::after
         background: #FF7010
         border: none
         padding: toRem(12) toRem(21)
-
+    &__option input[type="radio"]:checked + #word_opts
+        color: #fff
+        background: #FF7010
+        border: none
+        padding: toRem(12) toRem(21)
+    &__option-input
+        padding: toRem(12) toRem(21)
+        border: 1px solid #F0F0F0
+        border-radius: 6px
+        width: 100%
+        &::-webkit-input-placeholder
+            color: #dcdcdc
     &__buttons
         flex: 0 0 auto
         display: flex

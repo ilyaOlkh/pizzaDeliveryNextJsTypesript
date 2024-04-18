@@ -5,14 +5,45 @@ import { sql } from 'kysely'
 export default async (req) => {
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
     const type = req.type;
-    const filters = req.filters;
+    let filters = req.filters;
     const limit = req.limit;
     const sort = req.sort;
+    let size_sm;
+    let priceFrom;
+    let priceTo;
+    console.log(filters)
 
+    if (filters) {
+        if (filters.size_sm) {
+            size_sm = filters.size_sm.replace('см', '')
+            if (size_sm != 'null') {
+                size_sm = `= '${size_sm}'`
+            } else {
+                size_sm = `IS NULL`
+            }
+            if (filters.priceFrom) {
+                priceFrom = filters.priceFrom
+            }
+            if (filters.priceTo) {
+                priceTo = filters.priceTo
+            }
+        }
+        delete filters.size_sm
+        delete filters.priceFrom
+        delete filters.priceTo
+
+        if (Object.keys(filters).length == 0) {
+            filters = undefined
+        }
+        console.log(filters)
+    }
     let query = db
         .selectFrom('product')
         .leftJoin('composition', 'composition.product_id', 'product.product_id')
         .leftJoin('ingredient', 'ingredient.ingredient_id', 'composition.ingredient_id')
+    if (size_sm) {
+        query = query.leftJoin('pizzadetails', 'product.product_id', 'pizzadetails.product_id')
+    }
     if (sort?.sortRule == 'rating') {
         query = query.leftJoin(sql(`(SELECT 
         product.product_id, 
@@ -37,6 +68,7 @@ export default async (req) => {
             product
         LEFT JOIN 
             pizzadetails ON product.product_id = pizzadetails.product_id
+        ${size_sm ? ('WHERE pizzadetails.size_cm ' + size_sm) : ''}
         GROUP BY 
             product.product_id) AS prices`), 'prices.product_id', 'product.product_id')
         .select([
@@ -44,6 +76,7 @@ export default async (req) => {
             `prices.minprice`,
             `prices.numofprice`,
             'p_name',
+            // 'pizzadetails.size_cm',
             (sort?.sortRule == 'rating') ? 'order_counts.rating' : null,
             'is_available',
             'added_date',
@@ -52,9 +85,21 @@ export default async (req) => {
             sql`COALESCE(STRING_AGG(i_name, ', '), 'немає складу')`.as('composition'),
         ].filter(Boolean))
 
+    let whereArr = []
     if (type) {
-        query = query.where('p_type', '=', type);
+        whereArr.push(`p_type = '${type}'`)
     }
+    if (size_sm) {
+        whereArr.push(`pizzadetails.size_cm ${size_sm}`)
+        if (priceFrom) {
+            whereArr.push(`pizzadetails.price >= ${priceFrom}`)
+        }
+        if (priceTo) {
+            whereArr.push(`pizzadetails.price <= ${priceTo}`)
+        }
+    }
+    console.log(`${whereArr.join(' AND ')}`)
+    query = query.where(sql(`${whereArr.join(' AND ')}`));
     query = query.groupBy(sql(`product.product_id, minprice, numofprice${(sort?.sortRule == 'rating') ? ', rating' : ''}`));
     if (filters) {
         let querytextGlobal = ``

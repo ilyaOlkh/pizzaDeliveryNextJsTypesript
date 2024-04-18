@@ -1,11 +1,11 @@
 'use client'
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getProduct } from '../service/getProduct.js';
 import getIngredients from '../service/getIngredients.js';
 import getSizes from '../service/getSizes.js';
 import { CartContext } from '../context/contextProvider'
 import { ProductsInfoContext } from '../context/contextProvider';
-import { Skeleton } from '@mui/material';
+import { useSearchParams } from 'next/navigation.js';
 
 const HTMLLoading = (
     <img src="/Common/loading.svg" alt="loading" className='card__loading' />
@@ -36,6 +36,7 @@ export default function popupProduct() {
     const [ingredients, setIngredients] = useState([])
     const [avalibleSizes, setAvalibleSizes] = useState([])
     const [curentSize, setCurentSize] = useState({})
+    const searchParam = useSearchParams().get('size_sm') ? decodeURIComponent(useSearchParams().get('size_sm')) : undefined
     let content;
     let uniqueDivKey = 0
     let uniqueLabelKey = 0
@@ -89,8 +90,17 @@ export default function popupProduct() {
                 let Ingredients = await getIngredients(id)
                 setIngredients(Ingredients)
                 let sizesRespons = await getSizes(id)
+                console.log(searchParam)
                 setAvalibleSizes(sizesRespons)
-                setCurentSize(sizesRespons[0])
+                if (searchParam && productRespons[0].p_type == "піца") {
+                    setCurentSize(sizesRespons.find((elem) => {
+                        console.log(elem, searchParam.replace('см', ''))
+                        return elem.size_cm == searchParam.replace('см', '')
+                    }))
+                } else {
+                    setCurentSize(sizesRespons[0])
+                }
+
                 setLoading(false)
 
             }
@@ -137,7 +147,6 @@ export default function popupProduct() {
                                     <h2 className="card__title-product">
                                         {/* <img src="/Common/Fire.svg" alt="Fire" /> */}
                                         <span>{product.p_name}</span>
-
                                     </h2>
                                     <div className="card__ingridients">
                                         {ingredients.map(({ i_type, i_name }) => {

@@ -65,7 +65,7 @@ export default function OrderItem({ orderData, orderProductsData }) {
         </div>
         <div className="order__row">
             <div className="order__images">
-                {orderProductsData.map(item => <div className="order__image">
+                {orderProductsData?.map(item => <div className={"order__image" + (item.hidden ? " order__image_hidden" : '')}>
                     <img src={item.image_url.slice(3)} />
                     <span>{item.quantity}</span>
                 </div>)
@@ -77,8 +77,11 @@ export default function OrderItem({ orderData, orderProductsData }) {
 
 function getOrderPrice(orderProductsData) {
     let sum = 0;
-    for (let i = 0; i < orderProductsData.length; i++) {
-        sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;
+    if (orderProductsData) {
+        for (let i = 0; i < orderProductsData.length; i++) {
+            if (orderProductsData[i].hidden) continue
+            sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;
+        }
     }
     return sum;
 }

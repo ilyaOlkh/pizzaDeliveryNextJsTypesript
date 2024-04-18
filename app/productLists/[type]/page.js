@@ -22,7 +22,7 @@ export default async function productList(params) {
     let decodedContent = {};
     for (let key in params.searchParams) {
         let decodedKey = decodeURIComponent(key);
-        if (!i_types.includes(decodedKey)) {
+        if (!i_types.includes(decodedKey) && !process.env.NEXT_PUBLIC_FILTERS_SPECIAL_PARAMS.split(', ').includes(decodedKey)) {
             continue
         }
         let decodedValue = decodeURIComponent(params.searchParams[key]);
@@ -34,16 +34,19 @@ export default async function productList(params) {
     console.log(params.searchParams[sortRuleId])
     let type = decodeURIComponent(params.params.type)
     const filtersContent = await getFilters(type);
+
     let products = await getProducts({
         type: type,
-        filters: (Object.keys(filters).length !== 0 ? filters : undefined),
+        filters: (Object.keys(filters).length !== 0 ?
+            (type != 'піца' ? { ...filters, size_sm: 'null' } : filters)
+            : undefined),
         sort: sort
     })
     let ProductTypes = await getProductTypes()
     return (
         <>
             <SortProvider sort={sort}>
-                <ClientPage filters={filters} ProductTypes={ProductTypes} products={products} type={type} filtersContent={filtersContent} sortParams={sortParams} />
+                <ClientPage filters={filters} ProductTypes={ProductTypes} products={products} type={type} filtersContent={filtersContent} sortParams={sortParams} params={params} />
             </SortProvider>
         </>
     )

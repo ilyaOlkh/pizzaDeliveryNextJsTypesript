@@ -9,6 +9,7 @@ import { getProduct } from '@/app/service/getProduct'
 import { useRef, useContext, useEffect, useState } from 'react'
 import { sortContext } from '@/app/context/contextProvider'
 import getProducts from '@/app/service/getProducts'
+import PriceFilter from '@/app/components/priceFilter'
 
 const HTMLLoading = (
     <div className='error__loading'>
@@ -16,10 +17,12 @@ const HTMLLoading = (
     </div>
 )
 
-export default function ClientPage({ ProductTypes, products, type, filtersContent, sortParams, filters }) {
+export default function ClientPage({ ProductTypes, products, type, filtersContent, sortParams, filters, params }) {
     const { sortState, setSort } = useContext(sortContext);
     const [productsState, setProducts] = useState(products)
     const [loadingState, setLoading] = useState(false)
+    const [sizeState, setSize] = useState(!!params.searchParams['size_sm'])
+    console.log(sizeState)
     const sortRef = useRef(sortState);
     const withComposition = process.env.NEXT_PUBLIC_TYPES_WITH_COMPOSITION.split(', ').includes(type)
 
@@ -31,7 +34,9 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
         setLoading(true)
         let products = await getProducts({
             type: type,
-            filters: (Object.keys(filters).length !== 0 ? filters : undefined),
+            filters: (Object.keys(filters).length !== 0 ?
+                (type != 'піца' ? { ...filters, size_sm: 'null' } : filters)
+                : undefined),
             sort: sortState
         }) || []
         console.log(products)
@@ -64,8 +69,23 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
                 <span className="error__code">таких типів продуктів немає</span>
             </div>)
     }
+    function sizeSelected() {
+        try {
+            let form = new FormData(document.querySelector('#filters form'))
+            return !!form.get('size_sm')
+        } catch (e) {
+            return false
+        }
+    }
+    // filtersContent.unshift({
+    //     filterRule: 'size_sm', i_type: 'мінімальна ціна', i_name: '', ui: 'custom',
+    //     customUI: <input className="popup-from-left__option-input" defaultValue={params.searchParams['priceFrom']} placeholder='мінімальна ціна' type='number' name='priceFrom' />
+    // })
+    // if (type == 'піца') {
+    //     filtersContent.unshift({ filterRule: 'size_sm', i_type: 'розмір', i_name: '20см, 28см, 33см', ui: 'radio' })
+    // }
     return <>
-        {ProductTypes.includes(type) ? <Filters filtersContent={filtersContent} /> : <></>}
+        {ProductTypes.includes(type) ? <Filters type={type} setSize={setSize} filtersContent={filtersContent} /> : <></>}
         {ProductTypes.includes(type) && (productsState.length > 0) ? <PopupSort sortParams={sortParams} /> : <></>}
         <PopupProduct withComposition={withComposition} />
         <Header />
@@ -77,15 +97,16 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
                         <div className="priceList__button-container">
                             {!ProductTypes.includes(type) ? <></> :
                                 <>
-                                    {withComposition ?
+                                    {
                                         <button type="button" data-popup="#filters" className="priceList__filter button">
                                             <img src="/Common/Filter.svg" alt="Filter" width={20} height={20} /><span>Фільтри</span>
-                                        </button> : <></>
+                                        </button>
                                     }
                                     {
-                                        (productsState.length > 0) ? (<button type="button" data-popup="#sort" className="priceList__filter button">
-                                            <img src="/Common/Sort.svg" alt="sort" width={20} height={20} /><span>Сортування</span>
-                                        </button>) : <></>
+                                        (productsState.length > 0) ?
+                                            (<button type="button" data-popup="#sort" className="priceList__filter button">
+                                                <img src="/Common/Sort.svg" alt="sort" width={20} height={20} /><span>Сортування</span>
+                                            </button>) : <></>
                                     }
                                 </>
                             }

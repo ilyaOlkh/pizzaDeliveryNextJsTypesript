@@ -27,6 +27,7 @@ export default async function getOrdersProductsByIDs(idArray) {
             .leftJoin('product', 'pizzadetails.product_id', 'product.product_id')
             .leftJoin('order_', 'order_.order_id', 'orderdetails.order_id')
             .select([
+                'orderdetails.order_details_id',
                 'orderdetails.order_id',
                 'product.p_name',
                 // 'product.image_url',

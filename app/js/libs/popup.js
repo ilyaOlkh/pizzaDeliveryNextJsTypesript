@@ -132,6 +132,7 @@ export default class Popup {
                 }
                 // Закриття на порожньому місці (popup__wrapper) та кнопки закриття (popup__close) для закриття
                 const buttonClose = e.target.closest(`[${this.options.attributeCloseButton}]`);
+                console.log(e.target)
                 if (buttonClose || !e.target.closest(`.${this.options.classes.popupContent}`) && this.isOpen) {
                     e.preventDefault();
                     this.close();

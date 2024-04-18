@@ -8,7 +8,6 @@ export const getProduct = async (id) => {
 
     let query = db
         .selectFrom('product')
-        // .leftJoin()
         .select([
             'product.product_id',
             'product.p_name',

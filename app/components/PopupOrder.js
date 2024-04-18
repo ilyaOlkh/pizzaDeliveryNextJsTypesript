@@ -1,11 +1,13 @@
 'use client'
 import { useContext, useState, useEffect, useRef } from "react"
 import { MyContext, OrdersContext, OrdersDetailsContext, isAdminContext } from "../context/contextProvider"
-import CartItem from "../ui/CartItem"
+import OrderDetailsItem from "../ui/OrderDetailsItem"
 import OrderSelect from "./OrderSelect"
 import { updateOrder } from "../service/updateOrder"
+import { updateQuantity } from "../service/updateQuantity"
 
 import { show, hide } from "./loading"
+import { deleteOrderDetails } from "../service/deleteOrderDetails"
 
 
 const orderHash = '#' + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH
@@ -17,6 +19,8 @@ export default function PopupOrder() {
     const [isOpen, setIsOpen] = useState(false)
     const [thisOrderState, setThisOrder] = useState({})
     let uniqueCartItemKey = 0
+    let toDelete = useRef(new Set())
+    let toChangeQuantity = useRef({})
 
 
     async function onSubmit(event) {
@@ -34,6 +38,13 @@ export default function PopupOrder() {
                         Changes[key] = formObj[key]
                     }
                 })
+            }
+
+            if (toDelete.current.size > 0) {
+                await deleteOrderDetails(Array.from(toDelete.current))
+            }
+            if (Object.keys(toChangeQuantity.current).length > 0) {
+                await updateQuantity(toChangeQuantity.current)
             }
             let res;
             if (Object.keys(Changes).length > 0) {
@@ -63,8 +74,9 @@ export default function PopupOrder() {
                 index: index,
                 order_id: orderId,
                 thisOrder: ordersState[index],
-                thisOrderDetails: ordersDetailsState[orderId]
+                thisOrderDetails: (!ordersDetailsState[orderId] && isAdminState) ? [] : ordersDetailsState[orderId]
             })
+            toDelete.current.clear()
         }
     }, [isOpen])
 
@@ -90,7 +102,26 @@ export default function PopupOrder() {
             document.removeEventListener('afterPopupClose', close);
         };
     }, []);
-
+    function deleteItem(num, item) {
+        let newOrdersDetailsState = { ...ordersDetailsState }
+        newOrdersDetailsState[thisOrderState.order_id][num].hidden = true
+        setOrdersDetails(newOrdersDetailsState)
+        toDelete.current.add(item.order_details_id)
+    }
+    function incQuantity(num, item) {
+        let newOrdersDetailsState = { ...ordersDetailsState }
+        newOrdersDetailsState[thisOrderState.order_id][num].quantity++
+        setOrdersDetails(newOrdersDetailsState)
+        toChangeQuantity.current[item.order_details_id] = newOrdersDetailsState[thisOrderState.order_id][num].quantity
+    }
+    function decQuantity(num, item) {
+        if (thisOrderState.thisOrderDetails[num].quantity > 1) {
+            let newOrdersDetailsState = { ...ordersDetailsState }
+            newOrdersDetailsState[thisOrderState.order_id][num].quantity--
+            setOrdersDetails(newOrdersDetailsState)
+            toChangeQuantity.current[item.order_details_id] = newOrdersDetailsState[thisOrderState.order_id][num].quantity
+        }
+    }
     return <>
         <div data-order-id={0} id={process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} aria-hidden="true" className="popup popup-window">
             <div className="popup__wrapper">
@@ -100,7 +131,7 @@ export default function PopupOrder() {
                     </button>
                     <form onSubmit={onSubmit} method="POST" className="popup-order">
                         {Object.keys(thisOrderState).length === 0 ? <div className="error"><span className="error__code">замовлення не обрано</span></div> :
-                            (!thisOrderState.thisOrderDetails ? <div className="error"><span className="error__code">це замовлення вам недоступне</span></div> :
+                            ((!thisOrderState.thisOrderDetails && !isAdminState) ? <div className="error"><span className="error__code">це замовлення вам недоступне</span></div> :
                                 (<>
                                     <div className="popup__header popup__header">
                                         <h2 className="popup__title popup__title">Замовлення №{thisOrderState.order_id}</h2>
@@ -135,7 +166,7 @@ export default function PopupOrder() {
                                             <h3 className="popup-order__data-title">Загальна ціна:</h3>
                                             <div className="popup-order__data-value">{getOrderPrice(thisOrderState.thisOrderDetails)} ₴</div>
                                         </div>
-                                        <div className="popup-order__data-block">
+                                        <div className="popup-order__data-block" hidden={!thisOrderState.thisOrderDetails.reduce((acc, elem) => acc + !elem.hidden, 0)}>
                                             <h3 className="popup-order__data-title">Продукти:</h3>
                                             <div className="popup-order__data-value popup-order__data-value_product">
                                                 <div className="popup-window__inner popup-window__inner_product">
@@ -144,7 +175,7 @@ export default function PopupOrder() {
                                                             console.log('перерендер')
                                                             uniqueCartItemKey++
                                                             return (
-                                                                <CartItem key={uniqueCartItemKey} productData={item} number={num} lock={true} />
+                                                                <OrderDetailsItem decQuantity={(e) => { e.preventDefault(); decQuantity(num, item) }} incQuantity={(e) => { e.preventDefault(); incQuantity(num, item) }} deleteFunc={(e) => { console.log(e); e.preventDefault(); deleteItem(num, item) }} lock={!isAdminState} key={uniqueCartItemKey} productData={item} number={num} />
                                                             )
                                                         })
                                                     }
@@ -159,13 +190,14 @@ export default function PopupOrder() {
                     </form>
                 </div>
             </div>
-        </div>
+        </div >
     </>
 }
 
 function getOrderPrice(orderProductsData) {
     let sum = 0;
-    for (let i = 0; i < orderProductsData.length; i++) {
+    for (let i = 0; i < orderProductsData?.length; i++) {
+        if (orderProductsData[i].hidden) continue
         sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;
     }
     return sum;
