@@ -34,6 +34,10 @@ export default async function productList(params) {
     console.log(params.searchParams[sortRuleId])
     let type = decodeURIComponent(params.params.type)
     const filtersContent = await getFilters(type);
+    filtersContent.unshift({
+        filterRule: 'searchName', i_type: 'назва', i_name: '', ui: 'custom',
+        customUI: <input pattern="^[А-ЩЬЮЯҐІЇЄа-щьюяґіїє]{1,500}$" className="popup-from-left__option-input" defaultValue={params.searchParams['searchName']} placeholder='назва' type='text' name='searchName' />
+    })
 
     let products = await getProducts({
         type: type,

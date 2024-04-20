@@ -15,7 +15,7 @@ export default async function insertOrder(delivery, worker_id, customer_id, cart
         }).returning('order_id').executeTakeFirst()
     } catch (error) {
         console.log({ error: `Помилка при вставці даних: ${error.message}` })
-        return 'error'
+        return ['error']
     }
     if (OrderId) {
         try {
@@ -23,13 +23,13 @@ export default async function insertOrder(delivery, worker_id, customer_id, cart
             insertOrderDetails(OrderId.order_id, cartItems)
         } catch (error) {
             console.log({ error: `Помилка при вставці даних: ${error.message}` })
-            return 'error'
+            return ['error']
         }
     } else {
         console.log('немає айдішника')
-        return 'error'
+        return ['error']
     }
-    return 'success'
+    return ['success', OrderId.order_id]
 }
 
 async function insertOrderDetails(OrderId, cartItems) {

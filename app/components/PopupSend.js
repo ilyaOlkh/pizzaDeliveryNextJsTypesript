@@ -6,6 +6,7 @@ import insertOrder from "../CartServerServices/SendCart"
 import { flsModules } from "../js/files/modules"
 import { show, hide } from "./loading"
 import { getTotalPrice } from '../CartClientServises/CartServices';
+import { setParam } from "../service/setSearchParam"
 
 export default function PopupSend() {
     const { cartState, setCart } = useContext(CartContext)
@@ -17,10 +18,13 @@ export default function PopupSend() {
         event.preventDefault()
         const formData = new FormData(event.target);
         let delivery = formData.get('delivery')
-        const res = await insertOrder(delivery, 1, userState.customer_id, cartState)
+        const [res, orderId] = await insertOrder(delivery, 1, userState.customer_id, cartState)
         if (res === 'success') {
             setCart([])
-            flsModules.popup.close('#send')
+            console.log(orderId)
+            setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderId)
+            // flsModules.popup.close('#send')
+            flsModules.popup.open('#cheque')
         } else {
             alert('щось пішло не так')
         }

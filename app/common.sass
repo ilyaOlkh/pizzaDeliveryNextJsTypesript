@@ -300,6 +300,15 @@ summary
         gap: toRem(5)
         flex-wrap: wrap
         padding-top: toRem(16)
+    &__button
+        border-radius: toRem(16)
+        transition: 0.1s
+        transition-property: color,background
+        &:active
+            background: #fff
+            color: #FF7010
+            border: 1px solid #f0f0f0
+            padding: toRem(12) toRem(31)
     &__image
         display: flex
         flex-direction: column

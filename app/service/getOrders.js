@@ -85,7 +85,6 @@ export async function getOrders(page, numInPage, all = false, sort, filters) {
 
         } catch (error) {
             console.log({ error: `1Помилка: ${error.message}` })
-            setTimeout(() => { console.log({ error: `1Помилка: ${error.message}` }) }, 3000)
             return 'error'
         }
     }

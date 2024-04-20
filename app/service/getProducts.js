@@ -11,9 +11,13 @@ export default async (req) => {
     let size_sm;
     let priceFrom;
     let priceTo;
+    let searchName;
     console.log(filters)
 
     if (filters) {
+        if (filters.searchName) {
+            searchName = filters.searchName
+        }
         if (filters.size_sm) {
             size_sm = filters.size_sm.replace('см', '')
             if (size_sm != 'null') {
@@ -31,6 +35,8 @@ export default async (req) => {
         delete filters.size_sm
         delete filters.priceFrom
         delete filters.priceTo
+        delete filters.searchName
+
 
         if (Object.keys(filters).length == 0) {
             filters = undefined
@@ -86,6 +92,9 @@ export default async (req) => {
         ].filter(Boolean))
 
     let whereArr = []
+    if (searchName) {
+        whereArr.push(`POSITION('${searchName}' IN p_name) > 0`)
+    }
     if (type) {
         whereArr.push(`p_type = '${type}'`)
     }
@@ -129,7 +138,6 @@ export default async (req) => {
     }
     try {
         const result = await query.execute();
-        console.log(result)
         return result;
     } catch (err) {
         console.error('Помилка:', err);

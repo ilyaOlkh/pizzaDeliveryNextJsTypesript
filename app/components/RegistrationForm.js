@@ -31,13 +31,13 @@ export default function registrationForm() {
                         <div className="registration__input input-reg">
                             <label className="input-reg__title">ім’я *</label>
                             <div className="input-reg__input">
-                                <input name='name' type="text" pattern="^[A-Za-zА-Яа-яЁё]{1,50}$" required="required" />
+                                <input name='name' type="text" pattern="^[А-ЩЬЮЯҐІЇЄа-щьюяґіїє]{1,50}$" required="required" />
                             </div>
                         </div>
                         <div className="registration__input input-reg">
                             <label className="input-reg__title">Прізвище *</label>
                             <div className="input-reg__input">
-                                <input name='surname' type="text" pattern="^[A-Za-zА-Яа-яЁё]{1,50}$" required="required" />
+                                <input name='surname' type="text" pattern="^[А-ЩЬЮЯҐІЇЄа-щьюяґіїє]{1,50}$" required="required" />
                             </div>
                         </div>
                     </div>
