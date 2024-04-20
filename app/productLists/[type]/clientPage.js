@@ -5,23 +5,12 @@ import Header from "../../header/page.js"
 import Filters from '@/app/components/popupFilters'
 import PopupProduct from '@/app/components/popupProduct'
 import PopupSort from '@/app/components/PopupSort'
-import { getProduct } from '@/app/service/getProduct'
 import { useRef, useContext, useEffect, useState } from 'react'
 import { sortContext } from '@/app/context/contextProvider'
 import getProducts from '@/app/service/getProducts'
-import PriceFilter from '@/app/components/priceFilter'
 import PopupCheque from '@/app/components/PopupCheque'
 
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-import PdfPrinter from 'pdfmake'
-
-import { font } from '@/app/font/inter'
-
-import { jsPDF } from "jspdf";
-import generateCheque from '@/app/service/generateCheque'
 
 
 
