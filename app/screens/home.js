@@ -3,10 +3,12 @@ import ProductCard from '../ui/productCard.js'
 import Header from "../header/page.js"
 import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg.js';
+import PopupCheque from '@/app/components/PopupCheque'
 
 export default function Home(pizzas, shushi, drinks) {
     return (
         <>
+            <PopupCheque />
             <PopupProduct withComposition={true} />
             <PopupReg />
             <Header />
