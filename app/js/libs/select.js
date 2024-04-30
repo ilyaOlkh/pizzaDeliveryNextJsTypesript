@@ -247,6 +247,8 @@ export default class SelectConstructor {
     }
     // Функція відкриття/закриття конкретного селекту
     selectAction(selectItem) {
+        console.log(1)
+
         const originalSelect = this.getSelectElement(selectItem).originalSelect;
         const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
         const selectOpenzIndex = originalSelect.dataset.zIndex ? originalSelect.dataset.zIndex : 3;

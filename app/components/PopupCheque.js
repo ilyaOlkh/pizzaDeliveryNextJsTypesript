@@ -28,7 +28,9 @@ export default function PopupCheque() {
                         <div className="popup__body cheque__body">
                             <img src="/Common/checkmark.svg" alt="checkmark" />
                             <h2 className='cheque__title'>Дякуємо за замовлення!</h2>
-                            <button type="button" className='cheque__button button' onClick={createPDF}>Завантажити чек</button>
+                            <div className="cheque__button-wrapper">
+                                <button type="button" className='cheque__button button' onClick={createPDF}>Завантажити чек</button>
+                            </div>
                             <button data-popup='#cheque' type="button" style={{ display: 'none' }}></button>
                         </div>
                     </div>

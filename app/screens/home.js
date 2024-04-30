@@ -16,13 +16,13 @@ export default function Home(pizzas, shushi, drinks) {
                 <section className="categories">
                     <div className="categories__container swiper-container swiper">
                         <nav className="categories__list swiper-wrapper">
-                            <a href="" className="categories__category swiper-slide">
+                            {/* <a href="" className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img">
                                         <img src="/Categories/Fire.svg" alt="Fire" width={32} height={32} />
                                     </div><span>Акції   </span>
                                 </div>
-                            </a>
+                            </a> */}
                             <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_PIZZA_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner ">
                                     <div className="categories__img"><img src="/Categories/Pizza.svg" alt="Pizza" width={32} height={32} /></div><span>Піца</span>
@@ -38,24 +38,30 @@ export default function Home(pizzas, shushi, drinks) {
                                     <div className="categories__img"><img src="/Categories/Drink.svg" alt="Drink" width={32} height={32} /></div><span>Напої</span>
                                 </div>
                             </a>
-                            <a href="" className="categories__category categories__category_notWorking swiper-slide">
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_SNAKS_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Snacks.svg" alt="Snacks" width={32} height={32} /></div><span>Закуски</span>
                                 </div>
                             </a>
-                            <a href="" className="categories__category categories__category_notWorking swiper-slide">
+                            {/* <a href="" className="categories__category categories__category_notWorking swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Combo.svg" alt="Combo" width={32} height={32} /></div><span>Комбо</span>
-                                </div></a><a href="" className="categories__category categories__category_notWorking swiper-slide">
+                                </div>
+                            </a> */}
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_DESSERT_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Dessert.svg" alt="Dessert" width={32} height={32} /></div><span>Десерти</span>
-                                </div></a><a href="" className="categories__category categories__category_notWorking swiper-slide">
+                                </div>
+                            </a>
+                            <a href={process.env.NEXT_PUBLIC_GLOBAL_URL + process.env.NEXT_PUBLIC_SAUCES_URL} className="categories__category swiper-slide">
                                 <div className="categories__category-inner">
                                     <div className="categories__img"><img src="/Categories/Sauce.svg" alt="Sauce" width={32} height={32} /></div><span>Соуси</span>
-                                </div></a></nav>
+                                </div>
+                            </a>
+                        </nav>
                     </div>
                 </section>
-                <section id="promotions" className="promotions">
+                {/* <section id="promotions" className="promotions">
                     <div className="promotions__container swiper-container swiper">
                         <div className="swiper-wrapper">
                             <div className="promotions__promo promo promo_orange swiper-slide">
@@ -76,8 +82,8 @@ export default function Home(pizzas, shushi, drinks) {
                             </div>
                         </div>
                     </div>
-                </section>
-                <section className="CheckAddress">
+                </section> */}
+                {/* <section className="CheckAddress">
                     <div className="CheckAddress__container">
                         <div className="CheckAddress__inner">
                             <div className="CheckAddress__text">Перевірити адресу доставки</div>
@@ -89,7 +95,7 @@ export default function Home(pizzas, shushi, drinks) {
                             </form>
                         </div>
                     </div>
-                </section>
+                </section> */}
                 <section id="pizza" className="priceList">
                     <div className="priceList__container">
                         <div className="priceList__header">

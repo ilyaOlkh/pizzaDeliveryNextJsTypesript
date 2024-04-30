@@ -12,6 +12,7 @@ import { getCartCookie } from "./CartServerServices/getCartCookie";
 import { getProductsByIDs } from "./service/getProductsByIDs";
 import PopupSend from "./components/PopupSend";
 import PopupReg from "./components/popupReg";
+import Footer from "./footer/page";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -50,6 +51,7 @@ export default async function RootLayout({ children, params }) {
                         <PopupSend />
                         <PopupReg />
                         {children}
+                        <Footer />
                     </div>
                     <SpeedInsights />
                     <Analytics />

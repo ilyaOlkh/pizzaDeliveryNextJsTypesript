@@ -159,7 +159,7 @@ export default function PopupOrder() {
                                             <h3 className="popup-order__data-title">Статус:</h3>
                                             {!isAdminState ?
                                                 <div className="popup-order__data-value">{thisOrderState.thisOrder?.status}</div> :
-                                                (isOpen && thisOrderState) ? <OrderSelect name={'status'} statusArray={['готується', 'доставляється', 'доставлено', 'скасовано']} status={thisOrderState.thisOrder.status} id={1} /> : <></>}
+                                                <OrderSelect name={'status'} statusArray={['готується', 'доставляється', 'доставлено', 'скасовано']} status={thisOrderState.thisOrder.status} id={1} />}
                                         </div>
                                         <div className="popup-order__data-block">
                                             <h3 className="popup-order__data-title">Доставка:</h3>
@@ -178,7 +178,7 @@ export default function PopupOrder() {
                                             <h3 className="popup-order__data-title">Оплачено:</h3>
                                             {!isAdminState ?
                                                 <div className="popup-order__data-value">{thisOrderState.thisOrder.payment}</div> :
-                                                isOpen ? <OrderSelect name={'payment'} statusArray={['оплачено', 'потрібно оплатити']} status={thisOrderState.thisOrder.payment} id={2} /> : <></>}
+                                                <OrderSelect isLast={true} name={'payment'} statusArray={['оплачено', 'потрібно оплатити']} status={thisOrderState.thisOrder.payment} id={2} />}
                                         </div>
                                         <div className="popup-order__data-block">
                                             <h3 className="popup-order__data-title">Загальна ціна:</h3>

@@ -1,3 +1,55 @@
-//====================================================================================================
+.footer
+    &__row
+        display: flex
+        justify-content: center
+        padding: toRem(16) 0
+        border-top: toRem(1) solid #F0F0F0
+        border-bottom: toRem(1) solid #F0F0F0
+        &_orange
+            color: #fff
+            background: #FF7010
+            border: 0px
+        @media (max-width: $mobile)
+            border-bottom: toRem(0) solid #F0F0F0
+    &__container
+        border-top: toRem(1) solid #F0F0F0
+        padding-top: toRem(15)
 
-//====================================================================================================
+        @media (max-width: $mobile)
+            padding: 0
+            border-top: toRem(0) solid #F0F0F0
+
+    &__grid
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr
+        gap: toRem(20)
+        justify-items: center
+        @media (max-width: $mobile)
+            grid-template-columns: 1fr
+            gap: toRem(0)
+            justify-items: normal
+
+    &__list
+        display: flex
+        flex-direction: column
+        gap: toRem(20)
+    &__item
+        font-size: toRem(18)
+        &_header
+            font-weight: 600
+            font-size: toRem(20)
+    .spollers
+        padding: toRem(8) toRem(16)
+        &__title
+            font-weight: 600
+            font-size: toRem(20)
+            position: relative
+        &__body
+            background-color: inherit
+            padding: toRem(20) 0
+            box-shadow: none
+            border: none
+            &::after
+                display: none
+        @media (max-width: $mobile)
+            border-top: toRem(1) solid #F0F0F0

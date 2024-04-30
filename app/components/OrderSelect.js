@@ -1,32 +1,31 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { refreshSelect } from "./startJS"
 
-export default function OrderSelect({ statusArray, status, id, name }) {
+export default function OrderSelect({ statusArray, status, id, name, isLast = false }) {
     const [statusState, setStatus] = useState(status)
+    const onceRendered = useRef(false)
     console.log(status, statusState)
     useEffect(() => {
         // refreshSelect()
         const thisSelect = document.querySelector(`select[name='${name}']`)
         console.log(status)
+        thisSelect.value = status
         thisSelect.closest('.select').querySelector('.select__value').innerHTML = status
 
         setStatus(status)
         console.log(statusState)
         console.log(status)
     }, [statusArray, status]);
-    // useEffect(() => {
-    //     let func = (e) => {
-    //         if (e.detail.select == thisSelect) {
-    //             console.log(thisSelect.value)
-    //         }
-    //     }
-    //     document.addEventListener('selectCallback', func)
-    //     return () => { document.removeEventListener('selectCallback', func) }
-    // }, []);
+    useEffect(() => {
+        if (!onceRendered.current && isLast) {
+            refreshSelect()
+            onceRendered.current = true
+        }
+    }, []);
     return (
         <div class=" popup-order__data-select select _select-active" data-id={id}>
-            <select value={statusState} name={name} data-show-selected="true" hidden data-id={id} data-speed="150">
+            <select defaultValue={statusState} name={name} data-show-selected="true" hidden data-id={id} data-speed="150">
                 {
                     statusArray.map(item => <option value={item}>{item}</option>)
                 }

@@ -69,16 +69,21 @@ export function initSliders() {
                     slidesPerView: 5.5,
                     spaceBetween: 30,
                 },
+                // 1050: {
+                //     slidesPerView: 6.5,
+                //     spaceBetween: 30,
+                // },
+                // 1150: {
+                //     slidesPerView: 7.5,
+                //     spaceBetween: 30,
+                // },
+                // 1320: {
+                //     slidesPerView: 8,
+                //     spaceBetween: 30,
+                // },
+
                 1050: {
-                    slidesPerView: 6.5,
-                    spaceBetween: 30,
-                },
-                1150: {
-                    slidesPerView: 7.5,
-                    spaceBetween: 30,
-                },
-                1320: {
-                    slidesPerView: 8,
+                    slidesPerView: 6,
                     spaceBetween: 30,
                 },
             },
