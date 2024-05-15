@@ -6,18 +6,14 @@ import { getUserCookies } from "../AuthControllers/GetDataController"
 
 
 export default async function getOrdersProductsByIDs(idArray) {
+
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
     let userData;
     let isAdmin = false;
-    if (idArray) {
-        userData = await getUserCookies()
-    } else {
-        userData = await GetUserInfoForServer()
-    }
 
-    if (!idArray) {
-        isAdmin = userData[2]
-    }
+    userData = await GetUserInfoForServer()
+
+    isAdmin = userData[2]
 
     if (userData[0]) {
         userData = userData[1]
@@ -42,13 +38,19 @@ export default async function getOrdersProductsByIDs(idArray) {
         if (!isAdmin) {
             let querytextGlobal = ``
             if (!idArray || idArray.length == 0) {
+
                 return []
+
             }
             for (const value of idArray) {
                 querytextGlobal += `orderdetails.order_id = ${value} OR `
             }
             querytextGlobal = querytextGlobal.slice(0, -4);
-            querytextGlobal = `(${querytextGlobal}) AND order_.customer_id = ${userData.customer_id}`
+            querytextGlobal = `(${querytextGlobal})`
+            if (!isAdmin) {
+                querytextGlobal += ` AND order_.customer_id = ${userData.customer_id}`
+
+            }
             query = query.where(sql(querytextGlobal));
         }
         // query = query.having('order_.customer_id', '=', userData.customer_id)
@@ -63,6 +65,7 @@ export default async function getOrdersProductsByIDs(idArray) {
                 acc[cur.order_id].push(cur);
                 return acc;
             }, {});
+
             return groupedOrders;
         } catch (err) {
             console.error('2Помилка:', err);

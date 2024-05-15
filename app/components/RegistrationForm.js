@@ -45,7 +45,7 @@ export default function registrationForm() {
                         <div className="registration__input input-reg">
                             <label className="input-reg__title">телефон *</label>
                             <div className="input-reg__input"><span>+38</span>
-                                <input name='phone' type="tel" pattern="(067|097)[0-9]{7}" required="required" />
+                                <input name='phone' type="tel" pattern="(020|039|050|063|066|067|068|073|075|077|089|091|092|093|094|095|096|097|098|099)[0-9]{7}" required="required" />
                             </div>
                         </div>
                         <div className="registration__input input-reg">

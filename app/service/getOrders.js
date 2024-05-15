@@ -29,9 +29,7 @@ export async function getOrders(page, numInPage, all = false, sort, filters) {
             const db = createKysely({ connectionString: process.env.POSTGRES_URL });
 
             let query = db.selectFrom('order_')
-            if (isAdmin) {
-                query = query.leftJoin('customer', 'order_.customer_id', 'customer.customer_id')
-            }
+            query = query.leftJoin('customer', 'order_.customer_id', 'customer.customer_id')
             if (sort) {
                 query = query.leftJoin('orderdetails', 'order_.order_id', 'orderdetails.order_id')
             }
@@ -44,6 +42,13 @@ export async function getOrders(page, numInPage, all = false, sort, filters) {
                 'order_.delivery',
                 (isAdmin ? 'customer.first_name' : null),
                 (isAdmin ? 'customer.last_name' : null),
+                'customer.street',
+                'customer.house',
+                'customer.entrance',
+                'customer.floor',
+                'customer.apartment',
+                'customer.intercom_code',
+                'customer.phone',
             ].filter(Boolean))
 
             if (filters) {
@@ -66,14 +71,12 @@ export async function getOrders(page, numInPage, all = false, sort, filters) {
                 query = query.where(sql(`${querytextGlobal}order_.customer_id = ${userData.customer_id}`));
             } else if (filters) {
 
-                console.log(querytextGlobal)
-
                 query = query.where(sql(`${querytextGlobal}`))
             }
 
             if (sort) {
                 query = query.orderBy(sql(sort.sortRule), sort.direction)
-                query = query.groupBy(sql("order_.order_id, customer.first_name, customer.last_name"))
+                query = query.groupBy(sql("order_.order_id, customer.first_name, customer.last_name, customer.street, customer.house, customer.entrance, customer.floor, customer.apartment, customer.intercom_code, customer.phone"))
             } else {
                 query = query.orderBy('order_date_time', 'desc')
             }

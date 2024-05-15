@@ -26,6 +26,13 @@ export async function getOrder(id) {
                     'order_.delivery',
                     'customer.first_name',
                     'customer.last_name',
+                    'customer.street',
+                    'customer.house',
+                    'customer.entrance',
+                    'customer.floor',
+                    'customer.apartment',
+                    'customer.intercom_code',
+                    'customer.phone',
                 ])
 
             let whereArr = []

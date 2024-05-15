@@ -12,6 +12,7 @@ export default async function generateCheque(thisOrder, id) {
         thisOrder: await getOrder(id),
         thisOrderDetails: (await getOrdersProductsByIDs([id]))[id]
     }
+    console.log(id, await getOrdersProductsByIDs([id]))
 
     let reaArray = []
     if (Object.keys(thisOrderState).length === 0) {
@@ -27,8 +28,15 @@ export default async function generateCheque(thisOrder, id) {
                     Час: ${thisOrderState.thisOrder.order_date_time.toLocaleTimeString()}
                     Оплачено: ${thisOrderState.thisOrder.payment}
                     Загальна ціна: ${getOrderPrice(thisOrderState.thisOrderDetails)} грн
-                    Замовник: ${thisOrderState.thisOrder.first_name + ' ' + thisOrderState.thisOrder.last_name}`,
+                    Замовник: ${thisOrderState.thisOrder.first_name + ' ' + thisOrderState.thisOrder.last_name}
+                    Телефонний номер замовника: ${thisOrderState.thisOrder.phone}`,
         })
+        if (thisOrderState.thisOrder?.delivery == 'доставка') {
+            reaArray.push({
+                text: `Адреса ${thisOrderState.thisOrder.street ? `вулиця ${thisOrderState.thisOrder.street}` : ""}${thisOrderState.thisOrder.house ? `, будинок ${thisOrderState.thisOrder.house}` : ""}${thisOrderState.thisOrder.entrance ? `, під'їзд ${thisOrderState.thisOrder.entrance}` : ""}${thisOrderState.thisOrder.floor ? `, поверх ${thisOrderState.thisOrder.entrance}` : ""}${thisOrderState.thisOrder.apartment ? `, квартира ${thisOrderState.thisOrder.apartment}` : ""}${thisOrderState.thisOrder.intercom_code ? `, код від домофону ${thisOrderState.thisOrder.intercom_code}` : ""}`,
+            })
+        }
+        console.log(thisOrderState.thisOrderDetails)
         if (thisOrderState.thisOrderDetails) {
             reaArray.push({ text: 'Продукти:' })
             thisOrderState.thisOrderDetails.forEach((item, num) => {

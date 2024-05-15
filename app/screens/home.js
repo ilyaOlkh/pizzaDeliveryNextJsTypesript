@@ -5,7 +5,7 @@ import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg.js';
 import PopupCheque from '@/app/components/PopupCheque'
 
-export default function Home(pizzas, shushi, drinks) {
+export default function Home(pizzas, shushi, drinks, snaks, sauces, dessert) {
     return (
         <>
             <PopupCheque />
@@ -122,7 +122,7 @@ export default function Home(pizzas, shushi, drinks) {
                         </div>
                     </div>
                 </section>
-                <section id="shushi" className="priceList">
+                <section id="drinks" className="priceList">
                     <div className="priceList__container">
                         <div className="priceList__header">
                             <h1 className="priceList__title">Напої</h1>
@@ -130,6 +130,42 @@ export default function Home(pizzas, shushi, drinks) {
                         <div className="priceList__grid">
                             {drinks.map(drink => {
                                 return (<ProductCard productData={drink} type={'напої'} />)
+                            })}
+                        </div>
+                    </div>
+                </section>
+                <section id="snaks" className="priceList">
+                    <div className="priceList__container">
+                        <div className="priceList__header">
+                            <h1 className="priceList__title">Закуски</h1>
+                        </div>
+                        <div className="priceList__grid">
+                            {snaks.map(snak => {
+                                return (<ProductCard productData={snak} type={'закуски'} />)
+                            })}
+                        </div>
+                    </div>
+                </section>
+                <section id="sauces" className="priceList">
+                    <div className="priceList__container">
+                        <div className="priceList__header">
+                            <h1 className="priceList__title">Соуси</h1>
+                        </div>
+                        <div className="priceList__grid">
+                            {sauces.map(sauce => {
+                                return (<ProductCard productData={sauce} type={'соуси'} />)
+                            })}
+                        </div>
+                    </div>
+                </section>
+                <section id="dessert" className="priceList">
+                    <div className="priceList__container">
+                        <div className="priceList__header">
+                            <h1 className="priceList__title">Десерти</h1>
+                        </div>
+                        <div className="priceList__grid">
+                            {dessert.map(dessertOne => {
+                                return (<ProductCard productData={dessertOne} type={'десерти'} />)
                             })}
                         </div>
                     </div>

@@ -188,6 +188,23 @@ export default function PopupOrder() {
                                             <h3 className="popup-order__data-title">Завантажити чек:</h3>
                                             <button type="button" className='order__button button' onClick={createPDF}>Завантажити чек</button>
                                         </div>
+                                        <div className="popup-order__data-block">
+                                            <h3 className="popup-order__data-title">Номер телефону клієнта:</h3>
+                                            <div className="popup-order__data-value">{thisOrderState.thisOrder.phone}</div>
+                                        </div>
+                                        {thisOrderState.thisOrder?.delivery == 'доставка' ?
+                                            <div className="popup-order__data-block">
+                                                <h3 className="popup-order__data-title">Адреса:</h3>
+                                                {[
+                                                    thisOrderState.thisOrder.street ? <span>вулиця {thisOrderState.thisOrder.street}</span> : <></>,
+                                                    thisOrderState.thisOrder.house ? <span>, будинок {thisOrderState.thisOrder.house}</span> : <></>,
+                                                    thisOrderState.thisOrder.entrance ? <span>, під'їзд {thisOrderState.thisOrder.entrance}</span> : <></>,
+                                                    thisOrderState.thisOrder.floor ? <span>, поверх {thisOrderState.thisOrder.entrance}</span> : <></>,
+                                                    thisOrderState.thisOrder.apartment ? <span>, квартира {thisOrderState.thisOrder.apartment}</span> : <></>,
+                                                    thisOrderState.thisOrder.intercom_code ? <span>, код від домофону {thisOrderState.thisOrder.intercom_code}</span> : <></>,
+                                                ]}
+                                            </div> : <></>
+                                        }
                                         <div className="popup-order__data-block" hidden={!thisOrderState.thisOrderDetails.reduce((acc, elem) => acc + !elem.hidden, 0)}>
                                             <h3 className="popup-order__data-title">Продукти:</h3>
                                             <div className="popup-order__data-value popup-order__data-value_product">
