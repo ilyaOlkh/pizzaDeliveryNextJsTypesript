@@ -8,7 +8,7 @@ import PopupSort from '@/app/components/PopupSort'
 import { useRef, useContext, useEffect, useState } from 'react'
 import { sortContext } from '@/app/context/contextProvider'
 import getProducts from '@/app/service/getProducts'
-import PopupCheque from '@/app/components/PopupCheque'
+// import PopupCheque from '@/app/components/PopupCheque'
 
 
 
@@ -81,7 +81,7 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     //     }
     // }
     return <>
-        <PopupCheque />
+        {/* <PopupCheque /> */}
         {ProductTypes.includes(type) ? <Filters type={type} setSize={setSize} filtersContent={filtersContent} /> : <></>}
         {ProductTypes.includes(type) && (productsState.length > 0) ? <PopupSort sortParams={sortParams} /> : <></>}
         <PopupProduct withComposition={withComposition} />

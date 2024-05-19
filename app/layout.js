@@ -13,6 +13,7 @@ import { getProductsByIDs } from "./service/getProductsByIDs";
 import PopupSend from "./components/PopupSend";
 import PopupReg from "./components/popupReg";
 import Footer from "./footer/page";
+import PopupCheque from '@/app/components/PopupCheque'
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
@@ -50,6 +51,7 @@ export default async function RootLayout({ children, params }) {
                         <PopupCart />
                         <PopupSend />
                         <PopupReg />
+                        <PopupCheque />
                         {children}
                         <Footer />
                     </div>

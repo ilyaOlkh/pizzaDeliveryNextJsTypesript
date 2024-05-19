@@ -14,7 +14,7 @@ export default async function homePage(params) {
     const shushi = await getProducts({ type: "суші", limit: 8 })
     const drinks = await getProducts({ type: "напої", limit: 8 })
     const snaks = await getProducts({ type: "закуски", limit: 8 })
-    const sauces = await getProducts({ type: "десерти", limit: 8 })
-    const dessert = await getProducts({ type: "соуси", limit: 8 })
-    return Home(pizzas, shushi, drinks, snaks, sauces, dessert)
+    const dessert = await getProducts({ type: "десерти", limit: 8 })
+    const sauces = await getProducts({ type: "соуси", limit: 8 })
+    return Home(pizzas, shushi, drinks, snaks, dessert, sauces)
 }
