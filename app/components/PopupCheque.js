@@ -12,7 +12,6 @@ export default function PopupCheque() {
         let searchParams = new URLSearchParams(window.location.search)
         let id = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER) ? decodeURIComponent(searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER)) : undefined
         let text = await generateCheque(undefined, id)
-        console.log(text)
         pdfMake.createPdf({
             content: text
         }).download();

@@ -6,7 +6,6 @@ import { useContext } from 'react';
 
 export default function OrderDetailsItem({ productData, lock = true, deleteFunc, incQuantity, decQuantity }) {
     let info = productData
-    console.log(productData)
     return <>
         <div className={"cart-item" + (productData.hidden ? " cart-item_hidden" : '')}>
             {productData ? <>

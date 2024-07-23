@@ -11,7 +11,7 @@ const HTMLLoading = (
     </div>
 )
 
-export default function popupFilters({ setSize, filtersContent, type = false }) {
+export default function popupFilters({ filtersContent, type = false }) {
     const searchParams = useSearchParams()
     const searchParam = searchParams.get('size_sm') ? decodeURIComponent(searchParams.get('size_sm')) : undefined
     const [filters, setFilters] = useState(filtersContent);

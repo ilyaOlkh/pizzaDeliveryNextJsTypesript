@@ -1,0 +1,52 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        "incremental": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "strict": true, // Включает все строгие проверки
+        "noImplicitAny": true, // Ошибки для неявных типов any
+        "noImplicitThis": true, // Ошибки для неявных типов this
+        "alwaysStrict": true, // Включает строгий режим для всех файлов
+        "strictNullChecks": true, // Строгая проверка на null и undefined
+        "strictFunctionTypes": true, // Строгая проверка типов функций
+        "strictPropertyInitialization": true, // Строгая проверка инициализации свойств
+        "strictBindCallApply": true, // Строгая проверка методов bind, call, apply
+        "noImplicitReturns": true, // Ошибки, если функция может не вернуть значение
+        "noFallthroughCasesInSwitch": true, // Ошибки для fallthrough в switch
+        "noUnusedParameters": true, // Ошибки для неиспользуемых параметров
+        "noUnusedLocals": true, // Ошибки для неиспользуемых локальных переменных
+        "esModuleInterop": true, // Для совместимости с CommonJS и ES модулями
+        "forceConsistentCasingInFileNames": true, // Для согласованности регистра в именах файлов
+        "jsx": "preserve",
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "paths": {
+            "@/*": [
+                "./*"
+            ]
+        },
+    },
+    "include": [
+        "next-env.d.ts",
+        ".next/types/**/*.ts",
+        "**/*.ts",
+        "**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

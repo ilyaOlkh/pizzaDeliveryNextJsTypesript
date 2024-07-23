@@ -7,7 +7,7 @@ export async function updateOrder(changes, order_id) {
     try {
         const db = createKysely({ connectionString: process.env.POSTGRES_URL });
         let userData = await GetUserInfoForServer()
-        if (userData[2]) {
+        if (userData[3]) {
             if (Object.keys(changes).length > 0) {
                 await db.updateTable('order_').set(changes).where('order_id', '=', order_id).execute();
                 return 'Order updated successfully';

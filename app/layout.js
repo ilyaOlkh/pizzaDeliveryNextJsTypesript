@@ -46,7 +46,7 @@ export default async function RootLayout({ children, params }) {
             </head>
             <body>
                 <Loading />
-                <Providers user={user[0] ? user[1] : undefined} cart={cart} ProductsInfo={dataArray} sort={{}}>
+                <Providers user={user[0] ? user[2] : null} cart={cart} ProductsInfo={dataArray} sort={{}}>
                     <div className="wrapper">
                         <PopupCart />
                         <PopupSend />

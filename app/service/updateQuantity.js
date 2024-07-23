@@ -9,12 +9,11 @@ export async function updateQuantity(obj) {
     try {
         const db = createKysely({ connectionString: process.env.POSTGRES_URL });
         let userData = await GetUserInfoForServer()
-        if (userData[2]) {
+        if (userData[3]) {
             if (Object.keys(obj).length > 0) {
                 let command = ' CASE'
-                Object.entries(obj).forEach(([id, value]) => { console.log([id, value]); command += ` WHEN order_details_id = ${id} THEN ${value} ` })
+                Object.entries(obj).forEach(([id, value]) => { command += ` WHEN order_details_id = ${id} THEN ${value} ` })
                 command += ' ELSE quantity END'
-                console.log(command)
                 await db.updateTable('orderdetails')
                     .set({
                         quantity: sql.raw(`${command}`)

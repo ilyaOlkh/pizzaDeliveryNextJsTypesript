@@ -12,7 +12,6 @@ export default async (req) => {
     let priceFrom;
     let priceTo;
     let searchName;
-    console.log(filters)
 
     if (filters) {
         if (filters.searchName) {
@@ -41,7 +40,6 @@ export default async (req) => {
         if (Object.keys(filters).length == 0) {
             filters = undefined
         }
-        console.log(filters)
     }
     let query = db
         .selectFrom('product')
@@ -107,7 +105,6 @@ export default async (req) => {
             whereArr.push(`pizzadetails.price <= ${priceTo}`)
         }
     }
-    console.log(`${whereArr.join(' AND ')}`)
     query = query.where(sql(`${whereArr.join(' AND ')}`));
     query = query.groupBy(sql(`product.product_id, minprice, numofprice${(sort?.sortRule == 'rating') ? ', rating' : ''}`));
     if (filters) {

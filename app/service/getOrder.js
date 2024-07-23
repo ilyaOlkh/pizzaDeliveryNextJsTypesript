@@ -1,7 +1,6 @@
 'use server'
 
 import { GetUserInfoForServer, checkIsAdmin } from "../AuthControllers/GetDataController"
-import { getUserCookies } from "../AuthControllers/GetDataController"
 import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
 
@@ -9,10 +8,9 @@ export async function getOrder(id) {
     let userData;
 
     userData = await GetUserInfoForServer()
-    let isAdmin = userData[2]
-    console.log(isAdmin)
+    let isAdmin = userData[3]
     if (userData[0]) {
-        userData = userData[1]
+        userData = userData[2]
         try {
             const db = createKysely({ connectionString: process.env.POSTGRES_URL });
             let query = db.selectFrom('order_')

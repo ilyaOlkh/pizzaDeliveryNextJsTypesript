@@ -21,7 +21,6 @@ export default function PopupSend() {
         const [res, orderId] = await insertOrder(delivery, 1, userState.customer_id, cartState)
         if (res === 'success') {
             setCart([])
-            console.log(orderId)
             setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderId)
             // flsModules.popup.close('#send')
             flsModules.popup.open('#cheque')

@@ -24,8 +24,6 @@ function addMessage() {
         newMessage.classList.add('popup__message_hidden')
         setTimeout(() => { newMessage.remove() }, 3000);
     }, 3000)
-
-    console.log(newMessage)
 }
 
 export default function popupProduct() {
@@ -90,11 +88,9 @@ export default function popupProduct() {
                 let Ingredients = await getIngredients(id)
                 setIngredients(Ingredients)
                 let sizesRespons = await getSizes(id)
-                console.log(searchParam)
                 setAvalibleSizes(sizesRespons)
                 if (searchParam && productRespons[0].p_type == "піца") {
                     setCurentSize(sizesRespons.find((elem) => {
-                        console.log(elem, searchParam.replace('см', ''))
                         return elem.size_cm == searchParam.replace('см', '')
                     }))
                 } else {

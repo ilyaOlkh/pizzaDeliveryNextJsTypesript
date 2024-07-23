@@ -25,7 +25,6 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     const [productsState, setProducts] = useState(products)
     const [loadingState, setLoading] = useState(false)
     const [sizeState, setSize] = useState(!!params.searchParams['size_sm'])
-    console.log(sizeState)
     const sortRef = useRef(sortState);
     const withComposition = process.env.NEXT_PUBLIC_TYPES_WITH_COMPOSITION.split(', ').includes(type)
 
@@ -33,7 +32,6 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
     let typeUpper = type.charAt(0).toUpperCase() + type.slice(1);
 
     const updateProducts = async () => {
-        console.log('rerender')
         setLoading(true)
         let products = await getProducts({
             type: type,
@@ -42,13 +40,11 @@ export default function ClientPage({ ProductTypes, products, type, filtersConten
                 : undefined),
             sort: sortState
         }) || []
-        console.log(products)
         setProducts(products)
         setLoading(false)
     }
     useEffect(() => {
         if (sortRef.current != sortState) {
-            console.log('rerender')
             sortRef.current = sortState
             updateProducts()
         }

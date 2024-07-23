@@ -8,7 +8,6 @@ export default function PriceFilter({ type, selectedSize, setSelectedSize }) {
     let uniqueKeyLable = 0;
 
     const handleChange = (event) => {
-        console.log(event.target.value, selectedSize)
         if (decodeURIComponent(event.target.value) != selectedSize) {
             setSelectedSize(decodeURIComponent(event.target.value));
         } else {

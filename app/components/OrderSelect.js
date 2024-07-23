@@ -5,17 +5,13 @@ import { refreshSelect } from "./startJS"
 export default function OrderSelect({ statusArray, status, id, name, isLast = false }) {
     const [statusState, setStatus] = useState(status)
     const onceRendered = useRef(false)
-    console.log(status, statusState)
     useEffect(() => {
         // refreshSelect()
         const thisSelect = document.querySelector(`select[name='${name}']`)
-        console.log(status)
         thisSelect.value = status
         thisSelect.closest('.select').querySelector('.select__value').innerHTML = status
 
         setStatus(status)
-        console.log(statusState)
-        console.log(status)
     }, [statusArray, status]);
     useEffect(() => {
         if (!onceRendered.current && isLast) {

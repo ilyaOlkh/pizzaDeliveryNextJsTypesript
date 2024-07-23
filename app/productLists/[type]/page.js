@@ -4,7 +4,6 @@ import getIngredientsTypes from '../../service/getIngredientsTypes'
 
 import getProducts from '../../service/getProducts.js'
 import getFilters from '@/app/service/getFilters'
-import { GetUserInfoForServer } from '@/app/AuthControllers/GetDataController';
 import { SortProvider } from '@/app/context/contextProvider'
 import ClientPage from './clientPage'
 
@@ -16,8 +15,6 @@ const sortParams = [
 ]
 
 export default async function productList(params) {
-    //------авторизация----------
-    const user = await GetUserInfoForServer();
     //-------фильтрация----------
     let decodedContent = {};
     for (let key in params.searchParams) {
@@ -31,7 +28,6 @@ export default async function productList(params) {
     const filters = decodedContent
     //-------сортировка----------
     const sort = { sortRule: params.searchParams[sortRuleId] || 'product_id', direction: params.searchParams[process.env.NEXT_PUBLIC_DIR_PARAM] || 'asc' }
-    console.log(params.searchParams[sortRuleId])
     let type = decodeURIComponent(params.params.type)
     const filtersContent = await getFilters(type);
     filtersContent.unshift({

@@ -7,10 +7,8 @@ export async function deleteOrderDetails(arr) {
     try {
         const db = createKysely({ connectionString: process.env.POSTGRES_URL });
         let userData = await GetUserInfoForServer()
-        if (userData[2]) {
+        if (userData[3]) {
             if (arr.length > 0) {
-                console.log(arr)
-
                 await db.deleteFrom('orderdetails')
                     .where('order_details_id', 'in', arr)
                     .execute()

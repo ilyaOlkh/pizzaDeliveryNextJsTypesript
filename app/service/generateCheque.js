@@ -12,7 +12,6 @@ export default async function generateCheque(thisOrder, id) {
         thisOrder: await getOrder(id),
         thisOrderDetails: (await getOrdersProductsByIDs([id]))[id]
     }
-    console.log(id, await getOrdersProductsByIDs([id]))
 
     let reaArray = []
     if (Object.keys(thisOrderState).length === 0) {
@@ -36,7 +35,6 @@ export default async function generateCheque(thisOrder, id) {
                 text: `Адреса ${thisOrderState.thisOrder.street ? `вулиця ${thisOrderState.thisOrder.street}` : ""}${thisOrderState.thisOrder.house ? `, будинок ${thisOrderState.thisOrder.house}` : ""}${thisOrderState.thisOrder.entrance ? `, під'їзд ${thisOrderState.thisOrder.entrance}` : ""}${thisOrderState.thisOrder.floor ? `, поверх ${thisOrderState.thisOrder.entrance}` : ""}${thisOrderState.thisOrder.apartment ? `, квартира ${thisOrderState.thisOrder.apartment}` : ""}${thisOrderState.thisOrder.intercom_code ? `, код від домофону ${thisOrderState.thisOrder.intercom_code}` : ""}`,
             })
         }
-        console.log(thisOrderState.thisOrderDetails)
         if (thisOrderState.thisOrderDetails) {
             reaArray.push({ text: 'Продукти:' })
             thisOrderState.thisOrderDetails.forEach((item, num) => {
