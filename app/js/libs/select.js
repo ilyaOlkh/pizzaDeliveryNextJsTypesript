@@ -1,7 +1,6 @@
 // Підключення функціоналу "Чортоги Фрілансера"
 import { isMobile, _slideUp, _slideDown, _slideToggle, FLS } from "../files/functions.js";
 import { flsModules } from "../files/modules.js";
-import { formValidate } from "../files/forms/forms.js";
 
 // Підключення файлу стилів
 // Базові стилі полягають у src/scss/forms.scss
@@ -499,10 +498,6 @@ export default class SelectConstructor {
     }
     // Обробник зміни у селекті
     setSelectChange(originalSelect) {
-        // Миттєва валідація селекту
-        if (originalSelect.hasAttribute('data-validate')) {
-            formValidate.validateInput(originalSelect);
-        }
         // При зміні селекту надсилаємо форму
         if (originalSelect.hasAttribute('data-submit') && originalSelect.value) {
             let tempButton = document.createElement("button");
@@ -552,12 +547,12 @@ export default class SelectConstructor {
             }
         }));
     }
+
+
     // Логінг у консоль
     setLogging(message) {
         this.config.logging ? FLS(`[select]: ${message} `) : null;
     }
 }
-// Запускаємо та додаємо в об'єкт модулів
-// flsModules.select = new SelectConstructor({});
 
 
