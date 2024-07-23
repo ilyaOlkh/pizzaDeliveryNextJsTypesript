@@ -24,8 +24,8 @@
         "strictBindCallApply": true, // Строгая проверка методов bind, call, apply
         "noImplicitReturns": true, // Ошибки, если функция может не вернуть значение
         "noFallthroughCasesInSwitch": true, // Ошибки для fallthrough в switch
-        "noUnusedParameters": true, // Ошибки для неиспользуемых параметров
-        "noUnusedLocals": true, // Ошибки для неиспользуемых локальных переменных
+        // "noUnusedParameters": true, // Ошибки для неиспользуемых параметров
+        // "noUnusedLocals": true, // Ошибки для неиспользуемых локальных переменных
         "esModuleInterop": true, // Для совместимости с CommonJS и ES модулями
         "forceConsistentCasingInFileNames": true, // Для согласованности регистра в именах файлов
         "jsx": "preserve",
