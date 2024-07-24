@@ -43,17 +43,17 @@ export async function removeToken(refreshtoken: ITokens["refreshtoken"]): Promis
         dialect: new PostgresDialect({ pool }),
     });
 
-    let id = await db.selectFrom('customer').select(['customer_id'])
+    const customer = await db.selectFrom('customer').select(['customer_id'])
         .where('refreshtoken', '=', refreshtoken)
-        .executeTakeFirst();;
+        .executeTakeFirst();
 
     await db.updateTable('customer')
         .set({ refreshtoken: sql`NULL` })
         .where('refreshtoken', '=', refreshtoken)
         .execute();
 
-    if (id) {
-        return id.customer_id
+    if (customer && customer.customer_id) {
+        return customer.customer_id
     } else {
         return null
     }
@@ -97,12 +97,12 @@ export async function findToken(refreshtoken: ITokens["refreshtoken"]): Promise<
         dialect: new PostgresDialect({ pool }),
     });
 
-    let id = await db.selectFrom('customer').select(['customer_id'])
+    const customer = await db.selectFrom('customer').select(['customer_id'])
         .where('refreshtoken', '=', refreshtoken)
         .executeTakeFirst();
 
-    if (id) {
-        return id.customer_id
+    if (customer && customer.customer_id) {
+        return customer.customer_id
     } else {
         return null
     }

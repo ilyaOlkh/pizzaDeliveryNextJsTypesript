@@ -56,7 +56,7 @@ interface customer {
 }
 
 interface order_ {
-    order_id: number
+    order_id?: number
     customer_id: number
     worker_id: number
     order_date_time: string
@@ -66,7 +66,7 @@ interface order_ {
 }
 
 interface orderdetails {
-    order_details_id: number
+    order_details_id?: number
     order_id: number
     pizzadetails_id: number
     dough: string | null
