@@ -1,10 +1,9 @@
 'use server'
 import { Pool } from 'pg';
 import { Kysely, sql, PostgresDialect } from 'kysely'
-import { Database } from '../types/databaseSchema';
+import { DatabaseInsert } from '../types/databaseSchema';
 import bcrypt from 'bcrypt'
 import { generateTokens, saveToken } from '@/app/AuthServerServices/tokenServices'
-import { promises } from 'fs';
 import { ITokens, IUser } from '../types/user';
 
 
@@ -23,7 +22,7 @@ export default async function registration(query: FormData): Promise<ITokens & {
         connectionString: process.env.POSTGRES_URL
     });
 
-    const db = new Kysely<Database>({
+    const db = new Kysely<DatabaseInsert>({
         dialect: new PostgresDialect({ pool }),
     });
 

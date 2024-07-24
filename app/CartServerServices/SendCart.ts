@@ -3,14 +3,14 @@ import { createKysely } from '@vercel/postgres-kysely';
 import { TypeCart } from '../types/cart';
 import { Pool } from 'pg';
 import { Kysely, sql, PostgresDialect } from 'kysely'
-import { Database } from '../types/databaseSchema';
+import { DatabaseInsert } from '../types/databaseSchema';
 
 type TypeOrderResponce = [message: 'error'] | [message: 'success', order_id: number]
 
 export default async function insertOrder(
-    delivery: Database["order_"]["delivery"],
-    worker_id: Database["order_"]["worker_id"],
-    customer_id: Database["order_"]["customer_id"],
+    delivery: DatabaseInsert["order_"]["delivery"],
+    worker_id: DatabaseInsert["order_"]["worker_id"],
+    customer_id: DatabaseInsert["order_"]["customer_id"],
     cartItems: TypeCart): Promise<TypeOrderResponce> {
 
     let OrderId: { order_id: number | undefined } | undefined;
@@ -19,7 +19,7 @@ export default async function insertOrder(
             connectionString: process.env.POSTGRES_URL
         });
 
-        const db = new Kysely<Database>({
+        const db = new Kysely<DatabaseInsert>({
             dialect: new PostgresDialect({ pool }),
         });
 
@@ -60,7 +60,7 @@ async function insertOrderDetails(OrderId: number, cartItems: TypeCart): Promise
         connectionString: process.env.POSTGRES_URL
     });
 
-    const db = new Kysely<Database>({
+    const db = new Kysely<DatabaseInsert>({
         dialect: new PostgresDialect({ pool }),
     });
 
