@@ -1,6 +1,6 @@
 'use client'
 import registrationController from '../AuthControllers/registration'
-import { show, hide } from '../components/loading'
+import { show, hide } from './loading'
 import { MyContext } from '../context/contextProvider'
 import { useContext } from 'react';
 

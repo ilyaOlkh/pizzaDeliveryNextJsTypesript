@@ -39,7 +39,7 @@ interface worker {
 }
 
 interface customer {
-    customer_id: number
+    customer_id?: number
     first_name: string
     last_name: string
     phone: string

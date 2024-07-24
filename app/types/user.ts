@@ -22,3 +22,5 @@ export interface ITokens {
     accesstoken: string;
     refreshtoken: string;
 }
+
+export type customer_id = number | null

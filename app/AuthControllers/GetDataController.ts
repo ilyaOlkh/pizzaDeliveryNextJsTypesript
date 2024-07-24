@@ -5,16 +5,38 @@ import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely'
 import { cookies } from 'next/headers'
 import { Database } from '../types/databaseSchema';
-import { IUser } from '../types/user';
+import { ITokens, IUser } from '../types/user';
 
-export type TypeResponce = [
-    isSuccess: boolean,
-    info: 'NeedAuth' | 'valid' | 'NeedRefresh' | 'IDs are not equal',
-    UserData?: IUser,
+export type TypeResponce = TypeResponceTrue | TypeResponceFalse
+
+export type TypeResponceTrue = [
+    isSuccess: true,
+    info: 'valid',
+    UserData: IUser,
     role?: string | null
 ]
 
+export type TypeResponceFalse = [
+    isSuccess: false,
+    info: 'NeedAuth' | 'NeedRefresh' | 'IDs are not equal',
+]
 
+export type TypeResponceAuth = [
+    isSuccess: true,
+    info: 'Реєстрація пройшла успішно',
+    refresh: ITokens['refreshtoken'],
+    UserData: IUser,
+]
+
+export type TypeResponceFalseNoStrict = [
+    isSuccess: false,
+    info: string,
+]
+
+export type TypeResponceWithoutData = [
+    isSuccess: boolean,
+    info: string,
+]
 export async function CheckWithoutAccessToken(): Promise<TypeResponce> {
     const refreshtoken = cookies().get('refreshtoken')
     if (!refreshtoken) {

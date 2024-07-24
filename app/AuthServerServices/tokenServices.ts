@@ -6,6 +6,7 @@ import { Kysely, PostgresDialect, sql } from 'kysely'
 import { IUser, ITokens } from '../types/user';
 import { Database } from '../types/databaseSchema';
 import { UserJwtPayloadCast } from '../service/checkParams';
+import { customer_id } from '../types/user';
 
 export function generateTokens(payload: IUser): ITokens {
     const accesstoken: string = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, { expiresIn: '30s' })
@@ -33,7 +34,7 @@ export async function saveToken(userId: number, refreshtoken: ITokens["refreshto
         .where('customer_id', '=', +userId)
         .execute();
 }
-export async function removeToken(refreshtoken: ITokens["refreshtoken"]) {
+export async function removeToken(refreshtoken: ITokens["refreshtoken"]): Promise<customer_id> {
     const pool = new Pool({
         connectionString: process.env.POSTGRES_URL
     });
@@ -44,26 +45,19 @@ export async function removeToken(refreshtoken: ITokens["refreshtoken"]) {
 
     let id = await db.selectFrom('customer').select(['customer_id'])
         .where('refreshtoken', '=', refreshtoken)
-        .execute();
+        .executeTakeFirst();;
 
     await db.updateTable('customer')
         .set({ refreshtoken: sql`NULL` })
         .where('refreshtoken', '=', refreshtoken)
         .execute();
 
-    if (id.length > 0) {
-        return id[0].customer_id
+    if (id) {
+        return id.customer_id
     } else {
         return null
     }
 }
-
-// export async function refreshToken(refreshtoken: ITokens["refreshtoken"]) {
-//     if (!refreshtoken) {
-//         console.log('користувач не авторизований')
-//         return
-//     }
-// }
 
 export function validateAccessToken(token: ITokens["accesstoken"]): UserJwtPayload | null {
     try {
@@ -94,7 +88,7 @@ export function validateRefreshToken(token: ITokens["refreshtoken"]): UserJwtPay
     }
 }
 
-export async function findToken(refreshtoken: ITokens["refreshtoken"]) {
+export async function findToken(refreshtoken: ITokens["refreshtoken"]): Promise<customer_id> {
     const pool = new Pool({
         connectionString: process.env.POSTGRES_URL
     });

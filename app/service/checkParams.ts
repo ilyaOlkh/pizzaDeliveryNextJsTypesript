@@ -50,11 +50,12 @@ export function UserJwtPayloadCast(payload: JwtPayload): UserJwtPayload {
     if (typeof payload.discount !== 'number') {
         errors.push('discount must be a number');
     }
-    if (typeof payload.role !== 'string' && payload.role !== null) {
-        errors.push('role must be a string or null');
+    if (typeof payload.role !== 'string' && payload.role !== null && payload.role !== undefined) {
+        errors.push('role must be a string or null or undefined');
     }
 
     if (errors.length > 0) {
+        console.log(payload)
         throw new Error('Invalid token payload structure: ' + errors.join(', '));
     }
 
