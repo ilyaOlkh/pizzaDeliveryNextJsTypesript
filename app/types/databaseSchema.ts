@@ -146,7 +146,7 @@ interface order_Insert {
     order_id?: number
     customer_id: number
     worker_id: number
-    order_date_time: string
+    order_date_time: Date
     status: 'готується' | 'доставляється' | 'доставлено' | 'скасовано'
     payment: 'оплачено' | 'потрібно оплатити'
     delivery: 'доставка' | 'самовивіз'

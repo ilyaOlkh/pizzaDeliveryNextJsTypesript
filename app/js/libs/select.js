@@ -1,6 +1,6 @@
 // Підключення функціоналу "Чортоги Фрілансера"
 import { isMobile, _slideUp, _slideDown, _slideToggle, FLS } from "../files/functions.js";
-import { flsModules } from "../files/modules.js";
+import { flsModules } from "../files/modules";
 
 // Підключення файлу стилів
 // Базові стилі полягають у src/scss/forms.scss

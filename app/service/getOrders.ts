@@ -13,6 +13,7 @@ import { TypeOrders } from "../types/order";
 export async function getOrders(page: number, numInPage: number, all: boolean = false, sort?: ISort, filters?: TypeFilters): Promise<TypeOrders | 'error' | 'no access'> {
     let userData: TypeResponce;
     let isAdmin: boolean = false;
+    console.log(sort)
 
     if (!all) {
         userData = await getUserCookies()
@@ -42,8 +43,7 @@ export async function getOrders(page: number, numInPage: number, all: boolean = 
 
                 let query = db.selectFrom('order_')
                     .innerJoin('customer', 'order_.customer_id', 'customer.customer_id')
-                    .$if(Boolean(sort), (qb) =>
-                        qb.innerJoin('orderdetails', 'orderdetails.order_id', 'order_.order_id')
+                    .$if(Boolean(sort), (qb) => qb.leftJoin('orderdetails', 'orderdetails.order_id', 'order_.order_id')
                     )
                     .select(
                         [
@@ -73,8 +73,8 @@ export async function getOrders(page: number, numInPage: number, all: boolean = 
 
                 if (filters) {
                     for (const value in filters) {
-                        const ingredients: string[] = filters[value].split(",").map((elem) => `${elem}`);
-                        query.where(sql`${value}`, 'in', ingredients)
+                        const filterArr: string[] = filters[value].split(",");
+                        query = query.where(sql.ref(value), 'in', filterArr)
                     }
                 }
 
@@ -98,7 +98,6 @@ export async function getOrders(page: number, numInPage: number, all: boolean = 
                         .limit(sql.raw(numInPage.toString()))
                         .offset(sql.raw(((page - 1) * numInPage).toString()))
                 }
-                console.log(query.compile())
 
                 let result = await query.execute()
                 return result

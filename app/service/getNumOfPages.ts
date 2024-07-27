@@ -23,8 +23,8 @@ export async function getNumOfPages(userId?: number, filters?: TypeFilters): Pro
 
         if (filters) {
             for (const value in filters) {
-                const ingredients: string[] = filters[value].split(",").map((elem) => `${elem}`);
-                query.where(sql`${value}`, 'in', ingredients)
+                const filterArr: string[] = filters[value].split(",");
+                query = query.where(sql.ref(value), 'in', filterArr)
             }
         }
         if (userId) {

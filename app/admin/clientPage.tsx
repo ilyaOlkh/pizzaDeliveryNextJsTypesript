@@ -16,11 +16,9 @@ import { IParams, TypeFilters } from "../types/types"
 import { OrdersContext, OrdersDetailsContext, isAdminContext, sortContext } from "../context/contextProvider"
 import { useSafeContext } from "../service/useSafeContext"
 import ErrorBlock from "../ErrorBlock/ErrorBlock"
+import { ISortParam } from "../types/sort"
 
-interface ISortParam {
-    sortRule: string
-    value: string
-}
+
 
 const HTMLLoading: JSX.Element = (
     <div className='error__loading'>
@@ -109,7 +107,8 @@ export default function ClientPersonalPage({ searchParams, numOfPages, filters }
             return <ErrorBlock><span className="error__code">немає доступу адміна</span></ErrorBlock>;
         }
         if (Object.keys(ordersState).length === 0) {
-            return <ErrorBlock><span className="error__code">Немає замовлень</span></ErrorBlock>;
+
+            return <ErrorBlock withButtons={true}><span className="error__code">Немає замовлень</span></ErrorBlock>;
         }
         if (ordersState === 'error') {
             return <ErrorBlock><span className="error__code">виникла помилка</span></ErrorBlock>;

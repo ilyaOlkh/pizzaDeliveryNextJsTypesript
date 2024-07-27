@@ -1,6 +1,6 @@
 'use client'
 import generateCheque from "../service/generateCheque"
-import { show, hide } from '../components/loading';
+import { show, hide } from './loading';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -10,11 +10,14 @@ export default function PopupCheque() {
     async function createPDF() {
         show()
         let searchParams = new URLSearchParams(window.location.search)
-        let id = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER) ? decodeURIComponent(searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER)) : undefined
-        let text = await generateCheque(undefined, id)
-        pdfMake.createPdf({
-            content: text
-        }).download();
+        const OrderId = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER)
+        if (OrderId) {
+            let id = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER) ? decodeURIComponent(OrderId) : undefined
+            let text = await generateCheque(undefined, id)
+            pdfMake.createPdf({
+                content: text
+            }).download();
+        }
         hide()
     }
 

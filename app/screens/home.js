@@ -2,7 +2,7 @@ import ProductCard from '../ui/productCard.js'
 // import Image from "next/image";
 import Header from "../header/page.js"
 import PopupProduct from '../components/popupProduct'
-import PopupReg from '../components/popupReg.js';
+import PopupReg from '../components/popupReg';
 // import PopupCheque from '@/app/components/PopupCheque'
 
 export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
@@ -105,7 +105,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {pizzas.map(pizza => {
-                                return (<ProductCard productData={pizza} type={'піца'} />)
+                                return (<ProductCard key={pizza.product_id} productData={pizza} type={'піца'} />)
                             })}
                         </div>
                     </div>
@@ -117,7 +117,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {shushi.map(shushka => {
-                                return (<ProductCard productData={shushka} type={'суші'} />)
+                                return (<ProductCard key={shushka.product_id} productData={shushka} type={'суші'} />)
                             })}
                         </div>
                     </div>
@@ -129,7 +129,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {drinks.map(drink => {
-                                return (<ProductCard productData={drink} type={'напої'} />)
+                                return (<ProductCard key={drink.product_id} productData={drink} type={'напої'} />)
                             })}
                         </div>
                     </div>
@@ -141,7 +141,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {snaks.map(snak => {
-                                return (<ProductCard productData={snak} type={'закуски'} />)
+                                return (<ProductCard key={snak.product_id} productData={snak} type={'закуски'} />)
                             })}
                         </div>
                     </div>
@@ -153,7 +153,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {dessert.map(dessertOne => {
-                                return (<ProductCard productData={dessertOne} type={'десерти'} />)
+                                return (<ProductCard key={dessertOne.product_id} productData={dessertOne} type={'десерти'} />)
                             })}
                         </div>
                     </div>
@@ -165,7 +165,7 @@ export default function Home(pizzas, shushi, drinks, snaks, dessert, sauces) {
                         </div>
                         <div className="priceList__grid">
                             {sauces.map(sauce => {
-                                return (<ProductCard productData={sauce} type={'соуси'} />)
+                                return (<ProductCard key={sauce.product_id} productData={sauce} type={'соуси'} />)
                             })}
                         </div>
                     </div>

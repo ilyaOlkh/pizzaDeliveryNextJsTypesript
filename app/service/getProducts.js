@@ -3,9 +3,10 @@ import { createKysely } from '@vercel/postgres-kysely';
 import { sql } from 'kysely'
 
 export default async (req) => {
+
     const db = createKysely({ connectionString: process.env.POSTGRES_URL });
     const type = req.type;
-    let filters = req.filters;
+    let filters = { ...req.filters };
     const limit = req.limit;
     const sort = req.sort;
     let size_sm;
@@ -21,6 +22,8 @@ export default async (req) => {
             size_sm = filters.size_sm.replace('см', '')
             if (size_sm != 'null') {
                 size_sm = `= '${size_sm}'`
+                console.log(filters)
+
             } else {
                 size_sm = `IS NULL`
             }

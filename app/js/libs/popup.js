@@ -5,7 +5,7 @@
 
 // Підключення функціоналу "Чортоги Фрілансера"
 import { isMobile, bodyLockStatus, bodyLock, bodyUnlock, bodyLockToggle, FLS } from "../files/functions.js";
-import { flsModules } from "../files/modules.js";
+import { flsModules } from "../files/modules";
 
 // Клас Popup
 export default class Popup {

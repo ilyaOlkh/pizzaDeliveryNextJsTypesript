@@ -1,5 +1,5 @@
 // Підключення списку активних модулів
-import { flsModules } from "./modules.js";
+import { flsModules } from "./modules";
 
 /* Перевірка підтримки webp, додавання класу webp або no-webp для HTML */
 export function isWebp() {

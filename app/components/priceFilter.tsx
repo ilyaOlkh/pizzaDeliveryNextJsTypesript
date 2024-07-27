@@ -1,16 +1,17 @@
 'use client'
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, MouseEvent, MouseEventHandler, SetStateAction, useState } from "react";
 
-export default function PriceFilter({ type, selectedSize, setSelectedSize }) {
+export default function PriceFilter({ type, selectedSize, setSelectedSize }: { type: string | true, selectedSize: string | boolean | undefined | null, setSelectedSize: Dispatch<SetStateAction<string | boolean | undefined | null>> }) {
     let params = useSearchParams()
 
     let uniqueKeyLable = 0;
 
-    const handleChange = (event) => {
-        if (decodeURIComponent(event.target.value) != selectedSize) {
-            setSelectedSize(decodeURIComponent(event.target.value));
+    const handleChange = (event: MouseEvent<HTMLInputElement>) => {
+        if (decodeURIComponent(event.currentTarget.value) != selectedSize) {
+            setSelectedSize(decodeURIComponent(event.currentTarget.value));
         } else {
+            event.currentTarget.checked = false
             setSelectedSize(null)
         }
     };
@@ -23,7 +24,9 @@ export default function PriceFilter({ type, selectedSize, setSelectedSize }) {
                         uniqueKeyLable++
                         return (
                             <label className="popup-from-left__option" key={uniqueKeyLable}>
-                                <input onClick={handleChange} id={elem} type='radio' defaultChecked={false} checked={selectedSize == elem} name='size_sm' value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
+                                <input onClick={handleChange} id={elem} type='radio'
+                                    defaultChecked={selectedSize == elem}
+                                    name='size_sm' value={encodeURIComponent(elem)} style={{ display: 'none' }} /><span id="word_opts">{elem}</span>
                             </label>
                         )
                     })}

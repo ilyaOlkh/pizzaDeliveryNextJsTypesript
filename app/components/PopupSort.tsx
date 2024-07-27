@@ -1,7 +1,8 @@
 'use client'
-import { useState, useContext } from 'react';
+import { useState, useContext, MouseEventHandler, MouseEvent } from 'react';
 import { sortContext } from '../context/contextProvider';
-
+import { ISortParam } from "../types/sort"
+import { useSafeContext } from '../service/useSafeContext';
 
 const HTMLLoading = (
     <div className='popup-from-left__loading'>
@@ -9,13 +10,12 @@ const HTMLLoading = (
     </div>
 )
 
-export default function PopupSort({ sortParams }) {
-    const [filters, setFilters] = useState([]);
-    const { sortState, setSort } = useContext(sortContext);
+export default function PopupSort({ sortParams }: { sortParams: ISortParam[] }) {
+    const { sortState, setSort } = useSafeContext(sortContext);
 
-    function handleClick(event) {
+    function handleClick(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
-        const newSortRule = event.target.closest('button').dataset.sortRule
+        const newSortRule = event.currentTarget.dataset.sortRule
         let newSortDir = 'asc'
         if (sortState.sortRule == newSortRule) {
             if (sortState.direction == 'asc') {
@@ -24,7 +24,9 @@ export default function PopupSort({ sortParams }) {
                 newSortDir = 'asc'
             }
         }
-        setSort({ sortRule: newSortRule, direction: newSortDir })
+        if (newSortRule) {
+            setSort({ sortRule: newSortRule, direction: newSortDir })
+        }
     }
 
     return (<div id="sort" aria-hidden="true" className="popup popup-from-left">
@@ -39,8 +41,8 @@ export default function PopupSort({ sortParams }) {
                 <div className="popup-from-left__inner">
                     <div className="popup-from-left__block">
                         {
-                            sortParams.map((item) => {
-                                return (<button onClick={handleClick} data-sort-rule={item.sortRule} className="popup-from-left__button-wrapper button button_white">
+                            sortParams.map((item, index) => {
+                                return (<button key={index} onClick={handleClick} data-sort-rule={item.sortRule} className="popup-from-left__button-wrapper button button_white">
                                     <div className="popup-from-left__button-sort">
                                         {item.value}
                                         {sortState.sortRule == item.sortRule ? <img className={sortState.direction == 'desc' ? "reversed" : ""} src="/Common/triangle.svg" alt="triangle" /> : <></>}

@@ -5,10 +5,13 @@ import { IUser } from '../types/user'
 
 
 export default async function login(query: FormData): Promise<[
-    isSuccess: boolean,
+    isSuccess: true,
     comment: string,
-    accesstoken?: string,
-    user?: IUser
+    accesstoken: string,
+    user: IUser
+] | [
+    isSuccess: false,
+    comment: string,
 ]> {
     try {
         let res = await logService(query)

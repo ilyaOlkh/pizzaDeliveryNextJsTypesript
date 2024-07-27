@@ -8,6 +8,7 @@ export interface OrderDetail {
     weight_g: number | null;
     p_name: string | null;
     image_url: string;
+    hidden?: boolean
 }
 
 export type TypeOrderDetails = { [orderId: number]: OrderDetail[] };

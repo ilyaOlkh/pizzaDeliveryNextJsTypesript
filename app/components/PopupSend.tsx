@@ -1,5 +1,5 @@
 'use client'
-import { useContext } from "react"
+import { FormEvent, useContext } from "react"
 import { CartContext, ProductsInfoContext, MyContext } from "../context/contextProvider"
 import CartItem from "../ui/CartItem"
 import insertOrder from "../CartServerServices/SendCart"
@@ -7,28 +7,36 @@ import { flsModules } from "../js/files/modules"
 import { show, hide } from "./loading"
 import { getTotalPrice } from '../CartClientServises/CartServices';
 import { setParam } from "../service/setSearchParam"
+import { useSafeContext } from "../service/useSafeContext"
 
 export default function PopupSend() {
-    const { cartState, setCart } = useContext(CartContext)
-    const { productsInfoState, setProductsInfo } = useContext(ProductsInfoContext)
-    const { userState, setUser } = useContext(MyContext);
+    const { cartState, setCart } = useSafeContext(CartContext)
+    const { productsInfoState, setProductsInfo } = useSafeContext(ProductsInfoContext)
+    const { userState, setUser } = useSafeContext(MyContext);
     let uniqueCartItemKey = 0
-    async function sendForm(event) {
+    async function sendForm(event: FormEvent<HTMLFormElement>) {
         show()
-        event.preventDefault()
-        const formData = new FormData(event.target);
-        let delivery = formData.get('delivery')
-        const [res, orderId] = await insertOrder(delivery, 1, userState.customer_id, cartState)
-        if (res === 'success') {
-            setCart([])
-            setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderId)
-            // flsModules.popup.close('#send')
-            flsModules.popup.open('#cheque')
+        if (userState) {
+            event.preventDefault()
+            const formData = new FormData(event.currentTarget);
+            let delivery = formData.get('delivery')
+            if (delivery && !(delivery instanceof File) && (delivery === "доставка" || delivery === "самовивіз")) {
+                const [res, orderId] = await insertOrder(delivery, 1, userState.customer_id, cartState)
+                if (res === 'success') {
+                    setCart([])
+                    setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderId)
+                    // flsModules.popup.close('#send')
+                    flsModules.popup.open('#cheque')
+                } else {
+                    alert('щось пішло не так')
+                }
+            } else {
+                console.log('неправильный формат delivery')
+            }
+            hide()
         } else {
-            alert('щось пішло не так')
+            console.log('нельзя отправлять заказы без авторизации')
         }
-        hide()
-
     }
     return <>
         <div id="send" aria-hidden="true" className="popup popup-window">

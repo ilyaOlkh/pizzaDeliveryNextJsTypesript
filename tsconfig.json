@@ -45,7 +45,7 @@
         ".next/types/**/*.ts",
         "**/*.ts",
         "**/*.tsx",
-        "app/components/RegistrationForm.js"
+        "app/components/RegistrationForm.tsx"
     ],
     "exclude": [
         "node_modules"
