@@ -1,3 +1,5 @@
+import { OrderDetail } from "./OrderDetails";
+
 export interface IOrder {
     order_id: number;
     order_date_time: string;
@@ -15,3 +17,11 @@ export interface IOrder {
     phone: string;
 }
 export type TypeOrders = IOrder[];
+
+export interface IOrderData {
+    index: number,
+    order_id: number,
+    thisOrder: IOrder,
+    thisOrderDetails: OrderDetail[]
+}
+

@@ -24,13 +24,14 @@ export default async function productList(params: IParams) {
     let decodedContent: { [key: string]: string } = {};
     for (let key in params.searchParams) {
         let decodedKey = decodeURIComponent(key);
-        if (!i_types.includes(decodedKey) && !process.env.NEXT_PUBLIC_FILTERS_SPECIAL_PARAMS.split(', ').includes(decodedKey)) {
+        if (!isValidCategory(decodedKey) && !process.env.NEXT_PUBLIC_FILTERS_SPECIAL_PARAMS.split(', ').includes(decodedKey)) {
             continue
         }
         let decodedValue = decodeURIComponent(params.searchParams[key]);
         decodedContent[decodedKey] = decodedValue;
     }
     const filters = decodedContent
+
     //-------сортировка----------
     const sort: ISort = {
         sortRule: params.searchParams[sortRuleId] || 'product_id',
@@ -71,4 +72,24 @@ function isPType(type: string): type is Database['product']['p_type'] {
         return true
     }
     return false
+}
+
+function isValidCategory(value: string): value is Database['ingredient']['i_type'] {
+    if (
+        value === "соуси" ||
+        value === "сири" ||
+        value === "м'ясо" ||
+        value === "ковбаси" ||
+        value === "морепродукти" ||
+        value === "овочі" ||
+        value === "гриби" ||
+        value === "трави" ||
+        value === "фрукти" ||
+        value === "риба" ||
+        value === "водорості" ||
+        value === "інше"
+    ) {
+        return true;
+    }
+    return false;
 }

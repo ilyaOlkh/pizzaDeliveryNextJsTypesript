@@ -1,10 +1,11 @@
 'use server'
 
-import { GetUserInfoForServer, checkIsAdmin } from "../AuthControllers/GetDataController"
-import { createKysely } from '@vercel/postgres-kysely';
-import { sql } from 'kysely'
+import { GetUserInfoForServer } from "../AuthControllers/GetDataController"
+import { Pool } from 'pg';
+import { Kysely, PostgresDialect } from 'kysely'
+import { Database } from '@/app/types/databaseSchema';
 
-export async function getOrder(id) {
+export async function getOrder(id: number) {
     let userData;
 
     userData = await GetUserInfoForServer()
@@ -12,9 +13,15 @@ export async function getOrder(id) {
     if (userData[0]) {
         userData = userData[2]
         try {
-            const db = createKysely({ connectionString: process.env.POSTGRES_URL });
+            const pool = new Pool({
+                connectionString: process.env.POSTGRES_URL
+            });
+
+            const db = new Kysely<Database>({
+                dialect: new PostgresDialect({ pool }),
+            });
             let query = db.selectFrom('order_')
-                .leftJoin('customer', 'order_.customer_id', 'customer.customer_id')
+                .innerJoin('customer', 'order_.customer_id', 'customer.customer_id')
                 .select([
                     'order_.order_id',
                     // 'order_.customer_id',
@@ -33,27 +40,23 @@ export async function getOrder(id) {
                     'customer.phone',
                 ])
 
-            let whereArr = []
             if (userData) {
                 if (!isAdmin) {
-                    whereArr.push(`order_.customer_id = ${userData.customer_id}`)
+                    query = query.where('order_.customer_id', '=', userData.customer_id)
                 }
             } else {
                 return 'no log in'
             }
-            if (id) {
-                whereArr.push(`order_.order_id = ${id}`)
-            } else {
-                return 'no access'
-            }
-            query = query.where(sql(`${whereArr.join(' AND ')}`));
+            query = query.where('order_.order_id', '=', id)
 
             let result = await query.executeTakeFirst()
             return result
 
         } catch (error) {
-            console.log({ error: `1.5Помилка: ${error.message}` })
+            console.log(`1.5Помилка: ${error}`)
             return 'error'
         }
+    } else {
+        return 'no access'
     }
 }

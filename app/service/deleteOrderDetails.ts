@@ -1,11 +1,20 @@
 'use server'
 import { GetUserInfoForServer } from "../AuthControllers/GetDataController";
-import { createKysely } from '@vercel/postgres-kysely';
+import { Pool } from 'pg';
+import { Kysely, sql, PostgresDialect } from 'kysely'
+import { Database } from '../types/databaseSchema';
 
 
-export async function deleteOrderDetails(arr) {
+export async function deleteOrderDetails(arr: number[]): Promise<"Order updated successfully" | "нет изменений" | "no access" | "error"> {
     try {
-        const db = createKysely({ connectionString: process.env.POSTGRES_URL });
+        const pool = new Pool({
+            connectionString: process.env.POSTGRES_URL
+        });
+
+        const db = new Kysely<Database>({
+            dialect: new PostgresDialect({ pool }),
+        });
+
         let userData = await GetUserInfoForServer()
         if (userData[3]) {
             if (arr.length > 0) {
@@ -21,5 +30,6 @@ export async function deleteOrderDetails(arr) {
         }
     } catch (e) {
         console.log('1Помилка', e)
+        return "error"
     }
 }

@@ -12,11 +12,13 @@ export default function PopupCheque() {
         let searchParams = new URLSearchParams(window.location.search)
         const OrderId = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER)
         if (OrderId) {
-            let id = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER) ? decodeURIComponent(OrderId) : undefined
-            let text = await generateCheque(undefined, id)
+            let id = decodeURIComponent(OrderId)
+            let text = await generateCheque(undefined, +id)
             pdfMake.createPdf({
                 content: text
             }).download();
+        } else {
+            console.log('немає id замовлення')
         }
         hide()
     }

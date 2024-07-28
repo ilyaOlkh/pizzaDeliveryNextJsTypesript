@@ -1,16 +1,33 @@
 
-import { getOrder } from '../service/getOrder';
-import getOrdersProductsByIDs from '../service/getOrdersProductsByIDs';
-import OrderDetailsItem from '../ui/OrderDetailsItem';
+import { IOrder, IOrderData } from '../types/order';
+import { getOrder } from './getOrder';
+import getOrdersProductsByIDs from './getOrdersProductsByIDs';
 
+export default async function generateCheque(thisOrder: IOrderData, id: undefined): Promise<{ text: string; fontSize?: number; }[]>
+export default async function generateCheque(thisOrder: undefined, id: number): Promise<{ text: string; fontSize?: number; }[]>
+export default async function generateCheque(thisOrder?: IOrderData, id?: number): Promise<{
+    text: string;
+    fontSize?: number;
+}[]> {
+    let thisOrderState: Omit<IOrderData, 'index'>
+    if (thisOrder) {
+        thisOrderState = thisOrder
+    } else if (id) {
+        let order: "error" | "no access" | "no log in" | undefined | IOrder = await getOrder(id)
+        if (order && order !== 'no log in' && order !== 'no access' && order !== 'error') {
+            thisOrderState = {
+                order_id: id,
+                thisOrder: order,
+                thisOrderDetails: (await getOrdersProductsByIDs([id]))[id]
+            }
+        } else {
+            console.log("Отказано по причине: ", order)
+            return []
+        }
 
-// import { usePDF } from 'react-to-pdf';
-
-export default async function generateCheque(thisOrder, id) {
-    const thisOrderState = thisOrder || {
-        order_id: id,
-        thisOrder: await getOrder(id),
-        thisOrderDetails: (await getOrdersProductsByIDs([id]))[id]
+    } else {
+        console.log("нет никаких данных про заказ")
+        return []
     }
 
     let reaArray = []
@@ -23,8 +40,8 @@ export default async function generateCheque(thisOrder, id) {
         reaArray.push({
             text: `Статус: ${thisOrderState.thisOrder.status}
                     Доставка: ${thisOrderState.thisOrder.delivery}
-                    Дата: ${thisOrderState.thisOrder.order_date_time.toLocaleDateString()}
-                    Час: ${thisOrderState.thisOrder.order_date_time.toLocaleTimeString()}
+                    Дата: ${new Date(thisOrderState.thisOrder.order_date_time).toLocaleDateString()}
+                    Час: ${new Date(thisOrderState.thisOrder.order_date_time).toLocaleTimeString()}
                     Оплачено: ${thisOrderState.thisOrder.payment}
                     Загальна ціна: ${getOrderPrice(thisOrderState.thisOrderDetails)} грн
                     Замовник: ${thisOrderState.thisOrder.first_name + ' ' + thisOrderState.thisOrder.last_name}
@@ -57,20 +74,11 @@ export default async function generateCheque(thisOrder, id) {
     return reaArray
 }
 
-function getOrderPrice(orderProductsData) {
+function getOrderPrice(orderProductsData: IOrderData['thisOrderDetails']) {
     let sum = 0;
     for (let i = 0; i < orderProductsData?.length; i++) {
         if (orderProductsData[i].hidden) continue
-        sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;
+        sum += orderProductsData[i].selled_price * orderProductsData[i].quantity;
     }
     return sum;
-}
-
-function findById(id, ordersState) {
-    for (let item in ordersState) {
-        if (ordersState[item].order_id == id) {
-            return +item
-        }
-    }
-    return false
 }

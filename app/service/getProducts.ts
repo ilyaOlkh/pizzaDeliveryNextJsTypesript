@@ -130,6 +130,7 @@ export default async function getProducts(req: IProps): Promise<IProduct[]> {
             console.log(filters)
             const ingredients = filters[value].split(",")
                 .map((elem) => {
+                    elem = elem.replace("'", "''")
                     return `'${elem}'`
                 });
             query = query.having(sql.raw(`SUM(CASE WHEN i_name in (${ingredients}) THEN 1 ELSE 0 END)`), '>=', 1)

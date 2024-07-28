@@ -15,14 +15,8 @@ import { useSafeContext } from "../service/useSafeContext"
 import { IOrder, TypeOrders } from "../types/order"
 import { OrderDetail, TypeOrderDetails } from "../types/OrderDetails"
 import { CustomPopupEvent } from "../types/popupEvents"
+import { IOrderData } from "../types/order"
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-interface IOrderData {
-    index: number,
-    order_id: number,
-    thisOrder: IOrder,
-    thisOrderDetails: OrderDetail[]
-}
 
 interface IChanges {
     status?: "готується" | "доставляється" | "доставлено" | "скасовано"
@@ -39,7 +33,7 @@ export default function PopupOrder() {
     const [isOpen, setIsOpen] = useState(false)
     const [thisOrderState, setThisOrder] = useState<IOrderData | null>(null)
     let uniqueCartItemKey = 0
-    let toDelete = useRef(new Set())
+    let toDelete = useRef(new Set<number>())
     let toChangeQuantity = useRef<Record<number, number>>({})
 
     async function sendChanges(Changes: IChanges) {
@@ -192,11 +186,15 @@ export default function PopupOrder() {
         show()
         let searchParams = new URLSearchParams(window.location.search)
         const idForOrder = searchParams.get(process.env.NEXT_PUBLIC_ID_FOR_ORDER)
-        let id = idForOrder ? decodeURIComponent(idForOrder) : undefined
-        let text = await generateCheque(undefined, id)
-        pdfMake.createPdf({
-            content: text
-        }).download();
+        if (idForOrder) {
+            let id = decodeURIComponent(idForOrder)
+            let text = await generateCheque(undefined, +id)
+            pdfMake.createPdf({
+                content: text
+            }).download();
+        } else {
+            console.log('немає id замовлення')
+        }
         hide()
     }
     if (thisOrderState) {
