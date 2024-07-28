@@ -30,9 +30,9 @@ export default async function getOrdersProductsByIDs(idArray?: number[]): Promis
             let customer: IUser = userData[2]
             let query = db
                 .selectFrom("orderdetails")
-                .leftJoin("pizzadetails", "orderdetails.pizzadetails_id", 'pizzadetails.id')
-                .leftJoin('product', 'pizzadetails.product_id', 'product.product_id')
-                .leftJoin('order_', 'order_.order_id', 'orderdetails.order_id')
+                .innerJoin("pizzadetails", "orderdetails.pizzadetails_id", 'pizzadetails.id')
+                .innerJoin('product', 'pizzadetails.product_id', 'product.product_id')
+                .innerJoin('order_', 'order_.order_id', 'orderdetails.order_id')
                 .select([
                     "orderdetails.order_details_id",
                     'orderdetails.order_id',

@@ -16,7 +16,7 @@ export default function PopupSort({ sortParams }: { sortParams: ISortParam[] }) 
     function handleClick(event: MouseEvent<HTMLButtonElement>) {
         event.preventDefault()
         const newSortRule = event.currentTarget.dataset.sortRule
-        let newSortDir = 'asc'
+        let newSortDir: 'asc' | 'desc' = 'asc'
         if (sortState.sortRule == newSortRule) {
             if (sortState.direction == 'asc') {
                 newSortDir = 'desc'
