@@ -2,7 +2,7 @@
 
 import Header from "../header/page"
 
-import { useContext, useEffect, useState, useRef } from "react"
+import { useContext, useEffect, useState, useRef, ChangeEvent } from "react"
 import { MyContext } from "../context/contextProvider"
 import { getOrders } from "../service/getOrders"
 import OrderItem from "../ui/orderItem"
@@ -12,6 +12,9 @@ import PopupOrder from "../components/PopupOrder"
 
 import { OrdersContext, OrdersDetailsContext } from "../context/contextProvider"
 import ErrorBlock from "../ErrorBlock/ErrorBlock"
+import { IParams } from "../types/types"
+import { useSafeContext } from "../service/useSafeContext"
+import { TypeOrderDetails } from "../types/OrderDetails"
 
 const HTMLLoading = (
     <div className='error__loading'>
@@ -19,12 +22,14 @@ const HTMLLoading = (
     </div>
 )
 
-export default function ClientPersonalPage({ searchParams, numOfPages }) {
-    const [page, setPage] = useState(searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE])
-    const { userState, setUser } = useContext(MyContext)
-    const { ordersState, setOrders } = useContext(OrdersContext)
-    const { ordersDetailsState, setOrdersDetails } = useContext(OrdersDetailsContext)
+export default function ClientPersonalPage({ searchParams, numOfPages }: { searchParams: IParams["searchParams"], numOfPages: number }) {
+    const { userState, setUser } = useSafeContext(MyContext)
+    const { ordersState, setOrders } = useSafeContext(OrdersContext)
+    const { ordersDetailsState, setOrdersDetails } = useSafeContext(OrdersDetailsContext)
+
+    const [page, setPage] = useState<number>(+searchParams[process.env.NEXT_PUBLIC_ID_FOR_PAGE])
     const [loadingState, setLoading] = useState(false)
+
     const userStateRef = useRef(userState);
     const pageRef = useRef(page);
 
@@ -33,9 +38,9 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
     const updateOrders = async () => {
         setLoading(true)
         let orders = await getOrders(+page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
-        let ordersProducts = []
+        let ordersProducts: TypeOrderDetails = []
         if (Object.keys(orders).length > 0 && orders !== "error" && orders !== "no access") {
-            ordersProducts = await getOrdersProductsByIDs(orders.map(value => value.order_id), +page, +process.env.NEXT_PUBLIC_NUM_IN_PAGE) || []
+            ordersProducts = await getOrdersProductsByIDs(orders.map(value => value.order_id)) || []
         }
         setOrdersDetails(ordersProducts)
         setOrders(orders)
@@ -57,14 +62,14 @@ export default function ClientPersonalPage({ searchParams, numOfPages }) {
         }
     }, [page])
 
-    function handleChange(event, page) {
+    function handleChange(event: ChangeEvent<unknown>, page: number) {
         setPage(page)
     }
     function setPageParam() {
         let idForPage = process.env.NEXT_PUBLIC_ID_FOR_PAGE
         let previousParams = window.location.search
         const params = new URLSearchParams(previousParams)
-        params.set(idForPage, page)
+        params.set(idForPage, page.toString())
         history.pushState({}, '', `?${params}`)
     }
 

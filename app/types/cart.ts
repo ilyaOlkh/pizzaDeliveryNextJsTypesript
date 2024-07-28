@@ -1,7 +1,7 @@
 export interface ICartItem {
     id: number
     quantity: number
-    dough: string
+    dough: string | null
     selled_price: number
 }
 

@@ -27,7 +27,7 @@ declare global {
 
 interface ICurentSize {
     id: number;
-    size_cm: "20" | "28" | "33" | null;
+    size_cm: "20" | "28" | "33" | 'null';
     weight_g: number;
     price: number;
 }
@@ -71,10 +71,10 @@ export default function popupProduct(): React.JSX.Element {
     let uniqueLabelKey: number = 0
 
 
-    function findById(id: number, dough: string): number | false {
+    function findById(id: number, dough: string | null): number | false {
         let responce: number | false = false
         cartState.forEach((value, index) => {
-            if (value.id == id && value.dough == dough) {
+            if (value.id === id && value.dough === dough) {
                 responce = index
             }
         })
@@ -87,28 +87,28 @@ export default function popupProduct(): React.JSX.Element {
                 event.preventDefault();
                 const formData = new FormData(event.currentTarget);
                 const dough = formData.get('dough')
-                if (dough) {
-                    if (!(dough instanceof File)) {
-                        let isInCart = findById(curentSize.id, dough)
-                        if (isInCart !== false) {
-                            let newCartState = [...cartState]
-                            newCartState[isInCart].quantity++
-                            setCart(newCartState)
-                        } else {
-                            productsInfoState[curentSize.id] = {
-                                id: curentSize.id,
-                                image_url: product.image_url,
-                                p_name: product.p_name,
-                                price: curentSize.price,
-                                size_cm: curentSize.size_cm,
-                                weight_g: curentSize.weight_g
-                            }
-                            setCart([...cartState, { id: curentSize.id, quantity: 1, dough: dough, selled_price: curentSize.price }])
-                        }
-                        addMessage()
+                if (((product.p_type === 'піца' && dough) || product.p_type !== 'піца') && !(dough instanceof File)) {
+                    let isInCart = findById(curentSize.id, dough)
+                    if (isInCart !== false) {
+                        let newCartState = [...cartState]
+                        newCartState[isInCart].quantity++
+                        setCart(newCartState)
                     } else {
-                        alert('замість тіста прийшов файл 😕')
+                        productsInfoState[curentSize.id] = {
+                            id: curentSize.id,
+                            image_url: product.image_url,
+                            p_name: product.p_name,
+                            price: curentSize.price,
+                            size_cm: curentSize.size_cm,
+                            weight_g: curentSize.weight_g
+                        }
+                        setCart([...cartState, { id: curentSize.id, quantity: 1, dough: dough, selled_price: curentSize.price }])
                     }
+                    addMessage()
+
+                } else if (dough instanceof File) {
+                    alert('замість тіста прийшов файл 😕')
+
                 } else {
                     alert('у товару не обране тісто')
                 }

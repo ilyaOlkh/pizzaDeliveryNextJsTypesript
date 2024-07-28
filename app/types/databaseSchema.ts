@@ -23,7 +23,7 @@ interface composition {
 interface pizzadetails {
     id: number
     product_id: number
-    size_cm: '20' | '28' | '33' | null
+    size_cm: '20' | '28' | '33' | 'null'
     weight_g: number
     price: number
 }
@@ -110,7 +110,7 @@ interface compositionInsert {
 interface pizzadetailsInsert {
     id?: number
     product_id: number
-    size_cm: '20' | '28' | '33' | null
+    size_cm: '20' | '28' | '33' | 'null'
     weight_g: number
     price: number
 }

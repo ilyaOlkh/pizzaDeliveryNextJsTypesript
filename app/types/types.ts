@@ -1,4 +1,7 @@
 export interface IParams {
+    params: {
+        type: string
+    }
     searchParams: {
         [key: string]: string
     }

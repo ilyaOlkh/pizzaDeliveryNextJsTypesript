@@ -1,6 +1,6 @@
 import ProductCard from '../ui/productCard.js'
 // import Image from "next/image";
-import Header from "../header/page.js"
+import Header from "../header/page"
 import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg';
 // import PopupCheque from '@/app/components/PopupCheque'

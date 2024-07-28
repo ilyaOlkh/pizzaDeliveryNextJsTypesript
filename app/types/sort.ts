@@ -1,6 +1,6 @@
 export interface ISort {
     sortRule: string
-    direction: string
+    direction: 'desc' | 'asc'
 }
 
 export interface ISortParam {

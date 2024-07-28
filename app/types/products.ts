@@ -11,7 +11,7 @@ export interface IProductInfo {
 
 export interface IProduct {
     product_id: number;
-    p_type: Database['product']['p_name']
+    p_type: Database['product']['p_type']
     p_name: string;
     added_date: string;
     image_url: string;
