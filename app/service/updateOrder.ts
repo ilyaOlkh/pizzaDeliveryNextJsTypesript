@@ -26,7 +26,17 @@ export async function updateOrder(changes: IChanges, order_id: number) {
                 return 'нет изменений'
             }
         } else {
-            return 'no access'
+
+            if (Object.keys(changes).length > 0) {
+                let isSuccess = await db.updateTable('order_').set(changes).where('order_id', '=', order_id).where('customer_id', '=', userData[2]!.customer_id).returning('order_id').executeTakeFirst();
+                if (isSuccess) {
+                    return 'Order updated successfully';
+                } else {
+                    return 'no access'
+                }
+            } else {
+                return 'нет изменений'
+            }
         }
     } catch (e) {
         console.log('Помилка', e)

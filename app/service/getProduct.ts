@@ -2,9 +2,9 @@
 import { Pool } from 'pg';
 import { Kysely, sql, PostgresDialect } from 'kysely'
 import { Database } from '../types/databaseSchema';
-import { IProduct } from '../types/products';
+import { IProductShort } from '../types/products';
 
-export const getProduct = async (id: number): Promise<IProduct | undefined> => {
+export const getProduct = async (id: number): Promise<IProductShort | undefined> => {
     const pool = new Pool({
         connectionString: process.env.POSTGRES_URL
     });
@@ -30,6 +30,6 @@ export const getProduct = async (id: number): Promise<IProduct | undefined> => {
     } catch (err) {
         console.error('Помилка:', err);
 
-        return undefined; // Возвращаем пустой массив в случае ошибки
+        return undefined;
     }
 };

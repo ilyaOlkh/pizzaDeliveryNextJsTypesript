@@ -32,7 +32,6 @@ export default async function getProducts(req: IProps): Promise<IProduct[]> {
     let searchName: string | undefined;
 
     if (filters) {
-        console.log(filters)
         if (filters.searchName) {
             searchName = filters.searchName
         }
@@ -127,7 +126,6 @@ export default async function getProducts(req: IProps): Promise<IProduct[]> {
 
     if (filters) {
         for (const value in filters) {
-            console.log(filters)
             const ingredients = filters[value].split(",")
                 .map((elem) => {
                     elem = elem.replace("'", "''")
@@ -137,7 +135,6 @@ export default async function getProducts(req: IProps): Promise<IProduct[]> {
         }
     }
     try {
-        console.log(query.compile())
         const result = await query.execute();
         return result;
     } catch (err) {

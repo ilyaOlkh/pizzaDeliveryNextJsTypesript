@@ -23,8 +23,6 @@ export default async function insertOrder(
             dialect: new PostgresDialect({ pool }),
         });
 
-        console.log(new Date().toUTCString())
-
         OrderId = await db.insertInto('order_').values({
             customer_id: customer_id,
             worker_id: worker_id,

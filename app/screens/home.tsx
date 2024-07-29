@@ -1,8 +1,8 @@
-import ProductCard from '../ui/productCard.js'
+import ProductCard from '../ui/productCard'
 import Header from "../header/page"
 import PopupProduct from '../components/popupProduct'
 import PopupReg from '../components/popupReg';
-import { IProduct } from '../types/products.js';
+import { IProduct } from '../types/products';
 
 export default function Home(pizzas: IProduct[], shushi: IProduct[], drinks: IProduct[], snaks: IProduct[], dessert: IProduct[], sauces: IProduct[]) {
     return (

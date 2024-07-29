@@ -14,9 +14,7 @@ export default function LoginForm(): JSX.Element {
     async function loginStart(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         show()
-        console.log(event.currentTarget)
         const formData: FormData = new FormData(event.currentTarget);
-        console.log(formData)
 
         const res = await loginController(formData)
         if (res[0]) {

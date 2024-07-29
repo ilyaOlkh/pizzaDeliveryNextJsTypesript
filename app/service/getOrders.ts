@@ -13,7 +13,6 @@ import { TypeOrders } from "../types/order";
 export async function getOrders(page: number, numInPage: number, all: boolean = false, sort?: ISort, filters?: TypeFilters): Promise<TypeOrders | 'error' | 'no access'> {
     let userData: TypeResponce;
     let isAdmin: boolean = false;
-    console.log(sort)
 
     if (!all) {
         userData = await getUserCookies()

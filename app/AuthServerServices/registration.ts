@@ -16,7 +16,6 @@ export default async function registration(query: FormData): Promise<ITokens & {
             throw new Error("Каким боком был загружен файл в форму?")
         }
     }
-    console.log(queryObj)
 
     const pool = new Pool({
         connectionString: process.env.POSTGRES_URL

@@ -21,4 +21,13 @@ export interface IProduct {
     is_available: boolean;
 }
 
+export interface IProductShort {
+    product_id: number;
+    p_type: Database['product']['p_type']
+    p_name: string;
+    added_date: string;
+    image_url: string;
+}
+
+
 export type TypeProductsInfo = IProductInfo[]

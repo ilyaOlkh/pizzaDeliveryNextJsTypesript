@@ -55,7 +55,6 @@ export function UserJwtPayloadCast(payload: JwtPayload): UserJwtPayload {
     }
 
     if (errors.length > 0) {
-        console.log(payload)
         throw new Error('Invalid token payload structure: ' + errors.join(', '));
     }
 

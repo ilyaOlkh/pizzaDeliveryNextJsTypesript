@@ -9,7 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { useSafeContext } from '../service/useSafeContext';
 import { ICartItem } from '../types/cart';
 import { CustomPopupEvent } from '../types/popupEvents';
-import { IProduct } from '../types/products';
+import { IProduct, IProductShort } from '../types/products';
 import { flsModules } from '../js/files/modules';
 
 const HTMLLoading = (
@@ -58,7 +58,7 @@ export default function popupProduct(): React.JSX.Element {
     const { cartState, setCart } = useSafeContext(CartContext)
     const { productsInfoState, setProductsInfo } = useSafeContext(ProductsInfoContext)
     const [isLoading, setLoading] = useState(true)
-    const [product, setProduct] = useState<IProduct | null>(null)
+    const [product, setProduct] = useState<IProductShort | null>(null)
     const [ingredients, setIngredients] = useState<IIngridient[]>([])
     const [avalibleSizes, setAvalibleSizes] = useState<ICurentSize[]>([])
     const [curentSize, setCurentSize] = useState<ICurentSize | null>(null)

@@ -9,7 +9,7 @@ export default function ProductCard({ productData, type }: { productData: IProdu
         let filters = window.location.search
         const params = new URLSearchParams(filters)
         let paramIdForProduct = params.get(idForProduct)
-        if (paramIdForProduct && (+paramIdForProduct != productData.product_id)) {
+        if (paramIdForProduct !== productData.product_id.toString()) {
             params.delete(idForProduct)
             params.append(idForProduct, productData.product_id.toString())
             history.pushState({}, '', `?${params}#card`)
