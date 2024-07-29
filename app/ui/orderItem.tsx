@@ -1,7 +1,9 @@
 import { setParam } from "../service/setSearchParam";
+import { IOrder } from "../types/order";
+import { OrderDetail } from "../types/OrderDetails";
 
-export default function OrderItem({ orderData, orderProductsData }) {
-    return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className={"order" + (orderData.status == 'скасовано' ? " order_gray " : "")}>
+export default function OrderItem({ orderData, orderProductsData }: { orderData: IOrder, orderProductsData: OrderDetail[] }) {
+    return <button type="button" onClick={() => { setParam(process.env.NEXT_PUBLIC_ID_FOR_ORDER, orderData.order_id.toString()) }} data-popup={"#" + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH} className={"order" + (orderData.status == 'скасовано' ? " order_gray " : "")}>
         <div className={"order__row " + (orderData.status == 'готується' ? "order__row_red " : (orderData.status == 'доставляється' ? "order__row_orange " : ""))}>
             <div className="order__info">
                 <div className="order__info-title">
@@ -65,7 +67,7 @@ export default function OrderItem({ orderData, orderProductsData }) {
         </div>
         <div className="order__row">
             <div className="order__images">
-                {orderProductsData?.map((item, index) => <div key={index} className={"order__image" + (item.hidden ? " order__image_hidden" : '')}>
+                {orderProductsData?.map(item => <div className={"order__image" + (item.hidden ? " order__image_hidden" : '')}>
                     <img src={item.image_url.slice(3)} />
                     <span>{item.quantity}</span>
                 </div>)
@@ -75,12 +77,12 @@ export default function OrderItem({ orderData, orderProductsData }) {
     </button >
 }
 
-function getOrderPrice(orderProductsData) {
+function getOrderPrice(orderProductsData: OrderDetail[]) {
     let sum = 0;
     if (orderProductsData) {
         for (let i = 0; i < orderProductsData.length; i++) {
             if (orderProductsData[i].hidden) continue
-            sum += parseFloat(orderProductsData[i].selled_price) * orderProductsData[i].quantity;
+            sum += orderProductsData[i].selled_price * orderProductsData[i].quantity;
         }
     }
     return sum;

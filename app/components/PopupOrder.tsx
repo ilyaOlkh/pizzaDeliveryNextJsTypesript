@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useState, useEffect, useRef, FormEvent, MouseEventHandler } from "react"
+import { useContext, useState, useEffect, useRef, FormEvent, MouseEventHandler, MouseEvent } from "react"
 import { MyContext, OrdersContext, OrdersDetailsContext, isAdminContext } from "../context/contextProvider"
 import OrderDetailsItem from "../ui/OrderDetailsItem"
 import OrderSelect from "./OrderSelect"
@@ -16,12 +16,8 @@ import { IOrder, TypeOrders } from "../types/order"
 import { OrderDetail, TypeOrderDetails } from "../types/OrderDetails"
 import { CustomPopupEvent } from "../types/popupEvents"
 import { IOrderData } from "../types/order"
+import { IChanges } from "../types/order"
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-interface IChanges {
-    status?: "готується" | "доставляється" | "доставлено" | "скасовано"
-    payment?: "оплачено" | "потрібно оплатити"
-}
 
 
 const orderHash = '#' + process.env.NEXT_PUBLIC_POPUP_ORDER_HASH
@@ -272,7 +268,7 @@ export default function PopupOrder() {
                                                                 console.log('перерендер')
                                                                 uniqueCartItemKey++
                                                                 return (
-                                                                    <OrderDetailsItem decQuantity={(e: MouseEvent) => { e.preventDefault(); decQuantity(num, item) }} incQuantity={(e: MouseEvent) => { e.preventDefault(); incQuantity(num, item) }} deleteFunc={(e: MouseEvent) => { console.log(e); e.preventDefault(); deleteItem(num, item) }} lock={!isAdminState} key={uniqueCartItemKey} productData={item} />
+                                                                    <OrderDetailsItem decQuantity={(e: MouseEvent<HTMLButtonElement>) => { e.preventDefault(); decQuantity(num, item) }} incQuantity={(e: MouseEvent<HTMLButtonElement>) => { e.preventDefault(); incQuantity(num, item) }} deleteFunc={(e: MouseEvent<HTMLButtonElement>) => { console.log(e); e.preventDefault(); deleteItem(num, item) }} lock={!isAdminState} key={uniqueCartItemKey} productData={item} />
                                                                 )
                                                             })
                                                         }

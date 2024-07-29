@@ -1,11 +1,22 @@
 'use server'
 
-import { createKysely } from '@vercel/postgres-kysely';
 import { GetUserInfoForServer } from '../AuthControllers/GetDataController';
+import { IChanges } from "../types/order"
+import { Pool } from 'pg';
+import { Kysely, PostgresDialect } from 'kysely'
+import { Database } from '../types/databaseSchema';
 
-export async function updateOrder(changes, order_id) {
+
+
+export async function updateOrder(changes: IChanges, order_id: number) {
     try {
-        const db = createKysely({ connectionString: process.env.POSTGRES_URL });
+        const pool = new Pool({
+            connectionString: process.env.POSTGRES_URL
+        });
+
+        const db = new Kysely<Database>({
+            dialect: new PostgresDialect({ pool }),
+        });
         let userData = await GetUserInfoForServer()
         if (userData[3]) {
             if (Object.keys(changes).length > 0) {
@@ -19,6 +30,7 @@ export async function updateOrder(changes, order_id) {
         }
     } catch (e) {
         console.log('Помилка', e)
+        return 'error'
     }
 
 }

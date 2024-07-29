@@ -15,7 +15,7 @@ export async function getProductsByIDs(idArray: number[]) {
 
     let query = db
         .selectFrom('pizzadetails')
-        .leftJoin('product', 'pizzadetails.product_id', 'product.product_id')
+        .innerJoin('product', 'pizzadetails.product_id', 'product.product_id')
         .select([
             'pizzadetails.id',
             // 'product.product_id',

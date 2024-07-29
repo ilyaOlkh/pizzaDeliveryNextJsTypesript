@@ -1,13 +1,19 @@
 'use server'
-import { sql } from 'kysely'
 import { GetUserInfoForServer } from "../AuthControllers/GetDataController";
-import { createKysely } from '@vercel/postgres-kysely';
+import { Pool } from 'pg';
+import { Kysely, sql, PostgresDialect } from 'kysely'
+import { Database } from '../types/databaseSchema';
 
 
-export async function updateQuantity(obj) {
-
+export async function updateQuantity(obj: Record<number, number>) {
     try {
-        const db = createKysely({ connectionString: process.env.POSTGRES_URL });
+        const pool = new Pool({
+            connectionString: process.env.POSTGRES_URL
+        });
+
+        const db = new Kysely<Database>({
+            dialect: new PostgresDialect({ pool }),
+        });
         let userData = await GetUserInfoForServer()
         if (userData[3]) {
             if (Object.keys(obj).length > 0) {
@@ -18,7 +24,7 @@ export async function updateQuantity(obj) {
                     .set({
                         quantity: sql.raw(`${command}`)
                     })
-                    .where('order_details_id', 'in', Object.keys(obj))
+                    .where('order_details_id', 'in', Object.keys(obj).map(value => +value))
                     .execute()
                 return 'Order updated successfully';
             } else {
@@ -29,5 +35,6 @@ export async function updateQuantity(obj) {
         }
     } catch (e) {
         console.log('1Помилка', e)
+        return 'error'
     }
 }

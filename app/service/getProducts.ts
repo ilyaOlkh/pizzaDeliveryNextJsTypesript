@@ -7,7 +7,7 @@ import { IProduct } from '../types/products';
 
 interface IProps {
     type: Database['product']['p_type']
-    filters: { [key: string]: string } | undefined
+    filters?: { [key: string]: string } | undefined
     limit?: number
     sort?: ISort
 }
@@ -107,7 +107,7 @@ export default async function getProducts(req: IProps): Promise<IProduct[]> {
             )
             .orderBy(sql.ref(sort!.sortRule), sort!.direction)
         )
-        .leftJoin(subQueryPrices.as('prices'), 'prices.product_id', 'product.product_id')
+        .innerJoin(subQueryPrices.as('prices'), 'prices.product_id', 'product.product_id')
         .select([
             'product.product_id',
             `prices.minprice`,

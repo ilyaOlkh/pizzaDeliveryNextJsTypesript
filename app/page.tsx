@@ -2,10 +2,11 @@
 // import styles from "./page.module.css";
 import Home from './screens/home'
 import getProducts from './service/getProducts'
+import { IParams } from './types/types'
 
 
 
-export default async function homePage(params) {
+export default async function homePage(params: IParams) {
     const pizzas = await getProducts({ type: "піца", limit: 8 })
     const shushi = await getProducts({ type: "суші", limit: 8 })
     const drinks = await getProducts({ type: "напої", limit: 8 })

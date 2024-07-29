@@ -76,7 +76,7 @@ export function SortProvider({ children, sort }: { children: JSX.Element, sort: 
 
 
 
-export function Providers({ children, user, cart, ProductsInfo }: { children: JSX.Element, user: IUser, cart: TypeCart, ProductsInfo: TypeProductsInfo }) {
+export function Providers({ children, user, cart, ProductsInfo }: { children: JSX.Element, user: IUser | null, cart: TypeCart, ProductsInfo: TypeProductsInfo }) {
     const [userState, setUser] = useState<IUser | null>(user);
     const [cartState, setCartWithoutCookie] = useState<TypeCart>(cart);
     const [productsInfoState, setProductsInfo] = useState<TypeProductsInfo>(ProductsInfo);

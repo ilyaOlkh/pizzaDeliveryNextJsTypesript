@@ -15,6 +15,10 @@ export interface IProduct {
     p_name: string;
     added_date: string;
     image_url: string;
+    composition: string;
+    minprice: number;
+    numofprice: number;
+    is_available: boolean;
 }
 
 export type TypeProductsInfo = IProductInfo[]

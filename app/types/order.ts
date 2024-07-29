@@ -25,3 +25,7 @@ export interface IOrderData {
     thisOrderDetails: OrderDetail[]
 }
 
+export interface IChanges {
+    status?: "готується" | "доставляється" | "доставлено" | "скасовано"
+    payment?: "оплачено" | "потрібно оплатити"
+}
